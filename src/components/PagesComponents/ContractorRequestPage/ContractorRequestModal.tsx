@@ -1,6 +1,8 @@
 import { Modal } from "antd";
 import { MdTaskAlt } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
+import pdfIcon from "../../../assets/pdf-icon.svg"
+import { RiDownloadLine } from "react-icons/ri";
 
 type AddSubscriptionModalProps = {
     isModalOpen: boolean;
@@ -40,19 +42,19 @@ const ContractorRequestModal = ({ isModalOpen, handleOk, handleCancel }: AddSubs
                 </div>
                 <div className=" bg-[#efe6ef] px-2 py-1 rounded flex items-center mb-4">
                     <p className=" w-1/2">Skills</p>
-                    <p>: : Switchboard Installation</p>
+                    <p>: Switchboard Installation</p>
                 </div>
                 <div className=" bg-[#efe6ef] px-2 py-1 rounded flex items-center mb-4">
                     <p className=" w-1/2">Certificate</p>
-                    <p>: PDF</p>
+                    <div className=" flex items-center justify-between w-1/2"><div className=" flex items-center">: <img className=" w-6 ml-1 " src={pdfIcon} alt="pdf" /></div> <RiDownloadLine className=" w-6 h-6 cursor-pointer" /></div>
                 </div>
                 <div className=" bg-[#efe6ef] px-2 py-1 rounded flex items-center mb-4">
                     <p className=" w-1/2">Materials</p>
-                    <p>: : Electrical Cable, Fan, Switchboard</p>
+                    <p>: Electrical Cable, Fan, Switchboard</p>
                 </div>
                 <div className=" bg-[#efe6ef] px-2 py-1 rounded flex items-center mb-4">
                     <p className=" w-1/2">Charge</p>
-                    <p>: : Amount $/ Hour</p>
+                    <p>: $25 / Hour</p>
                 </div>
             </div>
             <div className=" px-14 flex justify-between items-center">
