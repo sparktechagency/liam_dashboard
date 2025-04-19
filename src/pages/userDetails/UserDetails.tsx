@@ -42,9 +42,9 @@ const UserDetails: React.FC = () => {
         setCurrentPage(page);
     };
 
-    const onFinish = (values: any): void => {
-        console.log(values);
-    };
+    // const onFinish = (values: any): void => {
+    //     console.log(values);
+    // };
 
     // User data
     const userData: UserDataSource = {

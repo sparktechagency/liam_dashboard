@@ -12,16 +12,16 @@ const MostUsingServicePie = () => {
 
     const COLORS = ['#cdb3cd', '#380538', '#8f538f', '#550855'];
 
-    const RADIAN = Math.PI / 180;
-    interface LabelProps {
-        cx: number;
-        cy: number;
-        midAngle: number;
-        innerRadius: number;
-        outerRadius: number;
-        percent: number;
-        index: number;
-    }
+    // const RADIAN = Math.PI / 180;
+    // interface LabelProps {
+    //     cx: number;
+    //     cy: number;
+    //     midAngle: number;
+    //     innerRadius: number;
+    //     outerRadius: number;
+    //     percent: number;
+    //     index: number;
+    // }
 
     // const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }: LabelProps) => {
     //     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
@@ -50,7 +50,7 @@ const MostUsingServicePie = () => {
                         fill="#8884d8"
                         dataKey="value"
                     >
-                        {data.map((entry, index) => (
+                        {data.map((_, index) => (
                             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                         ))}
                     </Pie>

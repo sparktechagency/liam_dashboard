@@ -50,9 +50,9 @@ const ContractorRequestPage: React.FC = () => {
         setIsModalOpen(false);
     };
 
-    const onFinish = (values: any): void => {
-        console.log(values);
-    };
+    // const onFinish = (values: any): void => {
+    //     console.log(values);
+    // };
 
     // User data
     const userData: UserDataSource = {
@@ -191,7 +191,7 @@ const ContractorRequestPage: React.FC = () => {
         },
         {
             title: "Action",
-            render: (_: any, record: UserData) => (
+            render: () => (
                 <div className="flex items-center">
                     <button onClick={showModal} className=" cursor-pointer">View</button>
                 </div>

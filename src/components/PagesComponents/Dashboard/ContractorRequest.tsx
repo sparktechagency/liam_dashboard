@@ -30,9 +30,9 @@ interface UserDataSource {
 
 const ContractorRequest: React.FC = () => {
 
-    const onFinish = (values: any): void => {
-        console.log(values);
-    };
+    // const onFinish = (values: any): void => {
+    //     console.log(values);
+    // };
 
     // User data
     const userData: UserDataSource = {

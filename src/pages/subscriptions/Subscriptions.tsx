@@ -40,9 +40,9 @@ const Subscriptions: React.FC = () => {
     };
 
 
-    const onFinish = (values: any): void => {
-        console.log(values);
-    };
+    // const onFinish = (values: any): void => {
+    //     console.log(values);
+    // };
 
     const userData: SubscriptionPlan[] = [
         {
@@ -112,7 +112,7 @@ const Subscriptions: React.FC = () => {
         },
         {
             title: "Action",
-            render: (_: any, record: SubscriptionPlan) => (
+            render: () => (
                 <div className="flex items-center">
                     <button onClick={showEditModal} className=" text-primaryColor cursor-pointer">
                         Edit
