@@ -32,7 +32,7 @@ const Manage = () => {
                 <div className=" flex gap-4">
                     <button
                         onClick={() => setActiveTab("category")}
-                        className={`cursor-pointer px-8 py-2 rounded-md  ${activeTab === "category"
+                        className={`cursor-pointer px-10 py-3 rounded-md  ${activeTab === "category"
                             ? "text-primary bg-primaryColor text-white"
                             : " border border-primaryColor"
                             }`}
@@ -41,7 +41,7 @@ const Manage = () => {
                     </button>
                     <button
                         onClick={() => setActiveTab("materials")}
-                        className={`cursor-pointer px-8 py-2 rounded-md  ${activeTab === "materials"
+                        className={`cursor-pointer px-10 py-3 rounded-md  ${activeTab === "materials"
                             ? "text-primary bg-primaryColor text-white"
                             : " border border-primaryColor"
                             }`}
