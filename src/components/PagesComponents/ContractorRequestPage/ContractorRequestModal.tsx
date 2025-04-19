@@ -2,6 +2,7 @@ import { Modal } from "antd";
 import { MdTaskAlt } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
 import pdfIcon from "../../../assets/pdf-icon.svg"
+import pdf from "../../../assets/fakepdf.pdf"
 import { RiDownloadLine } from "react-icons/ri";
 
 type AddSubscriptionModalProps = {
@@ -46,7 +47,11 @@ const ContractorRequestModal = ({ isModalOpen, handleOk, handleCancel }: AddSubs
                 </div>
                 <div className=" bg-[#efe6ef] px-2 py-1 rounded flex items-center mb-4">
                     <p className=" w-1/2">Certificate</p>
-                    <div className=" flex items-center justify-between w-1/2"><div className=" flex items-center">: <img className=" w-6 ml-1 " src={pdfIcon} alt="pdf" /></div> <RiDownloadLine className=" w-6 h-6 cursor-pointer" /></div>
+                    <div className=" flex items-center justify-between w-1/2"><div className=" flex items-center">: <img className=" w-6 ml-1 " src={pdfIcon} alt="pdf" /></div>
+                        <a href={pdf} download="contractor-certificate.pdf">
+                            <RiDownloadLine className=" w-[20px] h-[20px] cursor-pointer text-black" />
+                        </a>
+                    </div>
                 </div>
                 <div className=" bg-[#efe6ef] px-2 py-1 rounded flex items-center mb-4">
                     <p className=" w-1/2">Materials</p>
