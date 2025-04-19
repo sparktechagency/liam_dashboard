@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Table } from "antd";
+import { Pagination, Table } from "antd";
+import { useState } from "react";
+import { IoArrowBack } from "react-icons/io5";
 import { Link } from "react-router-dom";
 
 interface Name {
@@ -28,7 +30,13 @@ interface UserDataSource {
 }
 
 
-const ContractorRequest: React.FC = () => {
+const ContractorRequestPage: React.FC = () => {
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    console.log(currentPage);
+    const pageSize = 10;
+    const handlePageChange = (page: number) => {
+        setCurrentPage(page);
+    };
 
     const onFinish = (values: any): void => {
         console.log(values);
@@ -61,6 +69,61 @@ const ContractorRequest: React.FC = () => {
             },
             {
                 _id: "3",
+                name: {
+                    firstName: "Michael",
+                    lastName: "Johnson",
+                },
+                email: "michael.johnson@example.com",
+                number: 8852215615,
+                location: "Dkaka, Bangladesh",
+                role: "User",
+            },
+            {
+                _id: "4",
+                name: {
+                    firstName: "Michael",
+                    lastName: "Johnson",
+                },
+                email: "michael.johnson@example.com",
+                number: 8852215615,
+                location: "Dkaka, Bangladesh",
+                role: "User",
+            },
+            {
+                _id: "5",
+                name: {
+                    firstName: "Michael",
+                    lastName: "Johnson",
+                },
+                email: "michael.johnson@example.com",
+                number: 8852215615,
+                location: "Dkaka, Bangladesh",
+                role: "User",
+            },
+            {
+                _id: "6",
+                name: {
+                    firstName: "Michael",
+                    lastName: "Johnson",
+                },
+                email: "michael.johnson@example.com",
+                number: 8852215615,
+                location: "Dkaka, Bangladesh",
+                role: "User",
+            },
+            {
+                _id: "7",
+                name: {
+                    firstName: "Michael",
+                    lastName: "Johnson",
+                },
+                email: "michael.johnson@example.com",
+                number: 8852215615,
+                location: "Dkaka, Bangladesh",
+                role: "User",
+            },
+            {
+                _id: "8",
                 name: {
                     firstName: "Michael",
                     lastName: "Johnson",
@@ -114,34 +177,22 @@ const ContractorRequest: React.FC = () => {
             dataIndex: "location",
             render: (_: any, record: UserData) => <span>{record?.location}</span>,
         },
-        // {
-        //     title: "Action",
-        //     render: (_: any, record: UserData) => (
-        //         <div className="flex items-center">
-        //             <Button
-        //                 type="text"
-        //                 className="w-fit px-2"
-        //             >
-        //                 <FiTrash size={20} className="text-red-400 " />
-        //             </Button>
-        //         </div>
-        //     ),
-        // },
+        {
+            title: "Action",
+            render: (_: any, record: UserData) => (
+                <div className="flex items-center">
+                    <button className=" cursor-pointer">View</button>
+                </div>
+            ),
+        },
     ];
 
     return (
-        <>
-            <div className="flex justify-between items-center mt-5">
-                <h2 className="text-md md:text-xl font-semibold ">Contractor Request</h2>
-                <div>
-                    <Link  to={`/contractor-request`}>
-                        <button
-                            className="bg-primary rounded-md font-semibold cursor-pointer text-black"
-                        >
-                            View All
-                        </button>
-                    </Link>
-                </div>
+        <div className=" min-h-screen">
+            <div className="flex gap-3 items-center mt-5">
+                <Link to={-1 as any}>
+                    <IoArrowBack className=" w-8 h-8 cursor-pointer bg-accent text-black p-1 rounded-full" />
+                </Link> <h2 className="text-md md:text-xl font-semibold ">Contractor Request</h2>
             </div>
             <Table
                 columns={columns}
@@ -150,8 +201,21 @@ const ContractorRequest: React.FC = () => {
                 pagination={false}
                 rowKey="_id"
             />
-        </>
+            <div className=" mt-8 flex flex-col md:flex-row justify-between items-center">
+                <div>
+                    <p className=" text-lg text-black mb-5 md:mb-0">Showing 1-11 out of  1239</p>
+                </div>
+
+                <Pagination
+                    current={currentPage}
+                    pageSize={pageSize}
+                    total={50}
+                    onChange={handlePageChange}
+                />
+
+            </div>
+        </div>
     );
 };
 
-export default ContractorRequest;
+export default ContractorRequestPage;
