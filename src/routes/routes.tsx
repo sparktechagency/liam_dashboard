@@ -17,6 +17,7 @@ import UserDetails from '../pages/userDetails/UserDetails';
 import Manage from '../pages/manage/Manage';
 import ManageService from '../pages/manageService/ManageService';
 import ContractorRequestPage from '../pages/contractorRequestPage/ContractorRequestPage';
+import TransactionHistory from '../pages/transactionHistory/transactionHistory';
 
 
 const router = createBrowserRouter([
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
             {
                 path: "/income",
                 element: <Income></Income>,
+            },
+            {
+                path: "/income/transaction-history",
+                element: <TransactionHistory></TransactionHistory>,
             },
             {
                 path: "/user-details",

@@ -1,12 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Input, Table, TableProps } from "antd";
-import { CiSearch } from "react-icons/ci";
-import totalBalance from '../../assets/income/total-balance.png'
-import coin from '../../assets/income/coin.png'
+import { Pagination, Select, Table, TableProps } from "antd";
+import { useState } from "react";
+import { IoArrowBack } from "react-icons/io5";
 import { Link } from "react-router-dom";
 
 
-const Income = () => {
+const TransactionHistory = () => {
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const pageSize = 10;
+    const handlePageChange = (page: number) => {
+        setCurrentPage(page);
+    };
+
     interface Name {
         firstName: string;
         lastName: string;
@@ -35,7 +40,9 @@ const Income = () => {
         data: UserData[];
         meta: UserMeta;
     }
-    // User data
+
+
+
     const userData: UserDataSource = {
         data: [
             {
@@ -117,6 +124,54 @@ const Income = () => {
                 amount: 1000,
                 status: "Pending",
                 role: "User",
+            },
+            {
+                _id: "6",
+                name: {
+                    firstName: "Michael",
+                    lastName: "Johnson",
+                },
+                email: "michael.johnson@example.com",
+                number: 8852215615,
+                location: "Dkaka, Bangladesh",
+                contractStartDate: "24/01/2023",
+                contractorType: "Dimond",
+                paymentType: "Online Payment",
+                amount: 1000,
+                status: "Pending",
+                role: "User",
+            },
+            {
+                _id: "7",
+                name: {
+                    firstName: "Michael",
+                    lastName: "Johnson",
+                },
+                email: "michael.johnson@example.com",
+                number: 8852215615,
+                location: "Dkaka, Bangladesh",
+                contractStartDate: "24/01/2023",
+                contractorType: "Dimond",
+                paymentType: "Online Payment",
+                amount: 1000,
+                status: "Pending",
+                role: "User",
+            },
+            {
+                _id: "8",
+                name: {
+                    firstName: "Michael",
+                    lastName: "Johnson",
+                },
+                email: "michael.johnson@example.com",
+                number: 8852215615,
+                location: "Dkaka, Bangladesh",
+                contractStartDate: "24/01/2023",
+                contractorType: "Dimond",
+                paymentType: "Online Payment",
+                amount: 1000,
+                status: "Pending",
+                role: "User",
             }
         ],
         meta: {
@@ -172,50 +227,60 @@ const Income = () => {
         },
     ];
 
-
     return (
-        <div className=" w-full min-h-[100vh] bg-white rounded-lg px-3 py-4">
-            <div className="flex flex-col md:flex-row md:justify-between md:items-center ">
-                <h2 className="text-md md:text-xl font-semibold mb-5 md:mb-0 ">User Details</h2>
-                <div className=" w-[250px]">
-                    <Input prefix={<CiSearch className=" w-6 h-6" />} className="w-[250px]" placeholder="Search" />
-                </div>
-            </div>
-
-            <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-5">
-
-                <div className=" bg-[#42004A] rounded-lg px-5 py-8">
-                    <img src={totalBalance} className=" w-14 mb-4" alt="icon" />
-                    <h2 className="text-white text-xl xl:text-2xl mb-3">Total Balance</h2>
-                    <h2 className="text-white text-2xl lg:text-3xl xl:text-4xl font-semibold">$2584.54</h2>
-                </div>
-                <div className=" bg-[#5E095E] rounded-lg px-5 py-8">
-                    <img src={coin} className=" w-14 mb-4" alt="icon" />
-                    <h2 className="text-white text-xl xl:text-2xl mb-3">Gold-Earned</h2>
-                    <h2 className="text-white text-2xl lg:text-3xl xl:text-4xl font-semibold">$35804.54</h2>
-                </div>
-                <div className=" bg-[#5E095E80] rounded-lg px-5 py-8">
-                    <img src={coin} className=" w-14 mb-4" alt="icon" />
-                    <h2 className="text-white text-xl xl:text-2xl mb-3">Platinum-Earned</h2>
-                    <h2 className="text-white text-2xl lg:text-3xl xl:text-4xl font-semibold">$78584.54</h2>
-                </div>
-                <div className=" bg-[#CDB3CD] rounded-lg px-5 py-8">
-                    <img src={coin} className=" w-14 mb-4" alt="icon" />
-                    <h2 className="text-white text-xl xl:text-2xl mb-3">Diamond-Earned</h2>
-                    <h2 className="text-white text-2xl lg:text-3xl xl:text-4xl font-semibold">$92584.54</h2>
-                </div>
-
-            </div>
-            <div className="flex justify-between items-center mt-5">
-                <h2 className="text-md md:text-xl font-semibold ">Transaction History</h2>
-                <div>
-                    <Link to={`/income/transaction-history`}>
-                        <button
-                            className="bg-primary rounded-md font-semibold cursor-pointer text-black"
-                        >
-                            View All
-                        </button>
+        <div className=" min-h-screen">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between mt-5 ">
+                <div className=" flex gap-3 items-center mb-4 md:mb-0">
+                    <Link to={-1 as any}>
+                        <IoArrowBack className=" w-8 h-8 cursor-pointer bg-accent text-black p-1 rounded-full" />
                     </Link>
+                    <h2 className="text-md md:text-xl font-semibold ">Transaction History</h2>
+                </div>
+                <div className=" flex items-center gap-5">
+                    <div>
+                        <span>Month: </span>
+                        <Select
+                            placeholder="Select"
+                            style={{ width: 100 }}
+                            onChange={(value) => console.log("Selected month:", value)}
+                        >
+                            {[
+                                "January",
+                                "February",
+                                "March",
+                                "April",
+                                "May",
+                                "June",
+                                "July",
+                                "August",
+                                "September",
+                                "October",
+                                "November",
+                                "December",
+                            ].map((month, index) => (
+                                <Select.Option key={index} value={month}>
+                                    {month}
+                                </Select.Option>
+                            ))}
+                        </Select>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <span>Year: </span>
+                        <Select
+                            placeholder="Select"
+                            style={{ width: 100 }}
+                            onChange={(value) => console.log("Selected year:", value)}
+                        >
+                            {Array.from({ length: 5 }, (_, i) => {
+                                const year = new Date().getFullYear() - i;
+                                return (
+                                    <Select.Option key={year} value={year}>
+                                        {year}
+                                    </Select.Option>
+                                );
+                            })}
+                        </Select>
+                    </div>
                 </div>
             </div>
             <Table
@@ -225,8 +290,21 @@ const Income = () => {
                 pagination={false}
                 rowKey="_id"
             />
+            <div className=" mt-8 flex flex-col md:flex-row justify-between items-center">
+                <div>
+                    <p className=" text-lg text-black mb-5 md:mb-0">Showing 1-11 out of  1239</p>
+                </div>
+
+                <Pagination
+                    current={currentPage}
+                    pageSize={pageSize}
+                    total={50}
+                    onChange={handlePageChange}
+                />
+
+            </div>
         </div>
     );
 };
 
-export default Income;
+export default TransactionHistory;
