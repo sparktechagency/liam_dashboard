@@ -4,6 +4,7 @@ import { Pagination, Table } from "antd";
 import { useState } from "react";
 import { IoArrowBack } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import ContractorRequestModal from "../../components/PagesComponents/ContractorRequestPage/ContractorRequestModal";
 
 interface Name {
     firstName: string;
@@ -32,10 +33,21 @@ interface UserDataSource {
 
 const ContractorRequestPage: React.FC = () => {
     const [currentPage, setCurrentPage] = useState<number>(1);
-    console.log(currentPage);
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
     const pageSize = 10;
     const handlePageChange = (page: number) => {
         setCurrentPage(page);
+    };
+
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+    const handleCancel = () => {
+        setIsModalOpen(false);
     };
 
     const onFinish = (values: any): void => {
@@ -151,7 +163,7 @@ const ContractorRequestPage: React.FC = () => {
             title: "Name",
             dataIndex: "name",
             render: (_: any, record: UserData) =>
-                <div className=' flex items-center gap-2'>
+                <div className=' flex items-center gap-2 w-[180px]'>
                     <img
                         src={`https://avatar.iran.liara.run/public/${record?._id}`}
                         alt=""
@@ -181,7 +193,7 @@ const ContractorRequestPage: React.FC = () => {
             title: "Action",
             render: (_: any, record: UserData) => (
                 <div className="flex items-center">
-                    <button className=" cursor-pointer">View</button>
+                    <button onClick={showModal} className=" cursor-pointer">View</button>
                 </div>
             ),
         },
@@ -201,6 +213,7 @@ const ContractorRequestPage: React.FC = () => {
                 pagination={false}
                 rowKey="_id"
             />
+            <ContractorRequestModal isModalOpen={isModalOpen} handleOk={handleOk} handleCancel={handleCancel}></ContractorRequestModal>
             <div className=" mt-8 flex flex-col md:flex-row justify-between items-center">
                 <div>
                     <p className=" text-lg text-black mb-5 md:mb-0">Showing 1-11 out of  1239</p>

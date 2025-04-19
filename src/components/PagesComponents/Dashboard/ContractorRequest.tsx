@@ -88,13 +88,13 @@ const ContractorRequest: React.FC = () => {
             title: "Name",
             dataIndex: "name",
             render: (_: any, record: UserData) =>
-                <div className=' flex items-center gap-2'>
+                <div className=' flex items-center gap-2 w-[180px]'>
                     <img
                         src={`https://avatar.iran.liara.run/public/${record?._id}`}
                         alt=""
                         className="w-10 h-10 rounded-full mr-2"
                     />
-                    <div>
+                    <div className="">
                         <span>{record?.name?.firstName} {record?.name?.lastName}</span>
                     </div>
                 </div>,
@@ -134,7 +134,7 @@ const ContractorRequest: React.FC = () => {
             <div className="flex justify-between items-center mt-5">
                 <h2 className="text-md md:text-xl font-semibold ">Contractor Request</h2>
                 <div>
-                    <Link  to={`/contractor-request`}>
+                    <Link to={`/contractor-request`}>
                         <button
                             className="bg-primary rounded-md font-semibold cursor-pointer text-black"
                         >
