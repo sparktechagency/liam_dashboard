@@ -16,6 +16,7 @@ import Subscriptions from '../pages/subscriptions/Subscriptions';
 import UserDetails from '../pages/userDetails/UserDetails';
 import Manage from '../pages/manage/Manage';
 import ManageService from '../pages/manageService/ManageService';
+import ContractorRequestPage from '../pages/contractorRequestPage/ContractorRequestPage';
 
 
 const router = createBrowserRouter([
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
             {
                 path: "/",
                 element: <Dashboard></Dashboard>,
+            },
+            {
+                path: "/contractor-request",
+                element: <ContractorRequestPage></ContractorRequestPage>,
             },
             {
                 path: "/income",
