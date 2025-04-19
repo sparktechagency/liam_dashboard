@@ -52,6 +52,13 @@ export const mainTheme = {
             "itemBg": "rgba(255,255,255,0)",
             "colorPrimaryBorder": "rgba(145,202,255,0)",
             "colorPrimaryHover": "rgb(255,255,255)"
+        },
+        "Select": {
+            "activeBorderColor": "rgba(210,210,210,0)",
+            "hoverBorderColor": "rgba(89,89,89,0.44)",
+            "colorPrimary": "rgba(22,119,255,0)",
+            "optionSelectedBg": "rgba(230,244,255,0)",
+            "activeOutlineColor": "rgba(89,89,89,0.24)"
         }
     },
 };
