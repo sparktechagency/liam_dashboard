@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Table, TableProps } from "antd";
 import { useState } from "react";
@@ -8,11 +7,9 @@ import EditSubscriptionModal from "../../components/PagesComponents/Subscription
 type SubscriptionPlan = {
     slNo: number;
     subscriptionPlan: string;
-    contractorFeePerMonth: string;
-    pointsRange: string;
-    pointEarnPerSwap: string;
-    pointEarnPerPositiveComment: number;
-    pointLosePerNegativeComment: number;
+    price: string;
+    duration: string;
+    contractorFeePerMonth: number;
 };
 
 
@@ -48,29 +45,23 @@ const Subscriptions: React.FC = () => {
         {
             "slNo": 1,
             "subscriptionPlan": "Gold",
-            "contractorFeePerMonth": "$19.99",
-            "pointsRange": "0-24,999",
-            "pointEarnPerSwap": "20% of product value",
-            "pointEarnPerPositiveComment": 5,
-            "pointLosePerNegativeComment": 10
+            "price": "$19.99",
+            "duration": "Month",
+            "contractorFeePerMonth": 20
         },
         {
             "slNo": 2,
             "subscriptionPlan": "Platinum",
-            "contractorFeePerMonth": "$19.99",
-            "pointsRange": "25,000-99,999",
-            "pointEarnPerSwap": "20% of product value",
-            "pointEarnPerPositiveComment": 25,
-            "pointLosePerNegativeComment": 25
+            "price": "$19.99",
+            "duration": "06 Month",
+            "contractorFeePerMonth": 20,
         },
         {
             "slNo": 3,
             "subscriptionPlan": "Diamond",
-            "contractorFeePerMonth": "$19.99",
-            "pointsRange": "100,000+",
-            "pointEarnPerSwap": "20% of product value",
-            "pointEarnPerPositiveComment": 50,
-            "pointLosePerNegativeComment": 50
+            "price": "$19.99",
+            "duration": "Yearly",
+            "contractorFeePerMonth": 20,
         }
     ]
 
@@ -86,30 +77,21 @@ const Subscriptions: React.FC = () => {
             render: (_: any, record: SubscriptionPlan) => <span>{record?.subscriptionPlan}</span>,
         },
         {
+            title: "Price",
+            dataIndex: "price",
+            render: (_: any, record: SubscriptionPlan) => <span>{record?.price}</span>,
+        },
+        {
+            title: "Duration",
+            dataIndex: "duration",
+            render: (_: any, record: SubscriptionPlan) => <span>{record?.duration}</span>,
+        },
+        {
             title: "Contractor Fee Per Month",
-            dataIndex: "contractorFeePerMonth",
-            render: (_: any, record: SubscriptionPlan) => <span>{record?.contractorFeePerMonth}</span>,
+            dataIndex: "Contractor Fee Per Month",
+            render: (_: any, record: SubscriptionPlan) => <span>{record?.contractorFeePerMonth}%</span>,
         },
-        {
-            title: "Points Range",
-            dataIndex: "pointsRange",
-            render: (_: any, record: SubscriptionPlan) => <span>{record?.pointsRange}</span>,
-        },
-        {
-            title: "Point Earn Per Swap",
-            dataIndex: "pointEarnPerSwap",
-            render: (_: any, record: SubscriptionPlan) => <span>{record?.pointEarnPerSwap}</span>,
-        },
-        {
-            title: "Point Earn Per Positive Comment",
-            dataIndex: "pointEarnPerPositiveComment",
-            render: (_: any, record: SubscriptionPlan) => <span>{record?.pointEarnPerPositiveComment}</span>,
-        },
-        {
-            title: "Point Earn Per Negative Comment",
-            dataIndex: "pointLosePerNegativeComment",
-            render: (_: any, record: SubscriptionPlan) => <span>{record?.pointLosePerNegativeComment}</span>,
-        },
+
         {
             title: "Action",
             render: () => (
