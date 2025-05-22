@@ -13,11 +13,11 @@ import PrivacyPolicy from '../pages/settings/privacy-policy/PrivacyPolicy';
 import AboutUs from '../pages/settings/about-us/AboutUs';
 import TermsAndCondition from '../pages/settings/terms-and-conditon/TermsAndCondition';
 import Subscriptions from '../pages/subscriptions/Subscriptions';
-import UserDetails from '../pages/userDetails/UserDetails';
 import Manage from '../pages/manage/Manage';
 import ManageService from '../pages/manageService/ManageService';
 import ContractorRequestPage from '../pages/contractorRequestPage/ContractorRequestPage';
 import TransactionHistory from '../pages/transactionHistory/transactionHistory';
+import CustomerManage from '../pages/customerManage/CustomerManage';
 
 
 const router = createBrowserRouter([
@@ -42,8 +42,8 @@ const router = createBrowserRouter([
                 element: <TransactionHistory></TransactionHistory>,
             },
             {
-                path: "/user-details",
-                element: <UserDetails></UserDetails>,
+                path: "/customer-manage",
+                element: <CustomerManage></CustomerManage>,
             },
             {
                 path: "/subscriptions",

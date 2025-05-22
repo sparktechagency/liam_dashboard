@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Input, Pagination, Table } from "antd";
 import { useState } from "react";
+import { BiMessageDetail } from "react-icons/bi";
 import { BsFillStopCircleFill } from "react-icons/bs";
 import { CiSearch } from "react-icons/ci";
 import { MdOutlineBlock } from "react-icons/md";
@@ -34,7 +35,7 @@ interface UserDataSource {
 }
 
 
-const UserDetails: React.FC = () => {
+const CustomerManage = () => {
     const [currentPage, setCurrentPage] = useState<number>(1);
     console.log(currentPage);
     const pageSize = 10;
@@ -176,16 +177,16 @@ const UserDetails: React.FC = () => {
                     </div>
                 </div>,
         },
-        {
-            title: "Contractor Since",
-            dataIndex: "contractStartDate",
-            render: (_: any, record: UserData) => <span>{record?.contractStartDate}</span>,
-        },
-        {
-            title: "Contractor Type",
-            dataIndex: "contractorType",
-            render: (_: any, record: UserData) => <span>{record?.contractorType}</span>,
-        },
+        // {
+        //     title: "Contractor Since",
+        //     dataIndex: "contractStartDate",
+        //     render: (_: any, record: UserData) => <span>{record?.contractStartDate}</span>,
+        // },
+        // {
+        //     title: "Contractor Type",
+        //     dataIndex: "contractorType",
+        //     render: (_: any, record: UserData) => <span>{record?.contractorType}</span>,
+        // },
         {
             title: "Email",
             dataIndex: "email",
@@ -205,6 +206,16 @@ const UserDetails: React.FC = () => {
             title: "Status",
             dataIndex: "status",
             render: (_: any, record: UserData) => <span>{record?.status}</span>,
+        },
+        {
+            title: "Message",
+            dataIndex: "message",
+            render: (_: any, record: UserData) =>
+                <div className=" flex items-center gap-2 cursor-pointer">
+                    <BiMessageDetail size={22} />
+                    <p>Message</p>
+                </div>
+            ,
         },
         {
             title: "Action",
@@ -259,4 +270,4 @@ const UserDetails: React.FC = () => {
     );
 };
 
-export default UserDetails;
+export default CustomerManage;
