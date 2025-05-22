@@ -212,7 +212,7 @@ const CustomerManage = () => {
         {
             title: "Message",
             dataIndex: "message",
-            render: (_: any, record: UserData) =>
+            render: () =>
                 <div onClick={showModal} className=" flex items-center gap-2 cursor-pointer">
                     <BiMessageDetail size={22} />
                     <p>Message</p>
