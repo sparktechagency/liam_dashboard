@@ -6,6 +6,7 @@ import { BiMessageDetail } from "react-icons/bi";
 import { BsFillStopCircleFill } from "react-icons/bs";
 import { CiSearch } from "react-icons/ci";
 import { MdOutlineBlock } from "react-icons/md";
+import CustomerManageMessage from "../../components/PagesComponents/CustomerManage/CustomerManageMessage";
 
 interface Name {
     firstName: string;
@@ -37,6 +38,17 @@ interface UserDataSource {
 
 const CustomerManage = () => {
     const [currentPage, setCurrentPage] = useState<number>(1);
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+
     console.log(currentPage);
     const pageSize = 10;
     const handlePageChange = (page: number) => {
@@ -177,16 +189,6 @@ const CustomerManage = () => {
                     </div>
                 </div>,
         },
-        // {
-        //     title: "Contractor Since",
-        //     dataIndex: "contractStartDate",
-        //     render: (_: any, record: UserData) => <span>{record?.contractStartDate}</span>,
-        // },
-        // {
-        //     title: "Contractor Type",
-        //     dataIndex: "contractorType",
-        //     render: (_: any, record: UserData) => <span>{record?.contractorType}</span>,
-        // },
         {
             title: "Email",
             dataIndex: "email",
@@ -211,7 +213,7 @@ const CustomerManage = () => {
             title: "Message",
             dataIndex: "message",
             render: (_: any, record: UserData) =>
-                <div className=" flex items-center gap-2 cursor-pointer">
+                <div onClick={showModal} className=" flex items-center gap-2 cursor-pointer">
                     <BiMessageDetail size={22} />
                     <p>Message</p>
                 </div>
@@ -237,6 +239,7 @@ const CustomerManage = () => {
             ),
         },
     ];
+
 
     return (
         <div className="  min-h-[100vh]">
@@ -264,7 +267,7 @@ const CustomerManage = () => {
                     total={50}
                     onChange={handlePageChange}
                 />
-
+                <CustomerManageMessage isModalOpen={isModalOpen} handleOk={handleOk} handleCancel={handleCancel}></CustomerManageMessage>
             </div>
         </div>
     );
