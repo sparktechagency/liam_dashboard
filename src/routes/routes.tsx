@@ -19,6 +19,7 @@ import ContractorRequestPage from '../pages/contractorRequestPage/ContractorRequ
 import TransactionHistory from '../pages/transactionHistory/transactionHistory';
 import CustomerManage from '../pages/customerManage/CustomerManage';
 import ContractorManage from '../pages/contractorManage/ContractorManage';
+import Report from '../pages/report/Report';
 
 
 const router = createBrowserRouter([
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
             {
                 path: "/manage",
                 element: <Manage></Manage>,
+            },
+            {
+                path: "/report",
+                element: <Report></Report>,
             },
             {
                 path: "/manage-service",
