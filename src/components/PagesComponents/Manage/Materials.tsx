@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Table, TableProps } from "antd";
+import { MdOutlineModeEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import EditMaterials from "./EditMaterials";
+import { useState } from "react";
 
 type Idata = {
     id: number,
@@ -11,7 +14,16 @@ type Idata = {
 }
 
 const Materials = () => {
-
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
     const data: Idata[] = [
         {
             id: 1,
@@ -52,35 +64,13 @@ const Materials = () => {
 
     const columns: TableProps<Idata>['columns'] = [
         {
-            title: "S No.",
-            dataIndex: "id",
-            render: (_: any, record: Idata) => <span>{record?.id}</span>,
-        },
-        {
-            title: "Name",
-            dataIndex: "name",
-            render: (_: any, record: Idata) =>
-                <div className=' flex items-center gap-2 w-[200px]'>
-                    <img
-                        src={`https://avatar.iran.liara.run/public/${record?.id}`}
-                        alt=""
-                        className="w-10 h-10 rounded-full mr-2"
-                    />
-                    <div>
-                        <span>{record?.name}</span>
-                    </div>
-                </div>,
-        },
-        {
             title: "Materials Name",
             dataIndex: "materialsName",
-            align: 'center',
             render: (_: any, record: Idata) => <span>{record?.materialsName}</span>,
         },
         {
             title: "Materials Unit",
             dataIndex: "materialsUnit",
-            align: 'center',
             render: (_: any, record: Idata) => <span>{record?.materialsUnit}</span>,
         },
         {
@@ -96,6 +86,7 @@ const Materials = () => {
             render: () =>
                 <div className=" flex justify-end">
                     <div className=' flex items-center gap-2'>
+                        <button onClick={showModal} className=" bg-primaryColor p-1 rounded cursor-pointer"><MdOutlineModeEdit className="w-6 h-6 text-white" /></button>
                         <button className=" bg-red-600 p-1 rounded cursor-pointer"><RiDeleteBin6Line className="w-6 h-6 text-white" /></button>
                     </div>
                 </div>
@@ -111,6 +102,7 @@ const Materials = () => {
                 pagination={false}
                 rowKey="_id"
             />
+            <EditMaterials isModalOpen={isModalOpen} handleOk={handleOk} handleCancel={handleCancel}></EditMaterials>
         </div>
     );
 };

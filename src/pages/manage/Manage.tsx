@@ -2,12 +2,11 @@ import { useState } from "react";
 import Category from "../../components/PagesComponents/Manage/Category";
 import Materials from "../../components/PagesComponents/Manage/Materials";
 import AddCategoryModal from "../../components/PagesComponents/Manage/AddCategoryModal";
-import { Input } from "antd";
-import { CiSearch } from "react-icons/ci";
 import SubCategory from "../../components/PagesComponents/Manage/SubCategory";
 import AddSubCategoryModal from "../../components/PagesComponents/Manage/AddSubCategoryModal";
 import Questions from "../../components/PagesComponents/Manage/Questions";
 import AddQuestion from "../../components/PagesComponents/Manage/AddQuestion";
+import AddMaterials from "../../components/PagesComponents/Manage/AddMaterials";
 
 type Tab = "category" | "sub category" | "questions" | "materials";
 
@@ -42,6 +41,16 @@ const Manage = () => {
     };
     const handleQuestionCancel = () => {
         setIsQuestionOpen(false);
+    };
+    const [isMaterialsOpen, setIsMaterialsOpen] = useState<boolean>(false);
+    const showMaterials = () => {
+        setIsMaterialsOpen(true);
+    };
+    const handleMaterialsOk = () => {
+        setIsMaterialsOpen(false);
+    };
+    const handleMaterialsCancel = () => {
+        setIsMaterialsOpen(false);
     };
 
     const [activeTab, setActiveTab] = useState<Tab>("category");
@@ -94,23 +103,27 @@ const Manage = () => {
                 </div>
                 <div>
                     {
-                        activeTab === "category" && <button onClick={showModal} className=" bg-primaryColor py-2 px-4 rounded-md cursor-pointer text-white">+ Add</button>
+                        activeTab === "category" &&
+                        <button onClick={showModal} className=" bg-primaryColor py-2 px-4 rounded-md cursor-pointer text-white">+ Add</button>
                     }
                     {
-                        activeTab === "materials" && <div className=" w-[250px]">
-                            <Input prefix={<CiSearch className=" w-6 h-6" />} className="w-[250px] h-10" placeholder="Search" />
-                        </div>
+                        activeTab === "materials" &&
+                        <button onClick={showMaterials} className=" bg-primaryColor py-2 px-4 rounded-md cursor-pointer text-white">+ Add</button>
+
                     }
                     {
-                        activeTab === "sub category" && <button onClick={showSubCategoryModal} className=" bg-primaryColor py-2 px-4 rounded-md cursor-pointer text-white">+ Add</button>
+                        activeTab === "sub category" &&
+                        <button onClick={showSubCategoryModal} className=" bg-primaryColor py-2 px-4 rounded-md cursor-pointer text-white">+ Add</button>
                     }
                     {
-                        activeTab === "questions" && <button onClick={showQuestion} className=" bg-primaryColor py-2 px-4 rounded-md cursor-pointer text-white">+ Add</button>
+                        activeTab === "questions" &&
+                        <button onClick={showQuestion} className=" bg-primaryColor py-2 px-4 rounded-md cursor-pointer text-white">+ Add</button>
                     }
                 </div>
                 <AddCategoryModal isModalOpen={isModalOpen} handleOk={handleOk} handleCancel={handleCancel}></AddCategoryModal>
                 <AddSubCategoryModal isModalOpen={isSubCategoryModalOpen} handleOk={handleSubCategoryOk} handleCancel={handleSubCategoryCancel}></AddSubCategoryModal>
                 <AddQuestion isModalOpen={isQuestionOpen} handleOk={handleQuestionOk} handleCancel={handleQuestionCancel}></AddQuestion>
+                <AddMaterials isModalOpen={isMaterialsOpen} handleOk={handleMaterialsOk} handleCancel={handleMaterialsCancel}></AddMaterials>
             </div>
             {activeTab === "category" && <Category />}
             {activeTab === "sub category" && <SubCategory />}
