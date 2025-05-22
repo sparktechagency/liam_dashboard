@@ -24,7 +24,7 @@ export const mainTheme = {
             itemBorderRadius: 5,
             itemMarginInline: 20,
             itemMarginBlock: 10,
-            itemHeight: 50,
+            itemHeight: 45,
             subMenuItemHeight: 10,
             "motionDurationSlow": "0.0s",
         },
