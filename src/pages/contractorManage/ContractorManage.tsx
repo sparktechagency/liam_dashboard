@@ -6,7 +6,7 @@ import { BiMessageDetail } from "react-icons/bi";
 import { BsFillStopCircleFill } from "react-icons/bs";
 import { CiSearch } from "react-icons/ci";
 import { MdOutlineBlock } from "react-icons/md";
-import CustomerManageMessage from "../../components/PagesComponents/CustomerManage/CustomerManageMessage";
+import ContractorManageMessage from "../../components/PagesComponents/ContractorManage/ContractorManageMessage";
 
 interface Name {
     firstName: string;
@@ -36,7 +36,7 @@ interface UserDataSource {
 }
 
 
-const CustomerManage = () => {
+const ContractorManage = () => {
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const showModal = () => {
@@ -244,7 +244,7 @@ const CustomerManage = () => {
     return (
         <div className="  min-h-[100vh]">
             <div className="flex flex-col md:flex-row md:justify-between md:items-center mt-5">
-                <h2 className="text-md md:text-xl font-semibold mb-5 md:mb-0 ">Customer Manage</h2>
+                <h2 className="text-md md:text-xl font-semibold mb-5 md:mb-0 ">Contractor Manage</h2>
                 <div className=" w-[250px]">
                     <Input prefix={<CiSearch className=" w-6 h-6" />} className="w-[250px]" placeholder="Search" />
                 </div>
@@ -256,7 +256,7 @@ const CustomerManage = () => {
                 pagination={false}
                 rowKey="_id"
             />
-            <CustomerManageMessage isModalOpen={isModalOpen} handleOk={handleOk} handleCancel={handleCancel}></CustomerManageMessage>
+            <ContractorManageMessage isModalOpen={isModalOpen} handleOk={handleOk} handleCancel={handleCancel}></ContractorManageMessage>
             <div className=" mt-8 flex flex-col md:flex-row justify-between items-center">
                 <div>
                     <p className=" text-lg text-black mb-5 md:mb-0">Showing 1-11 out of  1239</p>
@@ -273,4 +273,4 @@ const CustomerManage = () => {
     );
 };
 
-export default CustomerManage;
+export default ContractorManage;

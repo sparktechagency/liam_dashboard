@@ -7,7 +7,7 @@ type AddModalProps = {
     handleCancel: () => void;
 };
 
-const CustomerManageMessage = ({ isModalOpen, handleOk, handleCancel }: AddModalProps) => {
+const ContractorManageMessage = ({ isModalOpen, handleOk, handleCancel }: AddModalProps) => {
     const [form] = Form.useForm();
 
     const onFinish = (values: any) => {
@@ -16,7 +16,7 @@ const CustomerManageMessage = ({ isModalOpen, handleOk, handleCancel }: AddModal
     return (
         <div>
             <Modal centered footer={false} title="Message" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                <p className=" text-sm font-semibold mb-2">Customer</p>
+                <p className=" text-sm font-semibold mb-2">Contractor</p>
                 <div className=" mb-2 border p-3 rounded border-[#dbdbdb]">
                     Lorem ipsum dolor sit amet consectetur. Eos error voluptatum illo nostrum cum. Adipisci nam itaque optio, eos velit culpa ipsam, odio nobis explicabo reprehenderit aliquid hic laborum asperiores ipsum accusantium? Sunt unde accusamus ducimus voluptatibus est sint, id hic ab harum officia, sit ipsam quisquam ex quos magnam, molestias vel nihil illo tempore eligendi architecto dicta non modi commodi. Animi culpa similique nam mollitia reiciendis quae cum officiis delectus, aut itaque asperiores?
                 </div>
@@ -48,4 +48,4 @@ const CustomerManageMessage = ({ isModalOpen, handleOk, handleCancel }: AddModal
     );
 };
 
-export default CustomerManageMessage;
+export default ContractorManageMessage;

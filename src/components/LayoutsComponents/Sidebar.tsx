@@ -60,40 +60,46 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
                             key: '4',
                             // icon: <img src={location.pathname === '/' ? dashboardActive : dashboard} className='menu-icon' />,
                             icon: <RiUserLine className='w-6 h-6' />,
-                            label: <Link className=' text-[16px]' to={`/customer-manage`}>Customer Manage</Link>,
+                            label: <Link className=' text-[16px]' to={`/contractor-manage`}>Contractor Manage</Link>,
                         },
                         {
                             key: '5',
+                            // icon: <img src={location.pathname === '/' ? dashboardActive : dashboard} className='menu-icon' />,
+                            icon: <RiUserLine className='w-6 h-6' />,
+                            label: <Link className=' text-[16px]' to={`/customer-manage`}>Customer Manage</Link>,
+                        },
+                        {
+                            key: '6',
                             // icon: <img src={location.pathname === '/' ? dashboardActive : dashboard} className='menu-icon' />,
                             icon: <MdOutlineCategory className='w-6 h-6' />,
                             label: <Link className=' text-[16px]' to={`/manage`}>Manage</Link>,
                         },
                         {
-                            key: '6',
+                            key: '7',
                             // icon: <img src={location.pathname === '/' ? dashboardActive : dashboard} className='menu-icon' />,
                             icon: <RiUserSettingsLine className='w-6 h-6' />,
                             label: <Link className=' text-[16px]' to={`/manage-service`}>Manage Services</Link>,
                         },
                         {
-                            key: '7',
+                            key: '8',
                             // icon: <img src={location.pathname === '/' ? dashboardActive : dashboard} className='menu-icon' />,
                             icon: <RiSettings2Line className='w-6 h-6' />,
                             label: <p className=' text-[16px]'>Settings</p>,
                             children: [
                                 {
-                                    key: "7-1",
+                                    key: "8-1",
                                     label: <Link className={``} to={`/settings/profile`}>Profile</Link>,
                                 },
                                 {
-                                    key: "7-2",
+                                    key: "8-2",
                                     label: <Link className={``} to={`/settings/about-us`}>About Us</Link>,
                                 },
                                 {
-                                    key: "7-3",
+                                    key: "8-3",
                                     label: <Link className={``} to={`/settings/privacy-policy`}>Privacy Policy</Link>,
                                 },
                                 {
-                                    key: "7-4",
+                                    key: "8-4",
                                     label: <Link className={``} to={`/settings/terms-and-condtion`}>Terms And Condition</Link>,
                                 },
                             ]
