@@ -1,15 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Table, TableProps } from "antd";
-import { useState } from "react";
 import { MdOutlineModeEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import EditSubCategoryModal from "./EditSubCategoryModal";
+import EditQuestion from "./EditQuestion";
+import { useState } from "react";
 
 type Idata = {
     id: number,
-    category: string,
+    questionAndAnswer: string,
+    type: string,
 }
-const SubCategory = () => {
+
+const Questions = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const showModal = () => {
         setIsModalOpen(true);
@@ -23,33 +25,45 @@ const SubCategory = () => {
     const data: Idata[] = [
         {
             id: 1,
-            category: "Electronics",
+            questionAndAnswer: "How many dimmers do you need installed ?",
+            type: "3 dimmers need installed ",
         },
         {
             id: 2,
-            category: "Plumber",
+            questionAndAnswer: "How many dimmers do you need installed ?",
+            type: "3 dimmers need installed ",
         },
         {
             id: 3,
-            category: "Cleaner",
+            questionAndAnswer: "How many dimmers do you need installed ?",
+            type: "3 dimmers need installed ",
+        },
+        {
+            id: 4,
+            questionAndAnswer: "How many dimmers do you need installed ?",
+            type: "3 dimmers need installed ",
+        },
+        {
+            id: 5,
+            questionAndAnswer: "How many dimmers do you need installed ?",
+            type: "3 dimmers need installed ",
         },
     ]
 
     const columns: TableProps<Idata>['columns'] = [
+
         {
-            title: "Category",
-            dataIndex: "category",
-            render: (_: any, record: Idata) => <span>{record?.category}</span>,
+            title: "Question",
+            dataIndex: "question",
+
+            render: (_: any, record: Idata) => <span className="">{record?.questionAndAnswer}</span>,
         },
-        {
-            title: "Image",
-            dataIndex: "image",
-            align: 'center',
-            render: () =>
-                <div className=" flex justify-center">
-                    <img className="w-20" src="https://metropha.com/wp-content/uploads/2018/09/Metro-Plumbing-_-6-Characteristics-That-An-Emergency-Plumber-In-Chattanooga-TN-Must-Have.jpg" alt="" />
-                </div>,
-        },
+        // {
+        //     title: "Type",
+        //     dataIndex: "type",
+
+        //     render: (_: any, record: Idata) => <span className=" border border-[#c5c5c5] px-3 py-[4px]">{record?.type}</span>,
+        // },
         {
             title: "Action",
             dataIndex: "action",
@@ -63,7 +77,6 @@ const SubCategory = () => {
                 </div>
 
         },
-
     ];
 
     return (
@@ -75,9 +88,9 @@ const SubCategory = () => {
                 pagination={false}
                 rowKey="_id"
             />
-            <EditSubCategoryModal isModalOpen={isModalOpen} handleOk={handleOk} handleCancel={handleCancel}></EditSubCategoryModal>
+            <EditQuestion isModalOpen={isModalOpen} handleOk={handleOk} handleCancel={handleCancel}></EditQuestion>
         </div>
     );
 };
 
-export default SubCategory;
+export default Questions;
