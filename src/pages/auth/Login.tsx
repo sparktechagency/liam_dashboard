@@ -1,6 +1,7 @@
 import { Form, Input } from "antd";
 import { Link } from "react-router-dom";
 import { FC } from "react";
+import { useLoginMutation } from "../../redux/features/auth/authApi";
 
 // Define the type for form values
 interface LoginFormValues {
@@ -9,9 +10,11 @@ interface LoginFormValues {
 }
 
 const LogIn: FC = () => {
+    const [login, {isLoading}] = useLoginMutation();
 
     const onFinish = (values: LoginFormValues) => {
         console.log(values);
+        login(values)
     };
 
     return (
@@ -65,20 +68,18 @@ const LogIn: FC = () => {
                                     </Link>
                                 </div>
                                 <div className=" flex justify-center">
-                                    <Link to="/">
                                         <button
                                             type="submit"
-                                            className="bg-primary bg-primaryColor cursor-pointer  mt-10 mb-16 text-white px-18 rounded-lg py-[6px] text-lg"
+                                            disabled={isLoading}
+                                            className="bg-primary bg-primaryColor cursor-pointer  mt-10 mb-16 disabled:cursor-not-allowed text-white px-18 rounded-lg py-[6px] text-lg"
                                         >
-                                            Log In
+                                            {
+                                                isLoading ? "Processing..." : "Log In"
+                                            }
                                         </button>
-
-                                    </Link>
                                 </div>
-
                             </Form>
                         </div>
-
                     </div>
                 </div>
             </div>
