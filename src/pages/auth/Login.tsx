@@ -58,7 +58,7 @@ const LogIn: FC = () => {
                                     />
                                 </Form.Item>
 
-                                <div className="flex justify-between items-center mt-2">
+                                <div className="flex justify-end items-center mt-2">
                                     {/* <Checkbox>Remember Password</Checkbox> */}
                                     <Link to="/auth/forgot-password" className=" bg-primaryColor">
                                         Forgot Password?
