@@ -1,12 +1,12 @@
 import { useState } from "react";
-import Category from "../../components/PagesComponents/Manage/Category";
-import Materials from "../../components/PagesComponents/Manage/Materials";
 import AddCategoryModal from "../../components/modal/category/AddCategoryModal";
-import SubCategory from "../../components/PagesComponents/Manage/SubCategory";
-import Questions from "../../components/PagesComponents/Manage/Questions";
 import AddSubCategoryModal from "../../components/modal/SubCategory/AddSubCategoryModal";
 import AddQuestionModal from "../../components/modal/question/AddQuestionModal";
-import AddMaterialsModal from "../../components/modal/materials/AddMaterialsModal";
+import Category from "../../components/category/Category";
+import SubCategory from "../../components/SubCategory/SubCategory";
+import Questions from "../../components/question/Questions";
+import Materials from "../../components/materials/Materials";
+import AddMaterialModal from "../../components/modal/materials/AddMaterialModal";
 
 type Tab = "category" | "sub category" | "questions" | "materials";
 
@@ -37,13 +37,13 @@ const Manage = () => {
                 </div>
                 <div>
                     {activeTab === "category" && <AddCategoryModal/>}
-                    {activeTab === "materials" && <AddMaterialsModal/>}
+                    {activeTab === "materials" && <AddMaterialModal/>}
                     {activeTab === "sub category" && <AddSubCategoryModal/>}
                     {activeTab === "questions" && <AddQuestionModal/>}
                 </div>                
             </div>
             {activeTab === "category" && <Category />}
-            {activeTab === "sub category" && <SubCategory />}
+            {activeTab === "sub category" && <SubCategory/>}
             {activeTab === "materials" && <Materials />}
             {activeTab === "questions" && <Questions />}
         </div>

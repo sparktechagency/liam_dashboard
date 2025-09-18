@@ -1,11 +1,12 @@
 import { useState } from "react";
-import ListLoading from "../../loader/ListLoading";
-import CategoryTable from "../../category/CategoryTable";
-import { useGetCategoriesQuery } from "../../../redux/features/category/categoryApi";
+import { useGetCategoriesQuery } from "../../redux/features/category/categoryApi";
+import ListLoading from "../loader/ListLoading";
+import QuestionTable from "./QuestionTable";
 
-const Category = () => {
+
+const Questions = () => {
     const [currentPage, setCurrentPage] = useState(1);
-    const [pageSize, setPageSize] = useState(2);
+    const [pageSize, setPageSize] = useState(10);
     const { data, isLoading, isFetching, isError } = useGetCategoriesQuery([
         { name: "page", value: currentPage },
         { name: "limit", value: pageSize },
@@ -23,14 +24,14 @@ const Category = () => {
     }
 
     if (!isLoading && !isError) {
-        content = <CategoryTable
+        content = <QuestionTable
             categories={categories}
             meta={meta}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
             pageSize={pageSize}
             setPageSize={setPageSize}
-            isFetching={isFetching}
+            loading={isFetching}
         />;
     }
 
@@ -45,4 +46,4 @@ const Category = () => {
     );
 };
 
-export default Category;
+export default Questions;

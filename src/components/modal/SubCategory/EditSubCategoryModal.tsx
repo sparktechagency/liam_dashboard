@@ -1,17 +1,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Form, Input, Modal, Upload } from "antd";
 import { useState } from "react";
-import { MdOutlineFileUpload } from "react-icons/md";
+import { MdOutlineFileUpload, MdOutlineModeEdit } from "react-icons/md";
+import { ISubCategoryDataSource } from "../../../types/category.type";
 
 
-type EditSubCategoryModalProps = {
-    isModalOpen: boolean;
-    handleOk: () => void;
-    handleCancel: () => void;
+type TProps = {
+    subCategory: ISubCategoryDataSource
 };
 
-const EditSubCategoryModal = ({ isModalOpen, handleOk, handleCancel }: EditSubCategoryModalProps) => {
-
+const EditSubCategoryModal = ({ subCategory }: TProps) => {
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
     const [form] = Form.useForm();
     const [fileList, setFileList] = useState<any[]>([]);
 
@@ -31,7 +39,9 @@ const EditSubCategoryModal = ({ isModalOpen, handleOk, handleCancel }: EditSubCa
     };
 
     return (
-        <Modal centered footer={false} title="Edit Sub Category" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+       <>
+          <button onClick={showModal} className=" bg-primaryColor p-1 rounded cursor-pointer"><MdOutlineModeEdit className="w-6 h-6 text-white" /></button>
+         <Modal centered maskClosable={false} footer={false} title="Edit Sub Category" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
             <Form
                 form={form}
                 initialValues={initialValues}
@@ -75,7 +85,7 @@ const EditSubCategoryModal = ({ isModalOpen, handleOk, handleCancel }: EditSubCa
                 </Form.Item>
             </Form>
         </Modal>
-
+       </>
     );
 };
 

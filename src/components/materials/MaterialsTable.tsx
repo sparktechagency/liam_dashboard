@@ -1,13 +1,12 @@
 import { Pagination, Table } from "antd";
-import type { ICategory, ICategoryDataSource } from "../../types/category.type";
 import type { IMeta } from "../../types/global.type";
-import placeholder from "../../assets/placeholder.png";
-import EditCategoryModal from "../modal/category/EditCategoryModal";
-import DeleteCategoryModal from "../modal/category/DeleteCategoryModal";
+import { IMaterial, IMaterialDataSource } from "../../types/material.type";
+import EditMaterialModal from "../modal/materials/EditMaterialModal";
+import DeleteMaterialModal from "../modal/materials/DeleteMaterialModal";
 
 
 type TProps = {
-  categories: ICategory[];
+  materials: IMaterial[];
   meta: IMeta;
   currentPage: number;
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
@@ -17,8 +16,9 @@ type TProps = {
 }
 
 
-const CategoryTable = ({
-  categories, meta,
+const MaterialsTable = ({
+  materials,
+  meta,
   currentPage,
   setCurrentPage,
   pageSize,
@@ -26,12 +26,13 @@ const CategoryTable = ({
   loading
 }: TProps) => {
 
-  const dataSource: ICategoryDataSource[] = categories?.map((category, index) => ({
+  const dataSource: IMaterialDataSource[] = materials?.map((material, index) => ({
     key: index,
     serial: Number(index + 1) + (meta.page - 1) * pageSize,
-    _id: category?._id,
-    name: category?.name,
-    img: category?.img
+    _id: material?._id,
+    name: material?.name,
+    unit: material?.unit,
+    price: material?.price
   }))
 
   const columns = [
@@ -42,7 +43,7 @@ const CategoryTable = ({
       width: 60,
     },
     {
-      title: "Category Name",
+      title: "Material Name",
       dataIndex: "name",
       key: "name",
       width: 180,
@@ -53,33 +54,36 @@ const CategoryTable = ({
       ),
     },
     {
-      title: "Image",
-      dataIndex: "img",
-      key: "img",
-      width: 100,
-      render: (val?: string) => (
-        <div className="flex items-center">
-            <img
-                src={val || placeholder}
-                alt="profile"
-                className="w-[45px] h-[45px] rounded-lg"
-                onError={(e) => {
-                    e.currentTarget.onerror = null;
-                    e.currentTarget.src = placeholder;
-                }}
-            />
-        </div>
-    ),
+      title: "Unit",
+      dataIndex: "unit",
+      key: "unit",
+      width: 180,
+      render: (text: string) => (
+        <>
+          <p className="truncate">{text}</p>
+        </>
+      ),
+    },
+    {
+      title: "Price",
+      dataIndex: "price",
+      key: "price",
+      width: 180,
+      render: (text: string) => (
+        <>
+          <p className="truncate">{text}</p>
+        </>
+      ),
     },
     {
       title: "Action",
       dataIndex: "_id",
       key: "action",
       width: 115,
-      render: (val: string, record: ICategory) => (
+      render: (val: string) => (
         <div className="flex items-center gap-3">
-          <EditCategoryModal category={record} />
-          <DeleteCategoryModal categoryId={val} />
+          <EditMaterialModal />
+          <DeleteMaterialModal categoryId={val} />
         </div>
       ),
     },
@@ -120,4 +124,4 @@ const CategoryTable = ({
   );
 };
 
-export default CategoryTable;
+export default MaterialsTable;

@@ -4,7 +4,7 @@ import { useState } from "react";
 
 const { Option } = Select;
 
-const AddMaterialsModal = () => {
+const AddMaterialModal = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const showModal = () => {
         setIsModalOpen(true);
@@ -24,7 +24,7 @@ const AddMaterialsModal = () => {
     return (
         <>
         <button onClick={showModal} className=" bg-primaryColor py-2 px-4 rounded-md cursor-pointer text-white">+ Add</button>
-         <Modal centered footer={false} title="Add Material" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+         <Modal maskClosable={false} centered footer={false} title="Add Material" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
             <Form form={form} onFinish={onFinish} layout="vertical" initialValues={{}}>
 
                 <ConfigProvider
@@ -99,4 +99,4 @@ const AddMaterialsModal = () => {
     );
 };
 
-export default AddMaterialsModal;
+export default AddMaterialModal;

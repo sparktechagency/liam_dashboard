@@ -5,11 +5,11 @@ import { ErrorToast, SuccessToast } from "../../../helper/ValidationHelper";
 import type { ICategory } from "../../../types/category.type";
 import type { IParam } from "../../../types/global.type";
 import { apiSlice } from "../api/apiSlice";
-import { SetCategoryCreateError, SetCategoryOptions, SetCategoryUpdateError } from "./categorySlice";
+import { SetCategoryCreateError, SetCategoryOptions, SetCategoryUpdateError } from "./subCategorySlice";
 
-export const categoryApi = apiSlice.injectEndpoints({
+export const subCategoryApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getCategories: builder.query({
+    getSubCategories: builder.query({
       query: (args) => {
         const params = new URLSearchParams();
         if (args !== undefined && args.length > 0) {
@@ -20,13 +20,13 @@ export const categoryApi = apiSlice.injectEndpoints({
           });
         }
         return {
-          url: "/categories",
+          url: "/sub-categories",
           method: "GET",
           params: params,
         };
       },
       keepUnusedDataFor: 600,
-      providesTags: [TagTypes.categories],
+      providesTags: [TagTypes.subCategories],
     }),
     getCategoryDropDown: builder.query({
       query: () => ({
@@ -51,7 +51,7 @@ export const categoryApi = apiSlice.injectEndpoints({
     }),
     createCategory: builder.mutation({
       query: (data) => ({
-        url: "/categories/create-category",
+        url: "/category/create-category",
         method: "POST",
         body: data,
       }),
@@ -107,7 +107,7 @@ export const categoryApi = apiSlice.injectEndpoints({
     }),
     deleteCategory: builder.mutation({
       query: (id) => ({
-        url: `/categories/${id}`,
+        url: `/category/delete-category/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: (result) => {
@@ -135,4 +135,4 @@ export const categoryApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetCategoriesQuery, useGetCategoryDropDownQuery, useCreateCategoryMutation, useDeleteCategoryMutation, useUpdateCategoryMutation } = categoryApi;
+export const { useGetSubCategoriesQuery, useGetCategoryDropDownQuery, useCreateCategoryMutation, useDeleteCategoryMutation, useUpdateCategoryMutation } = subCategoryApi;

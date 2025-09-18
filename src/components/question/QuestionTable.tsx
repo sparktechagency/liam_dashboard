@@ -17,7 +17,7 @@ type TProps = {
 }
 
 
-const CategoryTable = ({
+const QuestionTable = ({
   categories, meta,
   currentPage,
   setCurrentPage,
@@ -120,4 +120,4 @@ const CategoryTable = ({
   );
 };
 
-export default CategoryTable;
+export default QuestionTable;

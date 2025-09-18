@@ -1,5 +1,6 @@
-import { useEffect } from "react";
 import { ConfigProvider, Form, Input, Modal, Select } from "antd";
+import { useState } from "react";
+import { MdOutlineModeEdit } from "react-icons/md";
 
 const { Option } = Select;
 
@@ -10,40 +11,37 @@ type MaterialValues = {
   materialsPrice: string;
 };
 
-type EditMaterialsProps = {
-  isModalOpen: boolean;
-  handleOk: (values: MaterialValues) => void;
-  handleCancel: () => void;
-  initialValues?: MaterialValues;
-};
 
-const EditMaterials = ({
-  isModalOpen,
-  handleOk,
-  handleCancel,
-  initialValues = {
-    category: "Category 1",
-    subCategory: "Sub Category 1",
-    materialsUnit: "Piece",
-    materialsPrice: "12",
-  },
-}: EditMaterialsProps) => {
+
+const EditMaterialModal = () => {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
   const [form] = Form.useForm();
 
-  useEffect(() => {
-    if (isModalOpen) {
-      form.setFieldsValue(initialValues);
-    }
-  }, [form, initialValues, isModalOpen]);
+  // useEffect(() => {
+  //   if (isModalOpen) {
+  //     form.setFieldsValue(initialValues);
+  //   }
+  // }, [form, initialValues, isModalOpen]);
 
   const onFinish = (values: MaterialValues) => {
-    handleOk(values);
+    console.log(values);
   };
 
   return (
-    <Modal
+    <>
+     <button onClick={showModal} className=" bg-primaryColor p-1 rounded cursor-pointer"><MdOutlineModeEdit className="w-6 h-6 text-white" /></button>
+
+     <Modal
       centered
       footer={false}
+      maskClosable={false}
       title="Edit Material"
       open={isModalOpen}
       onCancel={() => {
@@ -119,7 +117,8 @@ const EditMaterials = ({
         </Form.Item>
       </Form>
     </Modal>
+    </>
   );
 };
 
-export default EditMaterials;
+export default EditMaterialModal;

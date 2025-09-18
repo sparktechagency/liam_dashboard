@@ -61,7 +61,6 @@ const EditCategoryModal = ({ category }: TProps) => {
                     label="Category Image"
                     valuePropName="fileList"
                     getValueFromEvent={(e: any) => e?.fileList}
-                    rules={[{ required: true, message: "Please upload the category image!" }]}
                 >
                     <Upload
                         name="categoryImage"

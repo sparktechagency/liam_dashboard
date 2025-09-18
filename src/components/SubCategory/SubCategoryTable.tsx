@@ -1,13 +1,13 @@
 import { Pagination, Table } from "antd";
-import type { ICategory, ICategoryDataSource } from "../../types/category.type";
+import type { ISubCategory, ISubCategoryDataSource } from "../../types/category.type";
 import type { IMeta } from "../../types/global.type";
 import placeholder from "../../assets/placeholder.png";
-import EditCategoryModal from "../modal/category/EditCategoryModal";
-import DeleteCategoryModal from "../modal/category/DeleteCategoryModal";
+import EditSubCategoryModal from "../modal/SubCategory/EditSubCategoryModal";
+import DeleteSubCategoryModal from "../modal/SubCategory/DeleteSubCategoryModal";
 
 
 type TProps = {
-  categories: ICategory[];
+  categories: ISubCategory[];
   meta: IMeta;
   currentPage: number;
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
@@ -17,7 +17,7 @@ type TProps = {
 }
 
 
-const CategoryTable = ({
+const SubCategoryTable = ({
   categories, meta,
   currentPage,
   setCurrentPage,
@@ -26,12 +26,14 @@ const CategoryTable = ({
   loading
 }: TProps) => {
 
-  const dataSource: ICategoryDataSource[] = categories?.map((category, index) => ({
+  const dataSource: ISubCategoryDataSource[] = categories?.map((category, index) => ({
     key: index,
     serial: Number(index + 1) + (meta.page - 1) * pageSize,
     _id: category?._id,
     name: category?.name,
-    img: category?.img
+    img: category?.img,
+    category: category?.categoryId?.name,
+    categoryId: category?.categoryId?._id
   }))
 
   const columns = [
@@ -42,9 +44,20 @@ const CategoryTable = ({
       width: 60,
     },
     {
-      title: "Category Name",
+      title: "Sub Category Name",
       dataIndex: "name",
       key: "name",
+      width: 180,
+      render: (text: string) => (
+        <>
+          <p className="truncate">{text}</p>
+        </>
+      ),
+    },
+    {
+      title: "Category",
+      dataIndex: "category",
+      key: "category",
       width: 180,
       render: (text: string) => (
         <>
@@ -76,10 +89,10 @@ const CategoryTable = ({
       dataIndex: "_id",
       key: "action",
       width: 115,
-      render: (val: string, record: ICategory) => (
+      render: (val: string, record: ISubCategoryDataSource) => (
         <div className="flex items-center gap-3">
-          <EditCategoryModal category={record} />
-          <DeleteCategoryModal categoryId={val} />
+          <EditSubCategoryModal subCategory={record} />
+          <DeleteSubCategoryModal subCategoryId={val} />
         </div>
       ),
     },
@@ -120,4 +133,4 @@ const CategoryTable = ({
   );
 };
 
-export default CategoryTable;
+export default SubCategoryTable;

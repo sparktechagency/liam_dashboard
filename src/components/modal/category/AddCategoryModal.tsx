@@ -1,10 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Form, Input, Modal, Upload } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdOutlineFileUpload } from "react-icons/md";
+import SubmitButton from "../../form/SubmitButton";
+import { useAppSelector } from "../../../redux/hooks/hooks";
+import { useCreateCategoryMutation } from "../../../redux/features/category/categoryApi";
+import Error from "../../validation/Error";
 
 
 const AddCategoryModal = () => {
+    const { CategoryCreateError } = useAppSelector((state) => state.category);
+    const [createCategory, { isLoading, isSuccess }] = useCreateCategoryMutation();
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const showModal = () => {
         setIsModalOpen(true);
@@ -26,15 +32,31 @@ const AddCategoryModal = () => {
         }
     };
 
+    //if success
+    useEffect(() => {
+        if (!isLoading && isSuccess) {
+            setIsModalOpen(false);
+            form.resetFields()
+        }
+    }, [isLoading, isSuccess, form]);
+
 
     const onFinish = (values: any) => {
-        console.log("Form Values: ", values);
+        const file = values.categoryImage?.[0]?.originFileObj;
+
+        if (file) {
+            const formData = new FormData();
+            formData.append("data", JSON.stringify({ name: values.category}));
+            formData.append("file", file);
+            createCategory(formData)
+        }
     };
 
     return (
       <>
        <button onClick={showModal} className=" bg-primaryColor py-2 px-4 rounded-md cursor-pointer text-white">+ Add</button>
           <Modal maskClosable={false} centered footer={false} title="Add Category" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+             {CategoryCreateError && <Error message={CategoryCreateError} />}
             <Form
                 form={form}
                 initialValues={undefined}
@@ -69,12 +91,7 @@ const AddCategoryModal = () => {
                 </Form.Item>
 
                 <Form.Item>
-                    <button
-                        type="submit"
-                        className="rounded-lg font-semibold cursor-pointer bg-primaryColor text-white px-3 py-2"
-                    >
-                        Add Category
-                    </button>
+                   <SubmitButton isLoading={isLoading} loadingTitle="Adding...">Add Category</SubmitButton>
                 </Form.Item>
             </Form>
         </Modal>
