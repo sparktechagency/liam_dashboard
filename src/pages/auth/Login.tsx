@@ -2,6 +2,10 @@ import { Form, Input } from "antd";
 import { Link } from "react-router-dom";
 import { FC } from "react";
 import { useLoginMutation } from "../../redux/features/auth/authApi";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
+import Error from "../../components/validation/Error";
+import { SetLoginError } from "../../redux/features/auth/authSlice";
+import SubmitButton from "../../components/form/SubmitButton";
 
 // Define the type for form values
 interface LoginFormValues {
@@ -10,10 +14,12 @@ interface LoginFormValues {
 }
 
 const LogIn: FC = () => {
+    const dispatch = useAppDispatch()
+    const { LoginError } = useAppSelector((state)=> state.auth);
     const [login, {isLoading}] = useLoginMutation();
 
     const onFinish = (values: LoginFormValues) => {
-        console.log(values);
+        dispatch(SetLoginError(""))
         login(values)
     };
 
@@ -33,6 +39,7 @@ const LogIn: FC = () => {
                                     Please enter your email and password to continue
                                 </p>
                             </div>
+                            {LoginError && <Error message={LoginError} />}
                             <Form<LoginFormValues>
                                 name="basic"
                                 layout="vertical"
@@ -42,7 +49,13 @@ const LogIn: FC = () => {
                                 <Form.Item
                                     label="Email"
                                     name="email"
-                                    rules={[{ required: true, message: "Please input your email!" }]}
+                                    rules={[
+                                        { required: true, message: "Please input your email!" },
+                                        {
+                                            type: 'email',
+                                            message: 'Invalid email address',
+                                        },
+                                    ]}
                                 >
                                     <Input
                                         placeholder="Enter your email"
@@ -67,16 +80,8 @@ const LogIn: FC = () => {
                                         Forgot Password?
                                     </Link>
                                 </div>
-                                <div className=" flex justify-center">
-                                        <button
-                                            type="submit"
-                                            disabled={isLoading}
-                                            className="bg-primary bg-primaryColor cursor-pointer  mt-10 mb-16 disabled:cursor-not-allowed text-white px-18 rounded-lg py-[6px] text-lg"
-                                        >
-                                            {
-                                                isLoading ? "Processing..." : "Log In"
-                                            }
-                                        </button>
+                                <div className="flex justify-center">
+                                    <SubmitButton isLoading={isLoading}>Log In</SubmitButton>
                                 </div>
                             </Form>
                         </div>
