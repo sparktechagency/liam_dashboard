@@ -1,16 +1,46 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import OtpInput from "react-otp-input";
-import { Link, useSearchParams } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
+import { useForgotPasswordResendOtpMutation, useForgotPasswordVerifyOtpMutation } from "../../redux/features/auth/authApi";
+import Error from "../../components/validation/Error";
+import CustomButton from "../../components/form/CustomButton";
+import { SetVerifyOtpError } from "../../redux/features/auth/authSlice";
+import { getEmail } from "../../helper/SessionHelper";
+import { useNavigate } from "react-router-dom";
 
 const VerificationCode: React.FC = () => {
+    const navigate = useNavigate();
     const [otp, setOtp] = useState<string>("");
-    const [searchParams] = useSearchParams();
-    const email: string | null = searchParams.get("email");
-    console.log(email);
+    const dispatch = useAppDispatch();
+    const { VerifyOtpError } = useAppSelector((state) => state.auth);
+    const [forgotPasswordVerifyOtp, { isLoading, isSuccess: verifySuccess }] =
+        useForgotPasswordVerifyOtpMutation();
 
-    // const onSent = () => {
-    //   // handle OTP submission
-    // };
+    const [
+        forgotPasswordResendOtp,
+        { isLoading: resendLoading },
+    ] = useForgotPasswordResendOtpMutation();
+
+    //if verify success
+    useEffect(() => {
+        if (verifySuccess) {
+            navigate("/auth/set-new-password");
+        }
+    }, [verifySuccess, navigate]);
+
+    const handleVerify = () => {
+        dispatch(SetVerifyOtpError(""))
+        forgotPasswordVerifyOtp({
+            email: getEmail(),
+            otp
+        });
+    };
+
+    const handleResend = () => {
+        forgotPasswordResendOtp({
+             email: getEmail()
+        });
+    }
 
     return (
         <div className="h-screen bg-barColor">
@@ -31,12 +61,13 @@ const VerificationCode: React.FC = () => {
                                 </p>
                             </div>
 
+                            {VerifyOtpError && <Error message={VerifyOtpError} />}
                             <div className="flex justify-center">
                                 <div className="flex gap-2 mb-4">
                                     <OtpInput
                                         value={otp}
                                         onChange={(value: string) => setOtp(value)}
-                                        numInputs={5}
+                                        numInputs={4}
                                         renderSeparator={<span className="w-4" />}
                                         renderInput={(props) => (
                                             <input
@@ -49,21 +80,14 @@ const VerificationCode: React.FC = () => {
                                 </div>
                             </div>
 
-                            <div className="flex justify-center">
-                                <Link to="/auth/set-new-password">
-                                    <button
-                                        type="button"
-                                        // onClick={onSent}
-                                        // disabled={isLoading}
-                                        className="bg-primary bg-primaryColor cursor-pointer  mt-10 mb-4 text-white px-18 rounded-lg py-[6px] text-lg"
-                                    >
-                                        Verify Code
-                                    </button>
-                                </Link>
+                            <div className="flex justify-center">                                  
+                                <CustomButton isLoading={isLoading} disabled={isLoading || otp?.length < 4} loadingTitle="Verifying..." onClick={handleVerify}>Verify Code</CustomButton>
                             </div>
                             <p className="text-center text-gray-600">
                                 You have not received the email?{" "}
-                                <span className="text-[#020202] cursor-pointer">Resend</span>
+                                <span onClick={handleResend} className="text-[#020202] cursor-pointer">
+                                    {resendLoading ? "Resending..." : "Resend"}
+                                </span>
                             </p>
                         </div>
 

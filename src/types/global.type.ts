@@ -4,7 +4,7 @@ export type IAuthUser = {
   id: string;
   iat: number;
   email: string;
-  role: "admin" | "super_admin";
+  role: "customer" | "superAdmin";
 };
 
 export interface IParam {

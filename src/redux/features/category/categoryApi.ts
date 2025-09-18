@@ -20,7 +20,7 @@ export const categoryApi = apiSlice.injectEndpoints({
           });
         }
         return {
-          url: "/category/get-categories",
+          url: "/categories",
           method: "GET",
           params: params,
         };

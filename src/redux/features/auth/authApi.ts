@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { jwtDecode } from "jwt-decode";
 import TagTypes from "../../../constant/tagType.constant.ts";
 import {
   setEmail,
-  setOtp,
   setToken,
 } from "../../../helper/SessionHelper.ts";
 import { ErrorToast, SuccessToast } from "../../../helper/ValidationHelper.ts";
@@ -14,6 +14,7 @@ import {
   SetResetPasswordError,
   SetVerifyOtpError,
 } from "./authSlice.ts";
+import { IAuthUser } from "../../../types/global.type.ts";
 
 export const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -26,13 +27,18 @@ export const authApi = apiSlice.injectEndpoints({
       async onQueryStarted(_arg, { queryFulfilled, dispatch }) {
         try {
           const res = await queryFulfilled;
-          const token = res?.data?.data?.accessToken;
-            localStorage.clear();
+           const token = res?.data?.data?.accessToken;
+          const authUser = jwtDecode(token) as IAuthUser;
+          const role = authUser?.role;
+          if (role === "superAdmin") {
             setToken(token);
             SuccessToast("Login Success");
             setTimeout(() => {
               window.location.href = "/";
             }, 300);
+          } else {
+            dispatch(SetLoginError("You are not admin!"));
+          }
         } catch (err: any) {
           const status = err?.error?.status;
           const message = err?.error?.data?.message || "Something Went Wrong";
@@ -47,7 +53,7 @@ export const authApi = apiSlice.injectEndpoints({
     }),
     forgotPasswordSendOtp: builder.mutation({
       query: (data) => ({
-        url: "/auth/forgot-pass-send-otp",
+        url: "/auth/forget-password",
         method: "POST",
         body: data,
       }),
@@ -70,14 +76,13 @@ export const authApi = apiSlice.injectEndpoints({
     }),
     forgotPasswordVerifyOtp: builder.mutation({
       query: (data) => ({
-        url: "/auth/forgot-pass-verify-otp",
+        url: "/otps/verify-forget-password",
         method: "POST",
         body: data,
       }),
-      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+      async onQueryStarted(_arg, { queryFulfilled, dispatch }) {
         try {
           await queryFulfilled;
-          setOtp(arg.otp)
           SuccessToast("Otp is verified successfully");
         } catch (err: any) {
           const status = err?.error?.status;
@@ -93,7 +98,7 @@ export const authApi = apiSlice.injectEndpoints({
     }),
     forgotPasswordResendOtp: builder.mutation({
       query: (data) => ({
-        url: "/auth/forgot-pass-send-otp",
+        url: "/auth/forget-password",
         method: "POST",
         body: data,
       }),
@@ -101,7 +106,7 @@ export const authApi = apiSlice.injectEndpoints({
         try {
           await queryFulfilled;
           setEmail(email);
-          SuccessToast("OTP is sent successfully");
+          SuccessToast("OTP is resent successfully");
         } catch (err: any) {
           const status = err?.error?.status;
           const message = err?.error?.data?.message || "Something Went Wrong";
@@ -116,7 +121,7 @@ export const authApi = apiSlice.injectEndpoints({
     }),
     forgotPasswordReset: builder.mutation({
       query: (data) => ({
-        url: `/auth/forgot-pass-create-new-pass`,
+        url: `/auth/reset-password`,
         method: "POST",
         body: data,
       }),
@@ -126,7 +131,7 @@ export const authApi = apiSlice.injectEndpoints({
           SuccessToast("Password is reset successfully!");
           localStorage.clear();
           setTimeout(() => {
-            window.location.href = "/auth/signin";
+            window.location.href = "/auth/login";
           }, 300);
         } catch (err: any) {
           const status = err?.error?.status;

@@ -1,5 +1,7 @@
 import { Form, Input } from "antd";
-import { Link, useSearchParams } from "react-router-dom";
+import SubmitButton from "../../components/form/SubmitButton";
+import { useForgotPasswordResetMutation } from "../../redux/features/auth/authApi";
+import { getEmail } from "../../helper/SessionHelper";
 
 interface SetNewPasswordFormValues {
     newPassword: string;
@@ -7,18 +9,15 @@ interface SetNewPasswordFormValues {
 }
 
 const SetNewPassword: React.FC = () => {
+    const [forgotPassReset, { isLoading }] = useForgotPasswordResetMutation();
     const [form] = Form.useForm();
-    //   const [isLoading, setIsLoading] = useState<boolean>(false);
-    //   const navigate = useNavigate();
 
-    const [searchParams] = useSearchParams();
-    const email: string | null = searchParams.get('email');
-    console.log(email);
 
-    // onFinish handler for the form
     const onFinish = (values: SetNewPasswordFormValues) => {
-        console.log(values);
-        // Here you can add your logic to submit the form, e.g., call an API
+        forgotPassReset({
+            email: getEmail(),
+            newPassword: values.newPassword
+        });
     };
 
     return (
@@ -50,7 +49,7 @@ const SetNewPassword: React.FC = () => {
                                 <Form.Item
                                     label="New Password"
                                     name="newPassword"
-                                    rules={[{ required: true, message: "Please input your new password!" }]}
+                                    rules={[{ required: true, message: "Please ienter new password!" }]}
                                 >
                                     <Input.Password
                                         placeholder="New Password"
@@ -60,7 +59,18 @@ const SetNewPassword: React.FC = () => {
                                 <Form.Item
                                     label="Confirm Password"
                                     name="confirmPassword"
-                                    rules={[{ required: true, message: "Please confirm your password!" }]}
+                                    dependencies={['newPassword']}
+                                    rules={[
+                                        { required: true, message: "Please enter confirm Password" },
+                                        ({ getFieldValue }) => ({
+                                            validator(_, value) {
+                                                if (!value || getFieldValue('newPassword') === value) {
+                                                    return Promise.resolve();
+                                                }
+                                                return Promise.reject(new Error('The new password that you entered do not match!'));
+                                            },
+                                        }),
+                                    ]}
                                 >
                                     <Input.Password
                                         placeholder="Confirm Password"
@@ -69,16 +79,7 @@ const SetNewPassword: React.FC = () => {
                                 </Form.Item>
 
                                 <Form.Item className="text-center mt-6">
-                                    <Link to={"/auth/successfully-changed-password"}>
-                                        <button
-                                            type="submit"
-                                            // disabled={isLoading}
-                                            className="bg-primary bg-primaryColor cursor-pointer  mt-8 text-white px-18 rounded-lg py-[6px] text-lg"
-                                        >
-                                            {/* Submit {isLoading && <Spin />} */}
-                                            Submit
-                                        </button>
-                                    </Link>
+                                    <SubmitButton isLoading={isLoading}>Submit</SubmitButton>
                                 </Form.Item>
                             </Form>
                         </div>

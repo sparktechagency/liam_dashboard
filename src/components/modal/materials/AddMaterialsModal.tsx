@@ -1,15 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ConfigProvider, Form, Input, Modal, Select } from "antd";
+import { useState } from "react";
 
 const { Option } = Select;
 
-type AddMaterialsProps = {
-    isModalOpen: boolean;
-    handleOk: () => void;
-    handleCancel: () => void;
-};
-
-const AddMaterials = ({ isModalOpen, handleOk, handleCancel }: AddMaterialsProps) => {
+const AddMaterialsModal = () => {
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
     const [form] = Form.useForm();
 
     const onFinish = (values: any) => {
@@ -17,7 +22,9 @@ const AddMaterials = ({ isModalOpen, handleOk, handleCancel }: AddMaterialsProps
     };
 
     return (
-        <Modal centered footer={false} title="Add Material" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+        <>
+        <button onClick={showModal} className=" bg-primaryColor py-2 px-4 rounded-md cursor-pointer text-white">+ Add</button>
+         <Modal centered footer={false} title="Add Material" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
             <Form form={form} onFinish={onFinish} layout="vertical" initialValues={{}}>
 
                 <ConfigProvider
@@ -88,7 +95,8 @@ const AddMaterials = ({ isModalOpen, handleOk, handleCancel }: AddMaterialsProps
                 </Form.Item>
             </Form>
         </Modal>
+        </>
     );
 };
 
-export default AddMaterials;
+export default AddMaterialsModal;

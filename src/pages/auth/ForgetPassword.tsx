@@ -1,14 +1,33 @@
 import { Form, Input } from "antd";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FormProps } from "antd";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
+import { useForgotPasswordSendOtpMutation } from "../../redux/features/auth/authApi";
+import Error from "../../components/validation/Error";
+import { SetForgotError } from "../../redux/features/auth/authSlice";
+import SubmitButton from "../../components/form/SubmitButton";
+import { useEffect } from "react";
 
 interface ForgotPasswordFormValues {
     email: string;
 }
 
 const ForgotPassword: React.FC = () => {
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+    const { ForgotError } = useAppSelector((state) => state.auth);
+    const [forgotPasswordSendOtp, { isLoading, isSuccess }] =
+        useForgotPasswordSendOtpMutation();
+
+    useEffect(() => {
+        if (isSuccess) {
+            navigate("/auth/verification-code");
+        }
+    }, [isSuccess, navigate])
+
     const onFinish: FormProps<ForgotPasswordFormValues>["onFinish"] = (values) => {
-        console.log(values);
+        dispatch(SetForgotError(""))
+        forgotPasswordSendOtp(values)
     };
 
     return (
@@ -28,6 +47,7 @@ const ForgotPassword: React.FC = () => {
                                     Please enter your email to continue
                                 </p>
                             </div>
+                             {ForgotError && <Error message={ForgotError} />}
                             <Form<ForgotPasswordFormValues>
                                 name="basic"
                                 layout="vertical"
@@ -39,6 +59,10 @@ const ForgotPassword: React.FC = () => {
                                     name="email"
                                     rules={[
                                         { required: true, message: "Please input your email!" },
+                                        {
+                                            type: 'email',
+                                            message: 'Invalid email address',
+                                        },
                                     ]}
                                 >
                                     <Input
@@ -48,16 +72,7 @@ const ForgotPassword: React.FC = () => {
                                 </Form.Item>
 
                                 <Form.Item className="text-center mt-6">
-                                    <Link to={`/auth/verification-code`}>
-                                        <button
-                                            type="button"
-                                            // disabled={isLoading}
-                                            className="bg-primary bg-primaryColor cursor-pointer  mt-4  text-white px-18 rounded-lg py-[6px] text-lg"
-                                        >
-                                            {/* Send Code {isLoading && <Spin></Spin>} */}
-                                            Send Code
-                                        </button>
-                                    </Link>
+                                    <SubmitButton isLoading={isLoading} loadingTitle="Sending..."> Send Code</SubmitButton>
                                 </Form.Item>
                             </Form>
                         </div>

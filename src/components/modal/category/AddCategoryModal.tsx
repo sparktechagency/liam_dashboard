@@ -4,14 +4,17 @@ import { useState } from "react";
 import { MdOutlineFileUpload } from "react-icons/md";
 
 
-type AddModalProps = {
-    isModalOpen: boolean;
-    handleOk: () => void;
-    handleCancel: () => void;
-};
-
-const EditCategoryModal = ({ isModalOpen, handleOk, handleCancel }: AddModalProps) => {
-
+const AddCategoryModal = () => {
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
     const [form] = Form.useForm();
     const [fileList, setFileList] = useState<any[]>([]);
 
@@ -23,18 +26,18 @@ const EditCategoryModal = ({ isModalOpen, handleOk, handleCancel }: AddModalProp
         }
     };
 
-    const initialValues = {
-        category: 'Electronics'
-    }
+
     const onFinish = (values: any) => {
         console.log("Form Values: ", values);
     };
 
     return (
-        <Modal centered footer={false} title="Edit Category" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+      <>
+       <button onClick={showModal} className=" bg-primaryColor py-2 px-4 rounded-md cursor-pointer text-white">+ Add</button>
+          <Modal maskClosable={false} centered footer={false} title="Add Category" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
             <Form
                 form={form}
-                initialValues={initialValues}
+                initialValues={undefined}
                 onFinish={onFinish}
                 layout="vertical"
             >
@@ -70,13 +73,13 @@ const EditCategoryModal = ({ isModalOpen, handleOk, handleCancel }: AddModalProp
                         type="submit"
                         className="rounded-lg font-semibold cursor-pointer bg-primaryColor text-white px-3 py-2"
                     >
-                        Update Category
+                        Add Category
                     </button>
                 </Form.Item>
             </Form>
         </Modal>
-
+      </>
     );
 };
 
-export default EditCategoryModal;
+export default AddCategoryModal;
