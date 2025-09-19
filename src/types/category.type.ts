@@ -13,7 +13,6 @@ export type ICategoryDataSource = {
     _id: string;
     name: string;
     img: string;
-
 }
 
 

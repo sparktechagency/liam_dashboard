@@ -261,7 +261,6 @@ const CustomerManage = () => {
                 <div>
                     <p className=" text-lg text-black mb-5 md:mb-0">Showing 1-11 out of  1239</p>
                 </div>
-
                 <Pagination
                     current={currentPage}
                     pageSize={pageSize}

@@ -147,8 +147,8 @@ export const authApi = apiSlice.injectEndpoints({
     }),
     changeStatus: builder.mutation({
       query: ({id, data}) => ({
-        url: `/auth/change-status/${id}`,
-        method: "PATCH",
+        url: `/users/change-status/${id}`,
+        method: "POST",
         body: data,
       }),
       invalidatesTags: (result) => {

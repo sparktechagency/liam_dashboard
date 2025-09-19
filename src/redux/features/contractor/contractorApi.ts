@@ -4,11 +4,11 @@ import TagTypes from "../../../constant/tagType.constant";
 import { ErrorToast, SuccessToast } from "../../../helper/ValidationHelper";
 import type { IParam } from "../../../types/global.type";
 import { apiSlice } from "../api/apiSlice";
-import { SetUser } from "./userSlice";
+import { SetCategoryCreateError, SetCategoryOptions, SetCategoryUpdateError } from "./contractorSlice";
 
-export const userApi = apiSlice.injectEndpoints({
+export const contractorApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getUsers: builder.query({
+    getContractors: builder.query({
       query: (args) => {
         const params = new URLSearchParams();
         if (args !== undefined && args.length > 0) {
@@ -19,54 +19,57 @@ export const userApi = apiSlice.injectEndpoints({
           });
         }
         return {
-          url: "/users",
+          url: "/contractors",
           method: "GET",
           params: params,
         };
       },
       keepUnusedDataFor: 600,
-      providesTags: [TagTypes.users],
+      providesTags: [TagTypes.categories],
     }),
-    getMe: builder.query({
-      query: () => ({
-        url: "/user/get-me",
-        method: "GET",
-      }),
-      keepUnusedDataFor: 600,
-      providesTags: [TagTypes.me],
-      async onQueryStarted(_arg, { queryFulfilled, dispatch }) {
-        try {
-          const res = await queryFulfilled;
-          const data = res?.data?.data;
-          dispatch(SetUser(data))
-        } catch (err: any) {
-          const status = err?.error?.status;
-          const message = err?.error?.data?.message || "Something Went Wrong";
-          if (status === 500) {
-            ErrorToast("Something Went Wrong");
-          }
-          else {
-            ErrorToast(message);
-          }
-        }
-      },
-    }),
-    updateProfile: builder.mutation({
-      query: (data) => ({
-        url: `/user/edit-my-profile`,
+    updateCategory: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/category/update-category/${id}`,
         method: "PATCH",
         body: data,
       }),
       invalidatesTags: (result) => {
         if (result?.success) {
-          return [TagTypes.me];
+          return [TagTypes.categories, TagTypes.categoryDropDown];
+        }
+        return [];
+      },
+      async onQueryStarted(_arg, { queryFulfilled, dispatch }) {
+        try {
+          await queryFulfilled;
+          SuccessToast("Category is updated successfully");
+        } catch (err: any) {
+          const status = err?.error?.status;
+          const message = err?.error?.data?.message || "Something Went Wrong";
+          if (status === 500) {
+            dispatch(SetCategoryUpdateError("Something Went Wrong"));
+          }
+          else {
+            dispatch(SetCategoryUpdateError(message));
+          }
+        }
+      },
+    }),
+    deleteCategory: builder.mutation({
+      query: (id) => ({
+        url: `/categories/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: (result) => {
+        if (result?.success) {
+          return [TagTypes.categories, TagTypes.categoryDropDown];
         }
         return [];
       },
       async onQueryStarted(_arg, { queryFulfilled }) {
         try {
           await queryFulfilled;
-          SuccessToast("Profile is updated successfully");
+          SuccessToast("Category is deleted successfully");
         } catch (err: any) {
           const status = err?.error?.status;
           const message = err?.error?.data?.message || "Something Went Wrong";
@@ -82,4 +85,4 @@ export const userApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetUsersQuery, useGetMeQuery, useUpdateProfileMutation } = userApi;
+export const { useGetContractorsQuery, useDeleteCategoryMutation, useUpdateCategoryMutation } = contractorApi;
