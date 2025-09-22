@@ -26,7 +26,8 @@ const TagTypes = {
     order: "Order",
     incomeGrowth: "incomeGrowth",
     subsbscribers: "Subscribers",
-    privacy: "Privacy"
+    privacy: "Privacy",
+    terms: "Terms"
 }
 
 export default TagTypes;

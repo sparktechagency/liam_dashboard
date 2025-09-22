@@ -29,3 +29,7 @@ export interface IApiError {
   }
 }
   
+
+export type TPolicy = {
+    description: string;
+}
