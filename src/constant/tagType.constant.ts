@@ -12,7 +12,7 @@ const TagTypes = {
     userGrowth: "UserGrowth",
     candidates: "Candidates",
     stats: "Stats",
-    contacts: "Contacts",
+    reports: "Reports",
     subscribers: "Subscribers",
     admins: "Admins",
     colors: "Colors",
@@ -25,7 +25,8 @@ const TagTypes = {
     orders: "Orders",
     order: "Order",
     incomeGrowth: "incomeGrowth",
-    subsbscribers: "Subscribers"
+    subsbscribers: "Subscribers",
+    privacy: "Privacy"
 }
 
 export default TagTypes;

@@ -8,6 +8,16 @@ export type TPolicyType = "privacy-policy" | "about-us" |  "terms-condition" | "
 
 export const policyApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    getPrivacyPolicy: builder.query({
+      query: () => {
+        return {
+          url: `/privacies`,
+          method: "GET",
+        };
+      },
+      keepUnusedDataFor: 600,
+      providesTags: [ TagTypes.policy ],
+    }),
     getPolicyByType: builder.query({
       query: (type:TPolicyType) => {
         return {
@@ -47,11 +57,41 @@ export const policyApi = apiSlice.injectEndpoints({
           }
         }
       },
+    }),
+    createUpdatePrivacy: builder.mutation({
+      query: (data) => ({
+        url: `/privacies/create-privacy`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: (result) => {
+        if (result?.success) {
+          return [TagTypes.privacy];
+        }
+        return [];
+      },
+      async onQueryStarted(_arg, { queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          SuccessToast(`Update Success`);
+        } catch (err: any) {
+          const status = err?.error?.status;
+          const message = err?.error?.data?.message || "Something Went Wrong";
+          if (status === 500) {
+            ErrorToast("Something Went Wrong");
+          }
+          else {
+            ErrorToast(message);
+          }
+        }
+      },
     })
   }),
 });
 
 export const {
+  useGetPrivacyPolicyQuery,
   useGetPolicyByTypeQuery,
-  useCreateUpdatePolicyMutation
+  useCreateUpdatePolicyMutation,
+  useCreateUpdatePrivacyMutation
 } = policyApi;

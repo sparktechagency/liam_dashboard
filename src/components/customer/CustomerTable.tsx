@@ -16,7 +16,7 @@ type TProps = {
 }
 
 
-const ContractorTable = ({
+const CustomerTable = ({
   categories, meta,
   currentPage,
   setCurrentPage,
@@ -149,4 +149,4 @@ const ContractorTable = ({
   );
 };
 
-export default ContractorTable;
+export default CustomerTable;

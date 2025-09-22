@@ -5,9 +5,9 @@ import { ErrorToast, SuccessToast } from "../../../helper/ValidationHelper";
 import type { IParam } from "../../../types/global.type";
 import { apiSlice } from "../api/apiSlice";
 
-export const contactApi = apiSlice.injectEndpoints({
+export const reportApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getContactList: builder.query({
+    getReports: builder.query({
       query: (args) => {
         const params = new URLSearchParams();
         if (args !== undefined && args.length > 0) {
@@ -18,13 +18,13 @@ export const contactApi = apiSlice.injectEndpoints({
           });
         }
         return {
-          url: "/contact/get-contacts",
+          url: "/reports",
           method: "GET",
           params: params,
         };
       },
       keepUnusedDataFor: 600,
-      providesTags: [TagTypes.contacts],
+      providesTags: [TagTypes.reports],
     }),
     replyContact: builder.mutation({
       query: ({id, data }) => ({
@@ -34,7 +34,7 @@ export const contactApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: (result) => {
         if (result?.success) {
-          return [TagTypes.contacts];
+          return [TagTypes.reports];
         }
         return [];
       },
@@ -57,4 +57,4 @@ export const contactApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetContactListQuery, useReplyContactMutation } = contactApi;
+export const { useGetReportsQuery, useReplyContactMutation } = reportApi;
