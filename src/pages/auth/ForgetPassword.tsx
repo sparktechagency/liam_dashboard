@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { FormProps } from "antd";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 import { useForgotPasswordSendOtpMutation } from "../../redux/features/auth/authApi";
-import Error from "../../components/validation/Error";
+import Error from "../../components/validation/FormError";
 import { SetForgotError } from "../../redux/features/auth/authSlice";
 import SubmitButton from "../../components/form/SubmitButton";
 import { useEffect } from "react";

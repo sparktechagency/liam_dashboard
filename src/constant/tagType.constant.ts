@@ -27,7 +27,8 @@ const TagTypes = {
     incomeGrowth: "incomeGrowth",
     subsbscribers: "Subscribers",
     privacy: "Privacy",
-    terms: "Terms"
+    terms: "Terms",
+    about: "About"
 }
 
 export default TagTypes;

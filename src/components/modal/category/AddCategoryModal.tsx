@@ -5,7 +5,7 @@ import { MdOutlineFileUpload } from "react-icons/md";
 import SubmitButton from "../../form/SubmitButton";
 import { useAppSelector } from "../../../redux/hooks/hooks";
 import { useCreateCategoryMutation } from "../../../redux/features/category/categoryApi";
-import Error from "../../validation/Error";
+import Error from "../../validation/FormError";
 
 
 const AddCategoryModal = () => {

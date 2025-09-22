@@ -52,14 +52,14 @@ const Profile: React.FC = () => {
                         <div>
                             <p className="text-xl md:text-2xl text-black font-bold capitalize">TA Emon</p>
                             <p className="text-sm text-black font-semibold">Super Admin</p>
-                            {profilePic && (
+                            {/* {profilePic && (
                                 <button
                                     onClick={handleSubmit}
                                     className=" bg-primaryColor cursor-pointer text-primary rounded-md mt-4 px-2 py-1"
                                 >
                                     Upload Image
                                 </button>
-                            )}
+                            )} */}
                         </div>
                     </div>
                     <div className="flex justify-center items-center gap-5 text-md md:text-xl font-semibold my-5">

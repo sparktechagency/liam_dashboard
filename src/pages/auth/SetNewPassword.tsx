@@ -2,6 +2,9 @@ import { Form, Input } from "antd";
 import SubmitButton from "../../components/form/SubmitButton";
 import { useForgotPasswordResetMutation } from "../../redux/features/auth/authApi";
 import { getEmail } from "../../helper/SessionHelper";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
+import { SetResetPasswordError } from "../../redux/features/auth/authSlice";
+import FormError from "../../components/validation/FormError";
 
 interface SetNewPasswordFormValues {
     newPassword: string;
@@ -10,10 +13,13 @@ interface SetNewPasswordFormValues {
 
 const SetNewPassword: React.FC = () => {
     const [forgotPassReset, { isLoading }] = useForgotPasswordResetMutation();
+    const dispatch = useAppDispatch()
+    const { ResetPasswordError } = useAppSelector((state) => state.auth);
     const [form] = Form.useForm();
 
 
     const onFinish = (values: SetNewPasswordFormValues) => {
+        dispatch(SetResetPasswordError(""))
         forgotPassReset({
             email: getEmail(),
             newPassword: values.newPassword
@@ -38,6 +44,7 @@ const SetNewPassword: React.FC = () => {
                                     previous ones for security
                                 </p>
                             </div>
+                            {ResetPasswordError && <FormError message={ResetPasswordError} />}
                             <Form
                                 form={form}
                                 onFinish={onFinish}
@@ -49,7 +56,8 @@ const SetNewPassword: React.FC = () => {
                                 <Form.Item
                                     label="New Password"
                                     name="newPassword"
-                                    rules={[{ required: true, message: "Please ienter new password!" }]}
+                                    rules={[
+                                        { required: true, message: "Please enter new password!" }]}
                                 >
                                     <Input.Password
                                         placeholder="New Password"

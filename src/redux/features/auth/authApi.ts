@@ -176,7 +176,7 @@ export const authApi = apiSlice.injectEndpoints({
     changePassword: builder.mutation({
       query: (data) => ({
         url: "/auth/change-password",
-        method: "PATCH",
+        method: "POST",
         body: data,
       }),
       async onQueryStarted(_arg, { queryFulfilled, dispatch }) {
@@ -185,13 +185,18 @@ export const authApi = apiSlice.injectEndpoints({
           SuccessToast("Password is updated successfully");
           setTimeout(() => {
             localStorage.clear()
-            window.location.href = "/auth/signin";
+            window.location.href = "/auth/login";
           }, 300);
         } catch (err: any) {
           const status = err?.error?.status;
           const message = err?.error?.data?.message || "Something Went Wrong";
+          if(message==="Password do not matched"){
+            dispatch(SetChangePasswordError("Wrong Old Password"));
+            return;
+          }
           if (status === 500) {
             dispatch(SetChangePasswordError("Something Went Wrong"));
+            return;
           }
           else {
             dispatch(SetChangePasswordError(message))

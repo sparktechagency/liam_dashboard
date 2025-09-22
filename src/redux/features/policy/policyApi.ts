@@ -83,6 +83,44 @@ export const policyApi = apiSlice.injectEndpoints({
           }
         }
       },
+    }),
+    getAbout: builder.query({
+      query: () => {
+        return {
+          url: `/abouts`,
+          method: "GET",
+        };
+      },
+      keepUnusedDataFor: 600,
+      providesTags: [ TagTypes.about ],
+    }),
+    createUpdateAbout: builder.mutation({
+      query: (data) => ({
+        url: `/abouts/create-about`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: (result) => {
+        if (result?.success) {
+          return [TagTypes.about];
+        }
+        return [];
+      },
+      async onQueryStarted(_arg, { queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          SuccessToast(`Update Success`);
+        } catch (err: any) {
+          const status = err?.error?.status;
+          const message = err?.error?.data?.message || "Something Went Wrong";
+          if (status === 500) {
+            ErrorToast("Something Went Wrong");
+          }
+          else {
+            ErrorToast(message);
+          }
+        }
+      },
     })
   }),
 });
@@ -91,5 +129,7 @@ export const {
   useGetPrivacyPolicyQuery,
   useCreateUpdatePrivacyMutation,
   useGetTermsQuery,
-  useCreateUpdateTermsMutation
+  useCreateUpdateTermsMutation,
+  useGetAboutQuery,
+  useCreateUpdateAboutMutation
 } = policyApi;

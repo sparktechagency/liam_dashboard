@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import OtpInput from "react-otp-input";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 import { useForgotPasswordResendOtpMutation, useForgotPasswordVerifyOtpMutation } from "../../redux/features/auth/authApi";
-import Error from "../../components/validation/Error";
+import Error from "../../components/validation/FormError";
 import CustomButton from "../../components/form/CustomButton";
 import { SetVerifyOtpError } from "../../redux/features/auth/authSlice";
 import { getEmail } from "../../helper/SessionHelper";

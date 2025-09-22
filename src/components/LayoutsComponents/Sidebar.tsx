@@ -25,7 +25,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
 
     return (
         <div className='fixed top-0 left-0 bottom-0 bg-barColor '>
-            <Sider className='h-[100vh] w-[300px] bg-barColor' width={250} collapsedWidth={80} trigger={null} collapsible collapsed={collapsed}>
+            <Sider className='h-[100vh] w-[300px] overflow-y-scroll bg-barColor' width={250} collapsedWidth={80} trigger={null} collapsible collapsed={collapsed}>
                 <div className=' flex justify-center items-center py-6 '>
                     <Link to={`/`}><img src={logo} className=' w-16' /></Link>
                 </div>

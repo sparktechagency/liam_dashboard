@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FC } from "react";
 import { useLoginMutation } from "../../redux/features/auth/authApi";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
-import Error from "../../components/validation/Error";
+import Error from "../../components/validation/FormError";
 import { SetLoginError } from "../../redux/features/auth/authSlice";
 import SubmitButton from "../../components/form/SubmitButton";
 
