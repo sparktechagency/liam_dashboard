@@ -1,32 +1,32 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  CategoryCreateError: "",
-  CategoryUpdateError: "",
+  SubCategoryCreateError: "",
+  SubCategoryUpdateError: "",
   categoryOptions: []
 };
 
-const categorySlice = createSlice({
-  name: "category",
+const subCategorySlice = createSlice({
+  name: "subCategory",
   initialState,
   reducers: {
-    SetCategoryCreateError: (state, action) => {
-      state.CategoryCreateError = action.payload;
+    SetSubCategoryCreateError: (state, action) => {
+      state.SubCategoryCreateError = action.payload;
     },
-    SetCategoryUpdateError: (state, action) => {
-      state.CategoryUpdateError = action.payload;
+    SetSubCategoryUpdateError: (state, action) => {
+      state.SubCategoryUpdateError = action.payload;
     },
-    SetCategoryOptions: (state, action) => {
+    SetSubCategoryOptions: (state, action) => {
       state.categoryOptions = action.payload;
     }
   },
 });
 
 export const {
-  SetCategoryCreateError,
-  SetCategoryUpdateError,
-  SetCategoryOptions
-} = categorySlice.actions;
+  SetSubCategoryCreateError,
+  SetSubCategoryUpdateError,
+  SetSubCategoryOptions
+} = subCategorySlice.actions;
 
-const categorySliceReducer = categorySlice.reducer;
-export default categorySliceReducer;
+const subCategorySliceReducer = subCategorySlice.reducer;
+export default subCategorySliceReducer;

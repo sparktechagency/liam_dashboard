@@ -2,10 +2,9 @@
 
 import TagTypes from "../../../constant/tagType.constant";
 import { ErrorToast, SuccessToast } from "../../../helper/ValidationHelper";
-import type { ICategory } from "../../../types/category.type";
 import type { IParam } from "../../../types/global.type";
 import { apiSlice } from "../api/apiSlice";
-import { SetCategoryCreateError, SetCategoryOptions, SetCategoryUpdateError } from "./subCategorySlice";
+import { SetSubCategoryCreateError, SetSubCategoryUpdateError } from "./subCategorySlice";
 
 export const subCategoryApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -28,56 +27,35 @@ export const subCategoryApi = apiSlice.injectEndpoints({
       keepUnusedDataFor: 600,
       providesTags: [TagTypes.subCategories],
     }),
-    getCategoryDropDown: builder.query({
-      query: () => ({
-        url: "/category/get-category-drop-down",
-        method: "GET",
-      }),
-      keepUnusedDataFor: 600,
-      providesTags: [TagTypes.categoryDropDown],
-      async onQueryStarted(_arg, { queryFulfilled, dispatch }) {
-        try {
-          const res = await queryFulfilled;
-          const data = res?.data?.data;
-          const options = data?.map((c: ICategory) => ({
-            value: c._id,
-            label: c.name,
-          }))
-          dispatch(SetCategoryOptions(options))
-        } catch {
-          ErrorToast("Something Went Wrong");
-        }
-      },
-    }),
-    createCategory: builder.mutation({
+    createSubCategory: builder.mutation({
       query: (data) => ({
-        url: "/category/create-category",
+        url: "/sub-categories/create-sub-category",
         method: "POST",
         body: data,
       }),
       invalidatesTags: (result) => {
         if (result?.success) {
-          return [TagTypes.categories, TagTypes.categoryDropDown];
+          return [TagTypes.subCategories];
         }
         return [];
       },
       async onQueryStarted(_arg, { queryFulfilled, dispatch }) {
         try {
           await queryFulfilled;
-          SuccessToast("Category is added successfully");
+          SuccessToast("Sub Category is added successfully");
         } catch (err: any) {
           const status = err?.error?.status;
           const message = err?.error?.data?.message || "Something Went Wrong";
           if (status === 500) {
-            dispatch(SetCategoryCreateError("Something Went Wrong"));
+            dispatch(SetSubCategoryCreateError("Something Went Wrong"));
           }
           else {
-            dispatch(SetCategoryCreateError(message));
+            dispatch(SetSubCategoryCreateError(message));
           }
         }
       },
     }),
-    updateCategory: builder.mutation({
+    updateSubCategory: builder.mutation({
       query: ({ id, data }) => ({
         url: `/category/update-category/${id}`,
         method: "PATCH",
@@ -85,41 +63,41 @@ export const subCategoryApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: (result) => {
         if (result?.success) {
-          return [TagTypes.categories, TagTypes.categoryDropDown];
+          return [TagTypes.subCategories, TagTypes.categoryDropDown];
         }
         return [];
       },
       async onQueryStarted(_arg, { queryFulfilled, dispatch }) {
         try {
           await queryFulfilled;
-          SuccessToast("Category is updated successfully");
+          SuccessToast("Sub Category is updated successfully");
         } catch (err: any) {
           const status = err?.error?.status;
           const message = err?.error?.data?.message || "Something Went Wrong";
           if (status === 500) {
-            dispatch(SetCategoryUpdateError("Something Went Wrong"));
+            dispatch(SetSubCategoryUpdateError("Something Went Wrong"));
           }
           else {
-            dispatch(SetCategoryUpdateError(message));
+            dispatch(SetSubCategoryUpdateError(message));
           }
         }
       },
     }),
-    deleteCategory: builder.mutation({
+    deleteSubCategory: builder.mutation({
       query: (id) => ({
         url: `/category/delete-category/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: (result) => {
         if (result?.success) {
-          return [TagTypes.categories, TagTypes.categoryDropDown];
+          return [TagTypes.subCategories, TagTypes.categoryDropDown];
         }
         return [];
       },
       async onQueryStarted(_arg, { queryFulfilled }) {
         try {
           await queryFulfilled;
-          SuccessToast("Category is deleted successfully");
+          SuccessToast("Sub Category is deleted successfully");
         } catch (err: any) {
           const status = err?.error?.status;
           const message = err?.error?.data?.message || "Something Went Wrong";
@@ -135,4 +113,4 @@ export const subCategoryApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetSubCategoriesQuery, useGetCategoryDropDownQuery, useCreateCategoryMutation, useDeleteCategoryMutation, useUpdateCategoryMutation } = subCategoryApi;
+export const { useGetSubCategoriesQuery, useCreateSubCategoryMutation, useDeleteSubCategoryMutation, useUpdateSubCategoryMutation } = subCategoryApi;

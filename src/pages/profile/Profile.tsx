@@ -13,8 +13,8 @@ const Profile: React.FC = () => {
     console.log('state', profilePic);
     const [activeTab, setActiveTab] = useState<Tab>("editProfile");
 
-    const handleSubmit = () => {
-    };
+    // const handleSubmit = () => {
+    // };
 
     // const profilePicUrl = profilePic ? URL.createObjectURL(profilePic) : null;
     // console.log(profilePicUrl);

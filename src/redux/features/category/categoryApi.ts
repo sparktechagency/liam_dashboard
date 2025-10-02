@@ -29,10 +29,21 @@ export const categoryApi = apiSlice.injectEndpoints({
       providesTags: [TagTypes.categories],
     }),
     getCategoryDropDown: builder.query({
-      query: () => ({
-        url: "/category/get-category-drop-down",
-        method: "GET",
-      }),
+      query: (args) => {
+        const params = new URLSearchParams();
+        if (args !== undefined && args.length > 0) {
+          args.forEach((item: IParam) => {
+            if (item.value) {
+              params.append(item.name, item.value);
+            }
+          });
+        }
+        return {
+          url: "/categories",
+          method: "GET",
+          params: params,
+        };
+      },
       keepUnusedDataFor: 600,
       providesTags: [TagTypes.categoryDropDown],
       async onQueryStarted(_arg, { queryFulfilled, dispatch }) {

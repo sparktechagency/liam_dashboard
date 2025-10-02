@@ -5,12 +5,14 @@ import categorySliceReducer from "../features/category/categorySlice";
 import adminSliceReducer from "../features/admin/adminSlice";
 import userSliceReducer from "../features/user/userSlice";
 import faqSliceReducer from "../features/faq/faqSlice";
+import subCategorySliceReducer from "../features/subCategory/subCategorySlice";
 
 export const store = configureStore({
   reducer: {
     [apiSlice.reducerPath]: apiSlice.reducer,
     auth: authSliceReducer,
     category: categorySliceReducer,
+    subCategory: subCategorySliceReducer,
     admin: adminSliceReducer,
     user: userSliceReducer,
     faq: faqSliceReducer

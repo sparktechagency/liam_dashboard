@@ -36,6 +36,7 @@ const EditSubCategoryModal = ({ subCategory }: TProps) => {
     }
     const onFinish = (values: any) => {
         console.log("Form Values: ", values);
+        console.log(subCategory)
     };
 
     return (

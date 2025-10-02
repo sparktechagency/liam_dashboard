@@ -3,12 +3,14 @@ import { Button, Form, Input, Modal, Upload } from "antd";
 import { useEffect, useState } from "react";
 import { MdOutlineFileUpload } from "react-icons/md";
 import SubmitButton from "../../form/SubmitButton";
-import { useAppSelector } from "../../../redux/hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks/hooks";
 import { useCreateCategoryMutation } from "../../../redux/features/category/categoryApi";
 import Error from "../../validation/FormError";
+import { SetCategoryCreateError } from "../../../redux/features/category/categorySlice";
 
 
 const AddCategoryModal = () => {
+    const dispatch = useAppDispatch();
     const { CategoryCreateError } = useAppSelector((state) => state.category);
     const [createCategory, { isLoading, isSuccess }] = useCreateCategoryMutation();
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -42,6 +44,7 @@ const AddCategoryModal = () => {
 
 
     const onFinish = (values: any) => {
+        dispatch(SetCategoryCreateError(""))
         const file = values.categoryImage?.[0]?.originFileObj;
 
         if (file) {
