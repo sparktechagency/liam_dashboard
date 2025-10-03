@@ -1,18 +1,18 @@
 "use client";
 import { Modal } from "antd";
 import { useEffect, useState } from "react";
-import { useDeleteCategoryMutation } from "../../../redux/features/category/categoryApi";
 import DeleteButton from "../../form/DeleteButton";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { useDeleteSubCategoryMutation } from "../../../redux/features/subCategory/subCategoryApi";
 
 type TProps = {
   subCategoryId: string;
 };
 
-const DeleteSubCategoryModal = ({subCategoryId}: TProps) => {
+const DeleteSubCategoryModal = ({ subCategoryId }: TProps) => {
   const [modalOpen, setModalOpen] = useState(false);
-  const [deleteCategory, { isLoading, isSuccess }] =
-    useDeleteCategoryMutation();
+  const [deleteSubCategory, { isLoading, isSuccess }] =
+    useDeleteSubCategoryMutation();
 
   useEffect(() => {
     if (!isLoading) {
@@ -22,7 +22,7 @@ const DeleteSubCategoryModal = ({subCategoryId}: TProps) => {
 
 
   const handleDelete = () => {
-    deleteCategory(subCategoryId);
+    deleteSubCategory(subCategoryId);
   };
 
   return (

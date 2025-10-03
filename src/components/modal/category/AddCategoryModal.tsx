@@ -49,7 +49,7 @@ const AddCategoryModal = () => {
 
         if (file) {
             const formData = new FormData();
-            formData.append("data", JSON.stringify({ name: values.category}));
+            formData.append("data", JSON.stringify({ name: values.name}));
             formData.append("file", file);
             createCategory(formData)
         }
@@ -67,7 +67,7 @@ const AddCategoryModal = () => {
                 layout="vertical"
             >
                 <Form.Item
-                    name="category"
+                    name="name"
                     label="Category Name"
                     rules={[{ required: true, message: "Please input the category name!" }]}
                 >
@@ -88,6 +88,7 @@ const AddCategoryModal = () => {
                         onChange={handleFileChange}
                         beforeUpload={() => false} // Prevent auto upload
                         accept="image/*"
+                        maxCount={1}
                     >
                         <Button icon={<MdOutlineFileUpload />}>Upload Image</Button>
                     </Upload>

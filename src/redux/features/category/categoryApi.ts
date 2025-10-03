@@ -90,7 +90,7 @@ export const categoryApi = apiSlice.injectEndpoints({
     }),
     updateCategory: builder.mutation({
       query: ({ id, data }) => ({
-        url: `/category/update-category/${id}`,
+        url: `/categories/${id}`,
         method: "PATCH",
         body: data,
       }),
