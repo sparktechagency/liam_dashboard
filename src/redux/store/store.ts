@@ -6,6 +6,7 @@ import adminSliceReducer from "../features/admin/adminSlice";
 import userSliceReducer from "../features/user/userSlice";
 import faqSliceReducer from "../features/faq/faqSlice";
 import subCategorySliceReducer from "../features/subCategory/subCategorySlice";
+import subscriptionSliceReducer from "../features/subscription/subscriptionSlice";
 
 export const store = configureStore({
   reducer: {
@@ -15,7 +16,8 @@ export const store = configureStore({
     subCategory: subCategorySliceReducer,
     admin: adminSliceReducer,
     user: userSliceReducer,
-    faq: faqSliceReducer
+    faq: faqSliceReducer,
+    subscription: subscriptionSliceReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware),

@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Navigate } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout';
 import Dashboard from '../pages/dashboard/Dashboard';
 import LogIn from '../pages/auth/Login';
@@ -6,7 +6,6 @@ import Income from '../pages/income/Income';
 import ForgotPassword from '../pages/auth/ForgetPassword';
 import VerificationCode from '../pages/auth/VerificationCode';
 import SetNewPassword from '../pages/auth/SetNewPassword';
-import PasswordChangedSuccessfull from '../pages/auth/PasswordChangedSuccessfull';
 import Profile from '../pages/profile/Profile';
 import Notification from '../pages/notification/Notification';
 import PrivacyPolicy from '../pages/settings/privacy-policy/PrivacyPolicy';
@@ -20,12 +19,17 @@ import TransactionHistory from '../pages/transactionHistory/transactionHistory';
 import CustomerManage from '../pages/customerManage/CustomerManage';
 import ContractorManage from '../pages/contractorManage/ContractorManage';
 import Report from '../pages/report/Report';
+import AuthLayout from '../components/LayoutsComponents/AuthLayout';
+import PrivateRoute from './PrivateRoute';
+import PublicRoute from './PublicRoute';
 
 
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <MainLayout />,
+        element: <PrivateRoute>
+            <MainLayout />
+        </PrivateRoute>,
         children: [
             {
                 path: "/",
@@ -90,26 +94,36 @@ const router = createBrowserRouter([
         ]
     },
     {
-        path: "/auth/login",
-        element: <LogIn></LogIn>,
+        path: '/auth',
+        element: <PublicRoute> <AuthLayout/> </PublicRoute>,
+        children: [
+            {
+                index: true,
+                element: <Navigate to="/auth/login" replace/>
+            },
+            {
+                path: "login",
+                element: <LogIn></LogIn>,
+            },
+            {
+                path: "forgot-password",
+                element: <ForgotPassword></ForgotPassword>,
+            },
+            {
+                path: "verification-code",
+                element: <VerificationCode></VerificationCode>,
+            },
+            {
+                path: "set-new-password",
+                element: <SetNewPassword></SetNewPassword>,
+            },
+        ]
     },
     {
-        path: "/auth/forgot-password",
-        element: <ForgotPassword></ForgotPassword>,
-    },
-    {
-        path: "/auth/verification-code",
-        element: <VerificationCode></VerificationCode>,
-    },
-    {
-        path: "/auth/set-new-password",
-        element: <SetNewPassword></SetNewPassword>,
-    },
-    {
-        path: "/auth/successfully-changed-password",
-        element: <PasswordChangedSuccessfull></PasswordChangedSuccessfull>,
-    },
-
+        path: '/*',
+        element: <h1>Not Found Page</h1>,
+    }
+   
 ]);
 
 export default router;

@@ -4,7 +4,7 @@ const PasswordChangedSuccessfull: React.FC = () => {
     return (
         <div className="h-screen bg-barColor">
             {/* Background Image */}
-            <div className="bg-primary  h-full">
+            <div className="bg-primary h-full">
                 {/* Form Container */}
                 <div className="relative z-10 flex items-center justify-center h-full px-3 text-white">
                     <div className="bg-[#ffffff] text-black overflow-hidden shadow-lg w-full md:max-w-[500px] rounded-lg">

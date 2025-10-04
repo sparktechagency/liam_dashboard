@@ -71,7 +71,7 @@ class SessionHelper {
 
   logout() {
     localStorage.clear();
-    window.location.href = "/auth/signin";
+    window.location.href = "/auth/login";
   }
 }
 

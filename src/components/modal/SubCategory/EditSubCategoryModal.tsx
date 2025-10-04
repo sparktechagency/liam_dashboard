@@ -1,8 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Form, Input, Modal, Upload } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdOutlineFileUpload, MdOutlineModeEdit } from "react-icons/md";
 import { ISubCategoryDataSource } from "../../../types/category.type";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks/hooks";
+import { useUpdateSubCategoryMutation } from "../../../redux/features/subCategory/subCategoryApi";
+import placeholder_img from "../../../assets/placeholder.png";
+import FormError from "../../validation/FormError";
+import { SetSubCategoryUpdateError } from "../../../redux/features/subCategory/subCategorySlice";
+import SubmitButton from "../../form/SubmitButton";
+
 
 
 type TProps = {
@@ -11,6 +18,21 @@ type TProps = {
 
 const EditSubCategoryModal = ({ subCategory }: TProps) => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [imageSrc, setImageSrc] = useState(subCategory?.img || placeholder_img); // Default image
+    const { SubCategoryUpdateError } = useAppSelector((state) => state.subCategory);
+    const [updateSubCategory, { isLoading, isSuccess }] = useUpdateSubCategoryMutation();
+    const dispatch = useAppDispatch();
+    const [form] = Form.useForm();
+    const [fileList, setFileList] = useState<any[]>([]);
+
+     //if success
+    useEffect(() => {
+        if (isSuccess) {
+            handleCancel();
+        }
+    }, [isSuccess, form]);
+
+
     const showModal = () => {
         setIsModalOpen(true);
     };
@@ -20,8 +42,7 @@ const EditSubCategoryModal = ({ subCategory }: TProps) => {
     const handleCancel = () => {
         setIsModalOpen(false);
     };
-    const [form] = Form.useForm();
-    const [fileList, setFileList] = useState<any[]>([]);
+  
 
     const handleFileChange = (info: any) => {
         if (info.fileList.length > 1) {
@@ -29,40 +50,74 @@ const EditSubCategoryModal = ({ subCategory }: TProps) => {
         } else {
             setFileList(info.fileList);
         }
+
+        if (info.fileList[0]?.originFileObj) {
+            const reader = new FileReader();
+            reader.onload = () => setImageSrc(reader.result as string);
+            reader.readAsDataURL(info.fileList[0]?.originFileObj);
+        } else {
+            setImageSrc(subCategory?.img || placeholder_img)
+        }
     };
 
-    const initialValues = {
-        category: 'Electronics'
-    }
+  
     const onFinish = (values: any) => {
-        console.log("Form Values: ", values);
-        console.log(subCategory)
+        dispatch(SetSubCategoryUpdateError(""))
+        const file = values.categoryImage?.[0]?.originFileObj;
+        const formData = new FormData();
+        formData.append("data", JSON.stringify({ name: values.name }));
+        if (file) {
+            formData.append("file", file);
+        }
+        updateSubCategory({
+            id: subCategory?._id,
+            data: formData
+        })
     };
+    
 
     return (
        <>
           <button onClick={showModal} className=" bg-primaryColor p-1 rounded cursor-pointer"><MdOutlineModeEdit className="w-6 h-6 text-white" /></button>
-         <Modal centered maskClosable={false} footer={false} title="Edit Sub Category" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+         <Modal 
+          centered 
+          maskClosable={false}
+          footer={false}
+          title="Edit Sub Category"
+          open={isModalOpen}
+          onOk={handleOk} 
+          onCancel={handleCancel}
+          >
+             {SubCategoryUpdateError && <FormError message={SubCategoryUpdateError} />}
             <Form
                 form={form}
-                initialValues={initialValues}
+                initialValues={{
+                    name: subCategory?.name
+                }}
                 onFinish={onFinish}
                 layout="vertical"
             >
                 <Form.Item
-                    name="category"
+                    name="name"
                     label="Sub Category Name"
                     rules={[{ required: true, message: "Please input the sub category name!" }]}
                 >
                     <Input />
                 </Form.Item>
-
+                <span className="text-md pb-2">Category Image</span>
+                <div className="relative w-32 h-32 rounded-2xl overflow-hidden shadow-md mb-6 mt-1">
+                 <img
+                    src={imageSrc}
+                    alt="Preview"
+                    onError={() => setImageSrc(placeholder_img)} //fallback img
+                    className="object-cover w-full h-full transition-opacity duration-200"
+                 />
+                </div>
                 <Form.Item
                     name="categoryImage"
-                    label="Sub Category Image"
+                    // label="Sub Category Image"
                     valuePropName="fileList"
                     getValueFromEvent={(e: any) => e?.fileList}
-                    rules={[{ required: true, message: "Please upload the sub category image!" }]}
                 >
                     <Upload
                         name="categoryImage"
@@ -76,13 +131,8 @@ const EditSubCategoryModal = ({ subCategory }: TProps) => {
                     </Upload>
                 </Form.Item>
 
-                <Form.Item>
-                    <button
-                        type="submit"
-                        className="rounded-lg font-semibold cursor-pointer bg-primaryColor text-white px-3 py-2"
-                    >
-                        Update Sub Category
-                    </button>
+               <Form.Item>
+                   <SubmitButton isLoading={isLoading}>Save Changes</SubmitButton>
                 </Form.Item>
             </Form>
         </Modal>

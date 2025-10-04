@@ -1,12 +1,7 @@
 import { Layout, Menu, } from 'antd';
 import { Link } from 'react-router-dom';
-// import logo from '../../assets/logo.svg'
 import logo from '../../assets/logo.svg'
-// import dashboard from '../../assets/sideBar/dashboard.svg'
-// import income from '../../assets/sideBar/income.svg'
-// import dashboardActive from '../../assets/sideBar/active-dashboard.svg'
 import { CiLogout } from 'react-icons/ci';
-// import { useLocation } from 'react-router-dom';
 
 const { Sider } = Layout;
 
@@ -14,13 +9,13 @@ import React from 'react';
 import { RiBarChartGroupedLine, RiDashboard3Line, RiSettings2Line, RiUserLine, RiUserSettingsLine } from 'react-icons/ri';
 import { IoAnalyticsOutline } from 'react-icons/io5';
 import { MdOutlineCategory, MdOutlineReport } from 'react-icons/md';
+import { logout } from '../../helper/SessionHelper';
 
 interface SidebarProps {
     collapsed: boolean;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
-    // const location = useLocation();
 
 
     return (
@@ -114,14 +109,13 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
                 />
             </Sider>
             <div className="flex justify-center items-center relative">
-                <Link to="/auth/login" className="w-full flex justify-center">
                     <div
+                       onClick={()=> logout()}
                         className="absolute bottom-8 w-[80%] py-2 bg-[#f6f6f6] hover:bg-gray-100 shadow-md rounded-lg flex justify-center items-center gap-3 cursor-pointer transition-all duration-200"
                     >
                         <CiLogout className="w-6 h-6 text-[#222]" />
                         <p className="text-base font-medium text-[#222]">Log Out</p>
                     </div>
-                </Link>
             </div>
 
         </div>

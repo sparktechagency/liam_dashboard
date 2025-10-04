@@ -5,8 +5,7 @@ import { MdOutlineFileUpload, MdOutlineModeEdit } from "react-icons/md";
 import { ICategory } from "../../../types/category.type";
 import placeholder_img from "../../../assets/placeholder.png";
 import { useUpdateCategoryMutation } from "../../../redux/features/category/categoryApi";
-import { useAppSelector } from "../../../redux/hooks/hooks";
-import { useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks/hooks";
 import { SetCategoryUpdateError } from "../../../redux/features/category/categorySlice";
 import FormError from "../../validation/FormError";
 import SubmitButton from "../../form/SubmitButton";
@@ -20,7 +19,7 @@ const EditCategoryModal = ({ category }: TProps) => {
     const [imageSrc, setImageSrc] = useState(category?.img || placeholder_img); // Default image
     const { CategoryUpdateError } = useAppSelector((state) => state.category);
     const [updateCategory, { isLoading, isSuccess }] = useUpdateCategoryMutation();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const showModal = () => {
         setIsModalOpen(true);
