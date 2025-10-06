@@ -2,9 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { apiSlice } from "../features/api/apiSlice";
 import authSliceReducer from "../features/auth/authSlice";
 import categorySliceReducer from "../features/category/categorySlice";
-import adminSliceReducer from "../features/admin/adminSlice";
 import userSliceReducer from "../features/user/userSlice";
-import faqSliceReducer from "../features/faq/faqSlice";
 import subCategorySliceReducer from "../features/subCategory/subCategorySlice";
 import subscriptionSliceReducer from "../features/subscription/subscriptionSlice";
 
@@ -14,9 +12,7 @@ export const store = configureStore({
     auth: authSliceReducer,
     category: categorySliceReducer,
     subCategory: subCategorySliceReducer,
-    admin: adminSliceReducer,
     user: userSliceReducer,
-    faq: faqSliceReducer,
     subscription: subscriptionSliceReducer
   },
   middleware: (getDefaultMiddleware) =>

@@ -1,31 +1,20 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Table } from "antd";
-import type { IMeta } from "../../types/global.type";
-import { IContratorDataSource } from "../../types/contractor.type";
-import ChangeStatusModal from "../modal/auth/ChangeStatusModal";
-import { ISubscription } from "../../types/subscription";
+import { ISubscription, ISubscriptionDataSource } from "../../types/subscription";
 
 
 type TProps = {
   subscriptions: ISubscription[];
-  meta: IMeta;
-  currentPage: number;
-  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
-  pageSize: number;
-  setPageSize: React.Dispatch<React.SetStateAction<number>>;
   loading: boolean;
 }
 
 
 const SubscriptionTable = ({
   subscriptions, 
-  meta,
   loading,
 }: TProps) => {
 
-  const dataSource: IContratorDataSource[] = subscriptions?.map((subscription, index) => ({
+  const dataSource: ISubscriptionDataSource[] = subscriptions?.map((subscription, index) => ({
     key: index,
-    serial: Number(index + 1) + (meta.page - 1) * meta.limit,
     slNo: subscription?.slNo,
     subscriptionPlan: subscription?.subscriptionPlan,
     price: subscription?.price,
@@ -37,7 +26,7 @@ const SubscriptionTable = ({
     {
       title: "S.N.",
       dataIndex: "slNo",
-      key: "serial",
+      key: "slNo",
       width: 60,
     },
     {
@@ -85,15 +74,15 @@ const SubscriptionTable = ({
         </>
       ),
     },
-    {
-      title: "Action",
-      width: 150,
-      render: (_: any, record: IContratorDataSource) => (
-        <div className="flex items-center">
-         <ChangeStatusModal userId={record?._id} status={record?.status}/>
-        </div>
-      ),
-    },
+    // {
+    //   title: "Action",
+    //   width: 150,
+    //   render: (_: any, record: IContratorDataSource) => (
+    //     <div className="flex items-center">
+    //      <ChangeStatusModal userId={record?._id} status={record?.status}/>
+    //     </div>
+    //   ),
+    // },
   ];
 
 
@@ -106,11 +95,12 @@ const SubscriptionTable = ({
           size="small"
           columns={columns}
           dataSource={dataSource}
-          rowKey="_id"
+          rowKey="slNo"
           sticky
           scroll={{ y: "calc(100vh - 265px)" }}
           className="employer-table min-h-[calc(100vh-290px)]"
           loading={loading}
+          pagination={false}
         />
       </div>
       </>

@@ -25,7 +25,7 @@ export const subscriptionApi = apiSlice.injectEndpoints({
         };
       },
       keepUnusedDataFor: 600,
-      providesTags: [TagTypes.categories],
+      providesTags: [TagTypes.subscriptions],
     }),
     createSubscription: builder.mutation({
       query: (data) => ({
@@ -35,14 +35,14 @@ export const subscriptionApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: (result) => {
         if (result?.success) {
-          return [TagTypes.categories, TagTypes.categoryDropDown];
+          return [TagTypes.subscriptions];
         }
         return [];
       },
       async onQueryStarted(_arg, { queryFulfilled, dispatch }) {
         try {
           await queryFulfilled;
-          SuccessToast("Category is added successfully");
+          SuccessToast("Subscription is added successfully");
         } catch (err: any) {
           const status = err?.error?.status;
           const message = err?.error?.data?.message || "Something Went Wrong";
@@ -63,14 +63,14 @@ export const subscriptionApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: (result) => {
         if (result?.success) {
-          return [TagTypes.categories, TagTypes.categoryDropDown];
+          return [TagTypes.subscriptions];
         }
         return [];
       },
       async onQueryStarted(_arg, { queryFulfilled, dispatch }) {
         try {
           await queryFulfilled;
-          SuccessToast("Category is updated successfully");
+          SuccessToast("Subscription is updated successfully");
         } catch (err: any) {
           const status = err?.error?.status;
           const message = err?.error?.data?.message || "Something Went Wrong";
@@ -90,14 +90,14 @@ export const subscriptionApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: (result) => {
         if (result?.success) {
-          return [TagTypes.categories, TagTypes.categoryDropDown];
+          return [TagTypes.subscriptions];
         }
         return [];
       },
       async onQueryStarted(_arg, { queryFulfilled }) {
         try {
           await queryFulfilled;
-          SuccessToast("Category is deleted successfully");
+          SuccessToast("Subscription is deleted successfully");
         } catch (err: any) {
           const status = err?.error?.status;
           const message = err?.error?.data?.message || "Something Went Wrong";

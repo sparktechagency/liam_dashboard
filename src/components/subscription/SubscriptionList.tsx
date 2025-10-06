@@ -1,4 +1,3 @@
-import { useState } from "react";
 import ListLoading from "../loader/ListLoading";
 import SubscriptionTable from "./SubscriptionTable";
 import CreateSubscriptionModal from "../modal/subscription/CreateSubscriptionModal";
@@ -6,19 +5,8 @@ import { useGetSubscriptionsQuery } from "../../redux/features/subscription/subs
 
 
 const SubscriptionList = () => {
-    const [currentPage, setCurrentPage] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
-    const { data, isLoading, isFetching, isError } = useGetSubscriptionsQuery([
-        { name: "page", value: currentPage },
-        { name: "limit", value: pageSize },
-        { name: "role", value: "contractor"},
-    ]);
-
-
-
-
+    const { data, isLoading, isFetching, isError } = useGetSubscriptionsQuery(undefined);
     const subscriptions = data?.data || [];
-    const meta = data?.meta || {};
 
     let content: React.ReactNode;
 
@@ -30,11 +18,6 @@ const SubscriptionList = () => {
     if (!isLoading && !isError) {
         content = <SubscriptionTable
             subscriptions={subscriptions}
-            meta={meta}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-            pageSize={pageSize}
-            setPageSize={setPageSize}
             loading={isFetching}
         />;
     }
