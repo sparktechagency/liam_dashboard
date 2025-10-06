@@ -28,7 +28,7 @@ const ContractorList = () => {
     }, [searchQuery]);
 
 
-    const categories = data?.data || [];
+    const contractors = data?.data || [];
     const meta = data?.meta || {};
 
     let content: React.ReactNode;
@@ -40,7 +40,7 @@ const ContractorList = () => {
 
     if (!isLoading && !isError) {
         content = <ContractorTable
-            categories={categories}
+            contractors={contractors}
             meta={meta}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}

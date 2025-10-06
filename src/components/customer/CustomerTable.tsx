@@ -6,7 +6,7 @@ import ChangeStatusModal from "../modal/auth/ChangeStatusModal";
 
 
 type TProps = {
-  categories: IContractor[];
+  customers: IContractor[];
   meta: IMeta;
   currentPage: number;
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
@@ -17,7 +17,8 @@ type TProps = {
 
 
 const CustomerTable = ({
-  categories, meta,
+  customers,
+  meta,
   currentPage,
   setCurrentPage,
   pageSize,
@@ -25,14 +26,14 @@ const CustomerTable = ({
   loading,
 }: TProps) => {
 
-  const dataSource: IContratorDataSource[] = categories?.map((contractor, index) => ({
+  const dataSource: IContratorDataSource[] = customers?.map((customer, index) => ({
     key: index,
     serial: Number(index + 1) + (meta.page - 1) * meta.limit,
-    _id: contractor?._id,
-    fullName: contractor?.fullName,
-    email: contractor?.email,
-    contactNo: contractor?.contactNo,
-    status: contractor?.status
+    _id: customer?._id,
+    fullName: customer?.fullName,
+    email: customer?.email,
+    contactNo: customer?.contactNo,
+    status: customer?.status
   }))
 
   const columns = [

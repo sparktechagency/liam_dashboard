@@ -28,7 +28,7 @@ const CustomerList = () => {
     }, [searchQuery]);
 
 
-    const categories = data?.data || [];
+    const customers = data?.data || [];
     const meta = data?.meta || {};
 
     let content: React.ReactNode;
@@ -40,7 +40,7 @@ const CustomerList = () => {
 
     if (!isLoading && !isError) {
         content = <CustomerTable
-            categories={categories}
+            customers={customers}
             meta={meta}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}

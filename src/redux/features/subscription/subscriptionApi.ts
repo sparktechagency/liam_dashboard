@@ -4,7 +4,7 @@ import TagTypes from "../../../constant/tagType.constant";
 import { ErrorToast, SuccessToast } from "../../../helper/ValidationHelper";
 import type { IParam } from "../../../types/global.type";
 import { apiSlice } from "../api/apiSlice";
-import { SetCategoryCreateError, SetCategoryUpdateError } from "./categorySlice";
+import { SetSubscriptioneCreateError, SetSubscriptionUpdateError } from "./subscriptionSlice";
 
 export const subscriptionApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -19,7 +19,7 @@ export const subscriptionApi = apiSlice.injectEndpoints({
           });
         }
         return {
-          url: "/categories",
+          url: "/dashboards/subscription-plans",
           method: "GET",
           params: params,
         };
@@ -27,7 +27,7 @@ export const subscriptionApi = apiSlice.injectEndpoints({
       keepUnusedDataFor: 600,
       providesTags: [TagTypes.categories],
     }),
-    createCategory: builder.mutation({
+    createSubscription: builder.mutation({
       query: (data) => ({
         url: "/categories/create-category",
         method: "POST",
@@ -47,15 +47,15 @@ export const subscriptionApi = apiSlice.injectEndpoints({
           const status = err?.error?.status;
           const message = err?.error?.data?.message || "Something Went Wrong";
           if (status === 500) {
-            dispatch(SetCategoryCreateError("Something Went Wrong"));
+            dispatch(SetSubscriptioneCreateError("Something Went Wrong"));
           }
           else {
-            dispatch(SetCategoryCreateError(message));
+            dispatch(SetSubscriptioneCreateError(message));
           }
         }
       },
     }),
-    updateCategory: builder.mutation({
+    updateSubscription: builder.mutation({
       query: ({ id, data }) => ({
         url: `/categories/${id}`,
         method: "PATCH",
@@ -75,15 +75,15 @@ export const subscriptionApi = apiSlice.injectEndpoints({
           const status = err?.error?.status;
           const message = err?.error?.data?.message || "Something Went Wrong";
           if (status === 500) {
-            dispatch(SetCategoryUpdateError("Something Went Wrong"));
+            dispatch(SetSubscriptionUpdateError("Something Went Wrong"));
           }
           else {
-            dispatch(SetCategoryUpdateError(message));
+            dispatch(SetSubscriptionUpdateError(message));
           }
         }
       },
     }),
-    deleteCategory: builder.mutation({
+    deleteSubscription: builder.mutation({
       query: (id) => ({
         url: `/categories/${id}`,
         method: "DELETE",
@@ -113,4 +113,4 @@ export const subscriptionApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetSubscriptionsQuery, useCreateCategoryMutation, useDeleteCategoryMutation, useUpdateCategoryMutation } = subscriptionApi;
+export const { useGetSubscriptionsQuery, useCreateSubscriptionMutation, useDeleteSubscriptionMutation, useUpdateSubscriptionMutation } = subscriptionApi;

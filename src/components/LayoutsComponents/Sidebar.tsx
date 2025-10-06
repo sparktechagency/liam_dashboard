@@ -52,6 +52,12 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
                             label: <Link className=' text-[16px]' to={`/subscriptions`}>Subscriptions</Link>,
                         },
                         {
+                            key: '3',
+                            // icon: <img src={location.pathname === '/' ? dashboardActive : dashboard} className='menu-icon' />,
+                            icon: <RiBarChartGroupedLine className='w-6 h-6' />,
+                            label: <Link className=' text-[16px]' to={`/subscriptions`}>Subscriptions</Link>,
+                        },
+                        {
                             key: '4',
                             // icon: <img src={location.pathname === '/' ? dashboardActive : dashboard} className='menu-icon' />,
                             icon: <RiUserLine className='w-6 h-6' />,

@@ -11,7 +11,6 @@ import Notification from '../pages/notification/Notification';
 import PrivacyPolicy from '../pages/settings/privacy-policy/PrivacyPolicy';
 import AboutUs from '../pages/settings/about-us/AboutUs';
 import TermsAndCondition from '../pages/settings/terms-and-conditon/TermsAndCondition';
-import Subscriptions from '../pages/subscriptions/Subscriptions';
 import Manage from '../pages/manage/Manage';
 import ManageService from '../pages/manageService/ManageService';
 import ContractorRequestPage from '../pages/contractorRequestPage/ContractorRequestPage';
@@ -22,6 +21,7 @@ import Report from '../pages/report/Report';
 import AuthLayout from '../components/LayoutsComponents/AuthLayout';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
+import Subscriptions from '../pages/subscriptions/Subscriptions';
 
 
 const router = createBrowserRouter([
