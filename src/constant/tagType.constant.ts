@@ -14,6 +14,7 @@ const TagTypes = {
     stats: "Stats",
     reports: "Reports",
     subscriptions: "Subscriptions",
+    transactions: "Transactions",
     admins: "Admins",
     products: "Products",
     product: "Product",

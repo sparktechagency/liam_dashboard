@@ -14,6 +14,10 @@ const DashboardPage = () => {
         return <Dashboard states={states}/>
     }
 
+    if(!isLoading && isError){
+        return <h1>Something Went Wrong</h1>
+    }
+
    
 };
 
