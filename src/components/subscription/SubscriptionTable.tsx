@@ -1,5 +1,6 @@
 import { Table } from "antd";
 import { ISubscription, ISubscriptionDataSource } from "../../types/subscription";
+import EditSubscriptionModal from "../modal/subscription/EditSubscriptionModal";
 
 
 type TProps = {
@@ -74,15 +75,14 @@ const SubscriptionTable = ({
         </>
       ),
     },
-    // {
-    //   title: "Action",
-    //   width: 150,
-    //   render: (_: any, record: IContratorDataSource) => (
-    //     <div className="flex items-center">
-    //      <ChangeStatusModal userId={record?._id} status={record?.status}/>
-    //     </div>
-    //   ),
-    // },
+    {
+      title: "Action",
+      width: 150,
+      dataIndex: "slNo",
+      render: (_: number, record: ISubscription) => (
+       <EditSubscriptionModal subscription={record}/>
+      ),
+    },
   ];
 
 

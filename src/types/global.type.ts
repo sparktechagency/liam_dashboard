@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 
 export type IAuthUser = {
@@ -32,4 +33,9 @@ export interface IApiError {
 
 export type TPolicy = {
     description: string;
+}
+
+export interface ApiError {
+  message?: string;
+  [key: string]: any;
 }

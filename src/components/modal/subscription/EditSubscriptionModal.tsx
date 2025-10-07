@@ -2,9 +2,15 @@
 import { Form, Input, Modal } from "antd";
 import { useState } from "react";
 import { MdOutlineModeEdit } from "react-icons/md";
+import { ISubscription } from "../../../types/subscription";
+import SubmitButton from "../../form/SubmitButton";
 
+type TProps = {
+    subscription: ISubscription
+}
 
-const EditSubscriptionModal = () => {
+const EditSubscriptionModal = ({ subscription}: TProps) => {
+    const isLoading = false;
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const showModal = () => {
         setIsModalOpen(true);
@@ -20,12 +26,13 @@ const EditSubscriptionModal = () => {
 
     const onFinish = (values: any) => {
         console.log("Form Values: ", values);
+        console.log(subscription)
     };
 
     return (
         <>
             <button onClick={showModal} className=" bg-primaryColor p-1 rounded cursor-pointer"><MdOutlineModeEdit className="w-6 h-6 text-white" /></button>
-            <Modal centered footer={false} title="Add Subscription" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+            <Modal maskClosable={false} centered footer={false} title="Update Subscription" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                 <Form
                     form={form}
                     initialValues={undefined}
@@ -65,12 +72,7 @@ const EditSubscriptionModal = () => {
                     </Form.Item>
 
                     <Form.Item>
-                        <button
-                            type="submit"
-                            className="rounded-lg font-semibold cursor-pointer bg-primaryColor text-white px-3 py-2"
-                        >
-                            Add Subscription
-                        </button>
+                        <SubmitButton isLoading={isLoading}>Save Changes</SubmitButton>
                     </Form.Item>
                 </Form>
             </Modal>

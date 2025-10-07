@@ -3,6 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import TagTypes from "../../../constant/tagType.constant.ts";
 import { getToken } from "../../../helper/SessionHelper.ts";
 import { ErrorToast } from "../../../helper/ValidationHelper.ts";
+import { ApiError } from "../../../types/global.type.ts";
 
 //export const baseUrl = "http://localhost:9090/api/v1";
 export const baseUrl = "http://10.10.20.24:5002/api/v1"
@@ -27,6 +28,16 @@ export const apiSlice = createApi({
       ErrorToast("Authorization Expired");
       window.location.href = "/";
     }
+
+    if (result?.error?.status === 500) {
+       const errorData = result?.error?.data as ApiError;
+      if (errorData?.message === "invalid signature" || errorData.message=== "jwt expired") {
+        localStorage.clear();
+        ErrorToast("Authorization Expired");
+        window.location.href = "/";
+      }
+    }
+
     return result;
   },
   tagTypes: Object.values(TagTypes), //TagS WhiteLists
