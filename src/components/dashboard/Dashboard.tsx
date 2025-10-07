@@ -6,8 +6,13 @@ import daimondUser from '../../assets/dashboard/daimond-user.png'
 import DailyServiceChart from '../../components/PagesComponents/Dashboard/DailyServiceChart'
 import MostUsingServicePie from '../../components/PagesComponents/Dashboard/MostUsingServicePie'
 import ContractorRequest from '../../components/PagesComponents/Dashboard/ContractorRequest'
+import { TDashboardStats } from '../../types/dashboard.type'
 
-const Dashboard = () => {
+type TProps = {
+    states: TDashboardStats
+}
+
+const Dashboard = ({ states }: TProps) => {
     return (
         <div className=' min-h-[100vh]'>
             <div className=' grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-4 '>
@@ -15,13 +20,13 @@ const Dashboard = () => {
                 <div className='bg-[#fefefe] rounded-lg px-8 py-5 text-center shadow-md'>
                     <h2 className=' mb-3 text-xl font-semibold text-[#4E4E4E]'>Total User</h2>
                     <img className=' mx-auto mb-3 w-12' src={totalUser} alt="user" />
-                    <h2 className='text-2xl font-semibold text-[#4E4E4E]'>852,650</h2>
+                    <h2 className='text-2xl font-semibold text-[#4E4E4E]'>{states?.totalUser}</h2>
                 </div>
 
                 <div className='bg-[#fefefe] rounded-lg px-8 py-5 text-center shadow-md'>
-                    <h2 className=' mb-3 text-xl font-semibold text-[#4E4E4E]'>Income</h2>
+                    <h2 className=' mb-3 text-xl font-semibold text-[#4E4E4E]'>Total Income</h2>
                     <img className=' mx-auto mb-3 w-12' src={totalIncome} alt="user" />
-                    <h2 className='text-2xl font-semibold text-[#4E4E4E]'>$82650</h2>
+                    <h2 className='text-2xl font-semibold text-[#4E4E4E]'>${states?.totalIncome}</h2>
                 </div>
 
                 <div className='bg-[#fefefe] rounded-lg px-8 py-5 text-center shadow-md'>
