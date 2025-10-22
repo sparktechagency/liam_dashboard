@@ -1,17 +1,18 @@
 
 export interface ISubscription {
-  slNo: number;
-  subscriptionPlan: string;
-  price: string;
+  _id: string;
+  planType: string;
+  price: number;
   duration: string;
-  contractorFeePerMonth: string;
+  details: string[];
 }
 
 export interface ISubscriptionDataSource {
   key: number;
-  slNo: number;
-  subscriptionPlan: string;
-  price: string;
+  serial:number;
+  _id: string;
+  planType: string;
+  price: number;
   duration: string;
-  contractorFeePerMonth: string;
+  details: string[];
 }

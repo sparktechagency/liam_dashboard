@@ -16,28 +16,30 @@ const SubscriptionTable = ({
 
   const dataSource: ISubscriptionDataSource[] = subscriptions?.map((subscription, index) => ({
     key: index,
-    slNo: subscription?.slNo,
-    subscriptionPlan: subscription?.subscriptionPlan,
+    serial: Number(index+1),
+    _id: subscription?._id,
+    planType: subscription?.planType,
     price: subscription?.price,
     duration: subscription?.duration,
-    contractorFeePerMonth: subscription?.contractorFeePerMonth
+    details: subscription?.details
   }))
+
 
   const columns = [
     {
       title: "S.N.",
-      dataIndex: "slNo",
-      key: "slNo",
+      dataIndex: "serial",
+      key: "serial",
       width: 60,
     },
     {
       title: "Subscription Plan",
-      dataIndex: "subscriptionPlan",
-      key: "subscriptionPlan",
+      dataIndex: "planType",
+      key: "planType",
       width: 180,
       render: (text: string) => (
         <>
-          <p className="truncate">{text}</p>
+          <p className="truncate capitalize">{text}</p>
         </>
       ),
     },
@@ -64,14 +66,15 @@ const SubscriptionTable = ({
       ),
     },
     {
-      title: "Contractor Fee Per Month",
-      dataIndex: "contractorFeePerMonth",
-      key: "contractorFeePerMonth",
-      width: 180,
-      align: "center" as const,
-      render: (text: string) => (
+      title: "Features",
+      dataIndex: "details",
+      key: "details",
+      width: 300,
+      render: (features: string[]) => (
         <>
-          <p className="truncate">{text}</p>
+          {features?.map((feature, i) => (
+            <p key={i} className="truncate">{Number(i+1)}. {feature}</p>
+          ))}
         </>
       ),
     },
@@ -95,7 +98,7 @@ const SubscriptionTable = ({
           size="small"
           columns={columns}
           dataSource={dataSource}
-          rowKey="slNo"
+          rowKey="_id"
           sticky
           scroll={{ y: "calc(100vh - 265px)" }}
           className="employer-table min-h-[calc(100vh-290px)]"

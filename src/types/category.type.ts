@@ -32,5 +32,6 @@ export type ISubCategoryDataSource = {
     _id: string;
     name: string;
     img: string;
-    category: string
+    category: string;
+    categoryId: string;
 }

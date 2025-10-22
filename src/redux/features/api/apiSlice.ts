@@ -6,7 +6,7 @@ import { ErrorToast } from "../../../helper/ValidationHelper.ts";
 import { ApiError } from "../../../types/global.type.ts";
 
 //export const baseUrl = "http://localhost:9090/api/v1";
-export const baseUrl = "http://10.10.20.11:5002/api/v1"
+export const baseUrl = "http://10.10.20.11:5003/api/v1"
 
 
 const baseQuery = fetchBaseQuery({

@@ -5,13 +5,11 @@ import AddQuestionModal from "../../components/modal/question/AddQuestionModal";
 import Category from "../../components/category/Category";
 import SubCategory from "../../components/SubCategory/SubCategory";
 import Questions from "../../components/question/Questions";
-import Materials from "../../components/materials/Materials";
-import AddMaterialModal from "../../components/modal/materials/AddMaterialModal";
 
-type Tab = "category" | "sub category" | "questions" | "materials";
+type Tab = "category" | "sub category" | "questions";
 
 const Manage = () => {
-    const tabItems = ["category", "sub category", "questions", "materials"]
+    const tabItems = ["category", "sub category", "questions"]
     const [activeTab, setActiveTab] = useState<Tab>("category");
 
 
@@ -37,14 +35,12 @@ const Manage = () => {
                 </div>
                 <div>
                     {activeTab === "category" && <AddCategoryModal/>}
-                    {activeTab === "materials" && <AddMaterialModal/>}
                     {activeTab === "sub category" && <AddSubCategoryModal/>}
                     {activeTab === "questions" && <AddQuestionModal/>}
                 </div>                
             </div>
             {activeTab === "category" && <Category />}
             {activeTab === "sub category" && <SubCategory/>}
-            {activeTab === "materials" && <Materials />}
             {activeTab === "questions" && <Questions />}
         </div>
     );

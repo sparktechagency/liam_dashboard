@@ -19,7 +19,7 @@ export const subscriptionApi = apiSlice.injectEndpoints({
           });
         }
         return {
-          url: "/dashboards/subscription-plans",
+          url: "/subscriptions/plans",
           method: "GET",
           params: params,
         };
@@ -29,7 +29,7 @@ export const subscriptionApi = apiSlice.injectEndpoints({
     }),
     createSubscription: builder.mutation({
       query: (data) => ({
-        url: "/categories/create-category",
+        url: "/subscriptions/plans",
         method: "POST",
         body: data,
       }),

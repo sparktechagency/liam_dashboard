@@ -3,6 +3,7 @@ import type { IMeta } from "../../types/global.type";
 import { IBanner, IBannerDataSource } from "../../types/banner.type";
 import placeholder from "../../assets/placeholder.png";
 import DeleteBannerModal from "../modal/banner/DeleteBannerModal";
+import EditBannerModal from "../modal/banner/EditBannerModal";
 
 
 
@@ -103,9 +104,9 @@ const BannerTable = ({
       dataIndex: "_id",
       key: "action",
       width: 115,
-      render: (val: string, record: ICategory) => (
+      render: (val: string, record: IBannerDataSource) => (
         <div className="flex items-center gap-3">
-          <EditCategoryModal category={record} />
+          <EditBannerModal banner={record} />
           <DeleteBannerModal bannerId={val} />
         </div>
       ),

@@ -1,12 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Form, Input, Modal } from "antd";
+import { Form, InputNumber, Modal, Select } from "antd";
 import { useState } from "react";
 import SubmitButton from "../../form/SubmitButton";
+import FeatureForm from "../../subscription/FeatureForm";
+import { durationOptions, planOptions } from "../../../data/option.data";
+import { WarningToast } from "../../../helper/ValidationHelper";
+import { useCreateSubscriptionMutation } from "../../../redux/features/subscription/subscriptionApi";
+const { Option } = Select;
+
 
 
 const CreateSubscriptionModal = () => {
-    const isLoading = false;
+    const [features, setFeatures] = useState<string[]>([])
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [createSubscription, { isLoading }] = useCreateSubscriptionMutation();
     const showModal = () => {
         setIsModalOpen(true);
     };
@@ -20,7 +27,11 @@ const CreateSubscriptionModal = () => {
     const [form] = Form.useForm();
 
     const onFinish = (values: any) => {
-        console.log("Form Values: ", values);
+        if(features?.length===0){
+            WarningToast("Please add minimum one feature !")
+        }else{
+            console.log("Form Values: ", values);
+        }
     };
 
     return (
@@ -31,49 +42,63 @@ const CreateSubscriptionModal = () => {
             >
                 Add Subscription
             </button>
-         <Modal maskClosable={false} centered footer={false} title="Add Subscription" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-            <Form
-                form={form}
-                initialValues={undefined}
-                onFinish={onFinish}
-                layout="vertical"
-            >
-                <Form.Item
-                    name="subscriptionPlan"
-                    label="Subscription Plan"
-                    rules={[{ required: true, message: "Please input the subscription plan!" }]}
+            <Modal maskClosable={false} centered footer={false} title="Add Subscription" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                <Form
+                    form={form}
+                    initialValues={undefined}
+                    onFinish={onFinish}
+                    layout="vertical"
                 >
-                    <Input />
-                </Form.Item>
-
-                <Form.Item
-                    name="price"
-                    label="Price"
-                    rules={[{ required: true, message: "Please input the price!" }]}
-                >
-                    <Input />
-                </Form.Item>
-
-                <Form.Item
-                    name="duration"
-                    label="Duration"
-                    rules={[{ required: true, message: "Please input the duration!" }]}
-                >
-                    <Input />
-                </Form.Item>
-
-                <Form.Item
-                    name="contractorFeePerMonth"
-                    label="Contractor Fee Per Month"
-                    rules={[{ required: true, message: "Please input the contractor fee per month!" }]}
-                >
-                    <Input />
-                </Form.Item>
-                <Form.Item>
-                    <SubmitButton isLoading={isLoading} loadingTitle="Adding...">Add</SubmitButton>
-                </Form.Item>
-            </Form>
-        </Modal>
+                    <Form.Item
+                        name="planType"
+                        label="Plan Type"
+                        rules={[{ required: true, message: "Please, Select a type !" }]}
+                    >
+                        <Select
+                            placeholder="Select a type"
+                            allowClear
+                        >
+                            {planOptions?.map(({ label, value }, index) => (
+                                <Option key={index} value={value}>{label}</Option>
+                            ))}
+                        </Select>
+                    </Form.Item>
+                    <Form.Item
+                        name="duration"
+                        label="Duration"
+                        rules={[{ required: true, message: "Please, Select a duration !" }]}
+                    >
+                        <Select
+                            placeholder="Select a type"
+                            allowClear
+                        >
+                            {durationOptions?.map(({ label, value }, index) => (
+                                <Option key={index} value={value}>{label}</Option>
+                            ))}
+                        </Select>
+                    </Form.Item>
+                    <Form.Item
+                        name="price"
+                        label="Price"
+                        rules={[
+                            { required: true, message: "Please enter the price!" },
+                            {
+                                type: "number",
+                                min: 1,
+                                message: "Price must be greater than 0",
+                            },
+                        ]}
+                    >
+                        <InputNumber
+                            style={{ width: "100%" }}
+                            min={0} // prevents input below 1
+                            placeholder="Enter price"
+                        />
+                    </Form.Item>
+                    <FeatureForm features={features} setFeatures={setFeatures} />
+                    <SubmitButton isLoading={isLoading}>Add New</SubmitButton>
+                </Form>
+            </Modal>
         </>
     );
 };

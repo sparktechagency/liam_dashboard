@@ -2,6 +2,7 @@ import { useState } from "react";
 import ListLoading from "../loader/ListLoading";
 import BannerTable from "./BannerTable";
 import { useGetBannersQuery } from "../../redux/features/banner/bannerApi";
+import AddBannerModal from "../modal/banner/AddBannerModal";
 
 
 const BannerList = () => {
@@ -40,7 +41,7 @@ const BannerList = () => {
         <>
             <div className="flex flex-col md:flex-row md:justify-between md:items-center mt-5">
                 <h2 className="text-md md:text-xl font-semibold mb-5 md:mb-0 ">Banner List</h2>
-                 
+                <AddBannerModal/>
             </div>
             <div className="mt-4">
                 {content}

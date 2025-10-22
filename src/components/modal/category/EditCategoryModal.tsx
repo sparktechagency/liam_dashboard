@@ -82,14 +82,14 @@ const EditCategoryModal = ({ category }: TProps) => {
              title="Edit Category"
              open={isModalOpen} 
              onOk={handleOk}
-                onCancel={() => {
-                    handleCancel();
-                    form.setFieldsValue({
-                        name: category?.name
-                    });
-                    setImageSrc(category?.img || placeholder_img)
-                }}
-            >
+             onCancel={() => {
+                handleCancel();
+                form.setFieldsValue({
+                   name: category?.name
+                });
+                setImageSrc(category?.img || placeholder_img)
+             }}
+          >
             {CategoryUpdateError && <FormError message={CategoryUpdateError} />}
             <Form
                 form={form}

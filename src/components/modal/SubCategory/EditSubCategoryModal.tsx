@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Form, Input, Modal, Upload } from "antd";
+import { Button, Form, Input, Modal, Select, Upload } from "antd";
 import { useEffect, useState } from "react";
 import { MdOutlineFileUpload, MdOutlineModeEdit } from "react-icons/md";
 import { ISubCategoryDataSource } from "../../../types/category.type";
@@ -9,6 +9,8 @@ import placeholder_img from "../../../assets/placeholder.png";
 import FormError from "../../validation/FormError";
 import { SetSubCategoryUpdateError } from "../../../redux/features/subCategory/subCategorySlice";
 import SubmitButton from "../../form/SubmitButton";
+import { useGetCategoryDropDownQuery } from "../../../redux/features/category/categoryApi";
+const { Option } = Select;
 
 
 
@@ -21,6 +23,11 @@ const EditSubCategoryModal = ({ subCategory }: TProps) => {
     const [imageSrc, setImageSrc] = useState(subCategory?.img || placeholder_img); // Default image
     const { SubCategoryUpdateError } = useAppSelector((state) => state.subCategory);
     const [updateSubCategory, { isLoading, isSuccess }] = useUpdateSubCategoryMutation();
+    const { categoryOptions } = useAppSelector((state) => state.category)
+    useGetCategoryDropDownQuery([
+        { name: "page", value: 1 },
+        { name: "limit", value: 100 }
+    ]);
     const dispatch = useAppDispatch();
     const [form] = Form.useForm();
     const [fileList, setFileList] = useState<any[]>([]);
@@ -65,7 +72,8 @@ const EditSubCategoryModal = ({ subCategory }: TProps) => {
         dispatch(SetSubCategoryUpdateError(""))
         const file = values.categoryImage?.[0]?.originFileObj;
         const formData = new FormData();
-        formData.append("data", JSON.stringify({ name: values.name }));
+
+        formData.append("data", JSON.stringify({ name: values.name, categoryId: values.categoryId}));
         if (file) {
             formData.append("file", file);
         }
@@ -73,6 +81,7 @@ const EditSubCategoryModal = ({ subCategory }: TProps) => {
             id: subCategory?._id,
             data: formData
         })
+
     };
     
 
@@ -80,23 +89,45 @@ const EditSubCategoryModal = ({ subCategory }: TProps) => {
        <>
           <button onClick={showModal} className=" bg-primaryColor p-1 rounded cursor-pointer"><MdOutlineModeEdit className="w-6 h-6 text-white" /></button>
          <Modal 
-          centered 
-          maskClosable={false}
-          footer={false}
-          title="Edit Sub Category"
-          open={isModalOpen}
-          onOk={handleOk} 
-          onCancel={handleCancel}
+           centered 
+           maskClosable={false}
+           footer={false}
+           title="Edit Sub Category"
+           open={isModalOpen}
+           onOk={handleOk} 
+           onCancel={() => {
+              handleCancel();
+              form.setFieldsValue({
+                name: subCategory?.name,
+                categoryId: subCategory?.categoryId
+               });
+               setImageSrc(subCategory?.img || placeholder_img)
+            }}
           >
              {SubCategoryUpdateError && <FormError message={SubCategoryUpdateError} />}
             <Form
                 form={form}
                 initialValues={{
-                    name: subCategory?.name
+                    name: subCategory?.name,
+                    categoryId: subCategory?.categoryId
                 }}
                 onFinish={onFinish}
                 layout="vertical"
             >
+                <Form.Item 
+                      name="categoryId"
+                      label="Category" 
+                      rules={[{ required: true, message: "Please, Select a category !" }]}
+                    >
+                    <Select
+                       placeholder="Select a category"
+                       allowClear
+                    >
+                        {categoryOptions?.map(({ label, value }, index) => (
+                          <Option key={index} value={value}>{label}</Option>
+                        ))}
+                    </Select>
+                    </Form.Item>
                 <Form.Item
                     name="name"
                     label="Sub Category Name"

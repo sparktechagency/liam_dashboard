@@ -27,6 +27,16 @@ export const subCategoryApi = apiSlice.injectEndpoints({
       keepUnusedDataFor: 600,
       providesTags: [TagTypes.subCategories],
     }),
+    getSubCategoryDropDown: builder.query({
+      query: (categoryId) => {
+        return {
+          url: `/sub-categories/by-category/${categoryId}`,
+          method: "GET",
+        };
+      },
+      keepUnusedDataFor: 600,
+      providesTags: [TagTypes.subCategoryDropDown],
+    }),
     createSubCategory: builder.mutation({
       query: (data) => ({
         url: "/sub-categories/create-sub-category",
@@ -35,7 +45,7 @@ export const subCategoryApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: (result) => {
         if (result?.success) {
-          return [TagTypes.subCategories];
+          return [TagTypes.subCategories, TagTypes.subCategoryDropDown];
         }
         return [];
       },
@@ -57,13 +67,13 @@ export const subCategoryApi = apiSlice.injectEndpoints({
     }),
     updateSubCategory: builder.mutation({
       query: ({ id, data }) => ({
-        url: `/subcategories/${id}`,
+        url: `/sub-categories/${id}`,
         method: "PATCH",
         body: data,
       }),
       invalidatesTags: (result) => {
         if (result?.success) {
-          return [TagTypes.subCategories, TagTypes.categoryDropDown];
+          return [TagTypes.subCategories, TagTypes.subCategoryDropDown];
         }
         return [];
       },
@@ -74,6 +84,7 @@ export const subCategoryApi = apiSlice.injectEndpoints({
         } catch (err: any) {
           const status = err?.error?.status;
           const message = err?.error?.data?.message || "Something Went Wrong";
+          console.log(err)
           if (status === 500) {
             dispatch(SetSubCategoryUpdateError("Something Went Wrong"));
           }
@@ -90,7 +101,7 @@ export const subCategoryApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: (result) => {
         if (result?.success) {
-          return [TagTypes.subCategories, TagTypes.categoryDropDown];
+          return [TagTypes.subCategories, TagTypes.subCategoryDropDown];
         }
         return [];
       },
@@ -113,4 +124,4 @@ export const subCategoryApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetSubCategoriesQuery, useCreateSubCategoryMutation, useDeleteSubCategoryMutation, useUpdateSubCategoryMutation } = subCategoryApi;
+export const { useGetSubCategoriesQuery, useGetSubCategoryDropDownQuery, useCreateSubCategoryMutation, useDeleteSubCategoryMutation, useUpdateSubCategoryMutation } = subCategoryApi;
