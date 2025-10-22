@@ -1,6 +1,7 @@
 import { Table } from "antd";
 import { ISubscription, ISubscriptionDataSource } from "../../types/subscription";
 import EditSubscriptionModal from "../modal/subscription/EditSubscriptionModal";
+import DeleteSubscriptionModal from "../modal/subscription/DeleteSubscriptionModal";
 
 
 type TProps = {
@@ -81,9 +82,13 @@ const SubscriptionTable = ({
     {
       title: "Action",
       width: 150,
-      dataIndex: "slNo",
-      render: (_: number, record: ISubscription) => (
-       <EditSubscriptionModal subscription={record}/>
+      dataIndex: "_id",
+      key: "_id",
+      render: (subscriptionId: string, record: ISubscription) => (
+       <div className="flex gap-x-2 items-center">
+        <EditSubscriptionModal subscription={record}/>
+        <DeleteSubscriptionModal subscriptionId={subscriptionId}/>
+       </div>
       ),
     },
   ];

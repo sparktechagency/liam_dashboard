@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Form, InputNumber, Modal, Select } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SubmitButton from "../../form/SubmitButton";
 import FeatureForm from "../../subscription/FeatureForm";
 import { durationOptions, planOptions } from "../../../data/option.data";
 import { WarningToast } from "../../../helper/ValidationHelper";
 import { useCreateSubscriptionMutation } from "../../../redux/features/subscription/subscriptionApi";
+import FormError from "../../validation/FormError";
+import { useAppSelector } from "../../../redux/hooks/hooks";
 const { Option } = Select;
 
 
@@ -13,7 +15,8 @@ const { Option } = Select;
 const CreateSubscriptionModal = () => {
     const [features, setFeatures] = useState<string[]>([])
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-    const [createSubscription, { isLoading }] = useCreateSubscriptionMutation();
+    const { SubscriptionCreateError } = useAppSelector((state) => state.subscription);
+    const [createSubscription, { isLoading, isSuccess }] = useCreateSubscriptionMutation();
     const showModal = () => {
         setIsModalOpen(true);
     };
@@ -26,11 +29,23 @@ const CreateSubscriptionModal = () => {
 
     const [form] = Form.useForm();
 
+
+    //if success
+    useEffect(() => {
+      if (!isLoading && isSuccess) {
+        setIsModalOpen(false);
+        form.resetFields()
+      }
+    }, [isLoading, isSuccess, form]);
+
     const onFinish = (values: any) => {
         if(features?.length===0){
             WarningToast("Please add minimum one feature !")
         }else{
-            console.log("Form Values: ", values);
+            createSubscription({
+                ...values,
+                details: features
+            })
         }
     };
 
@@ -43,6 +58,7 @@ const CreateSubscriptionModal = () => {
                 Add Subscription
             </button>
             <Modal maskClosable={false} centered footer={false} title="Add Subscription" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                {SubscriptionCreateError && <FormError message={SubscriptionCreateError} />}
                 <Form
                     form={form}
                     initialValues={undefined}

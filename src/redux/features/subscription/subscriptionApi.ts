@@ -57,7 +57,7 @@ export const subscriptionApi = apiSlice.injectEndpoints({
     }),
     updateSubscription: builder.mutation({
       query: ({ id, data }) => ({
-        url: `/categories/${id}`,
+        url: `/subscriptions/plans/${id}`,
         method: "PATCH",
         body: data,
       }),
@@ -85,7 +85,7 @@ export const subscriptionApi = apiSlice.injectEndpoints({
     }),
     deleteSubscription: builder.mutation({
       query: (id) => ({
-        url: `/categories/${id}`,
+        url: `/subscriptions/plans/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: (result) => {

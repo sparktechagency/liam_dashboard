@@ -1,19 +1,19 @@
 import { useState } from "react";
-import { useGetCategoriesQuery } from "../../redux/features/category/categoryApi";
 import ListLoading from "../loader/ListLoading";
 import QuestionTable from "./QuestionTable";
+import { useGetQuestionsQuery } from "../../redux/features/question/questionApi";
 
 
 const Questions = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize, setPageSize] = useState(10);
-    const { data, isLoading, isFetching, isError } = useGetCategoriesQuery([
+    const { data, isLoading, isFetching, isError } = useGetQuestionsQuery([
         { name: "page", value: currentPage },
         { name: "limit", value: pageSize },
     ]);
 
 
-    const categories = data?.data || [];
+    const questions = data?.data || [];
     const meta = data?.meta || {};
 
     let content: React.ReactNode;
@@ -25,7 +25,7 @@ const Questions = () => {
 
     if (!isLoading && !isError) {
         content = <QuestionTable
-            categories={categories}
+            questions={questions}
             meta={meta}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}

@@ -1,11 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Form, Modal } from "antd";
-import TextArea from "antd/es/input/TextArea";
 import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks/hooks";
+import { useCreateQuestionMutation } from "../../../redux/features/question/questionApi";
+import SubmitButton from "../../form/SubmitButton";
+import FeatureForm from "../../subscription/FeatureForm";
 
 
 const AddQuestionModal = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const dispatch = useAppDispatch();
+    const [features, setFeatures] = useState<string[]>([])
+    const { QuestionCreateError } = useAppSelector((state) => state.question);
+    const [createQuestion, { isLoading, isSuccess }] = useCreateQuestionMutation();
+
     const showModal = () => {
         setIsModalOpen(true);
     };
@@ -32,22 +40,8 @@ const AddQuestionModal = () => {
                     onFinish={onFinish}
                     layout="vertical"
                 >
-                    <Form.Item
-                        name="questions"
-                        label="Questions Name"
-                        rules={[{ required: true, message: "Please input the questions name!" }]}
-                    >
-                        <TextArea />
-                    </Form.Item>
-
-                    <Form.Item>
-                        <button
-                            type="submit"
-                            className="rounded-lg font-semibold cursor-pointer bg-primaryColor text-white px-3 py-2"
-                        >
-                            Add Questions
-                        </button>
-                    </Form.Item>
+                    <FeatureForm features={features} setFeatures={setFeatures}/>
+                   <SubmitButton isLoading={isLoading} loadingTitle="Adding...">Add Questions</SubmitButton>
                 </Form>
             </Modal>
         </>

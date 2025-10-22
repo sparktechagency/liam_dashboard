@@ -1,13 +1,12 @@
 import { Pagination, Table } from "antd";
-import type { ICategory, ICategoryDataSource } from "../../types/category.type";
 import type { IMeta } from "../../types/global.type";
 import placeholder from "../../assets/placeholder.png";
-import EditCategoryModal from "../modal/category/EditCategoryModal";
 import DeleteCategoryModal from "../modal/category/DeleteCategoryModal";
+import { IQuestion, IQuestionDataSource } from "../../types/question.type";
 
 
 type TProps = {
-  categories: ICategory[];
+  questions: IQuestion[];
   meta: IMeta;
   currentPage: number;
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
@@ -18,7 +17,8 @@ type TProps = {
 
 
 const QuestionTable = ({
-  categories, meta,
+  questions,
+  meta,
   currentPage,
   setCurrentPage,
   pageSize,
@@ -26,12 +26,14 @@ const QuestionTable = ({
   loading
 }: TProps) => {
 
-  const dataSource: ICategoryDataSource[] = categories?.map((category, index) => ({
+  const dataSource: IQuestionDataSource[] = questions?.map((question, index) => ({
     key: index,
     serial: Number(index + 1) + (meta.page - 1) * pageSize,
-    _id: category?._id,
-    name: category?.name,
-    img: category?.img
+    _id: question?._id,
+    question: question?.question,
+    subCategory: question?.subCategoryId?.name,
+    subCategoryId: question?.subCategoryId?._id,
+    img: question?.subCategoryId?.img
   }))
 
   const columns = [
@@ -42,9 +44,9 @@ const QuestionTable = ({
       width: 60,
     },
     {
-      title: "Category Name",
-      dataIndex: "name",
-      key: "name",
+      title: "Sub Category",
+      dataIndex: "subCategory",
+      key: "subCategory",
       width: 180,
       render: (text: string) => (
         <>
@@ -53,32 +55,26 @@ const QuestionTable = ({
       ),
     },
     {
-      title: "Image",
-      dataIndex: "img",
-      key: "img",
-      width: 100,
-      render: (val?: string) => (
-        <div className="flex items-center">
-            <img
-                src={val || placeholder}
-                alt="profile"
-                className="w-[45px] h-[45px] rounded-lg"
-                onError={(e) => {
-                    e.currentTarget.onerror = null;
-                    e.currentTarget.src = placeholder;
-                }}
-            />
-        </div>
-    ),
+      title: "Questions",
+      dataIndex: "question",
+      key: "question",
+      width: 300,
+      render: (questions: string[]) => (
+        <>
+          {questions?.map((question, i) => (
+            <p key={i} className="truncate">{Number(i + 1)}. {question}</p>
+          ))}
+        </>
+      ),
     },
     {
       title: "Action",
       dataIndex: "_id",
       key: "action",
       width: 115,
-      render: (val: string, record: ICategory) => (
+      render: (val: string) => (
         <div className="flex items-center gap-3">
-          <EditCategoryModal category={record} />
+          {/* <EditCategoryModal category={record} /> */}
           <DeleteCategoryModal categoryId={val} />
         </div>
       ),
