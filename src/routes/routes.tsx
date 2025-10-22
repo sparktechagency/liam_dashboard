@@ -22,6 +22,7 @@ import AuthLayout from '../components/LayoutsComponents/AuthLayout';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 import Subscriptions from '../pages/subscriptions/Subscriptions';
+import BannerPage from '../pages/bannerPage/BannerPage';
 
 
 const router = createBrowserRouter([
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
             {
                 path: "/income/transaction-history",
                 element: <TransactionHistory></TransactionHistory>,
+            },
+            {
+                path: "/banners",
+                element: <BannerPage></BannerPage>,
             },
             {
                 path: "/customer-manage",

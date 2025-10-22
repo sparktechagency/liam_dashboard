@@ -1,17 +1,17 @@
 import { Modal } from "antd";
 import { useEffect, useState } from "react";
-import { useDeleteCategoryMutation } from "../../../redux/features/category/categoryApi";
 import DeleteButton from "../../form/DeleteButton";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { useDeleteBannerMutation } from "../../../redux/features/banner/bannerApi";
 
 type TProps = {
-  categoryId: string;
+  bannerId: string;
 };
 
-const DeleteCategoryModal = ({categoryId}: TProps) => {
+const DeleteBannerModal = ({bannerId}: TProps) => {
   const [modalOpen, setModalOpen] = useState(false);
-  const [deleteCategory, { isLoading, isSuccess }] =
-    useDeleteCategoryMutation();
+  const [deleteBanner, { isLoading, isSuccess }] =
+    useDeleteBannerMutation();
 
   useEffect(() => {
     if (!isLoading) {
@@ -21,7 +21,7 @@ const DeleteCategoryModal = ({categoryId}: TProps) => {
 
 
   const handleDelete = () => {
-    deleteCategory(categoryId);
+    deleteBanner(bannerId);
   };
 
   return (
@@ -59,4 +59,4 @@ const DeleteCategoryModal = ({categoryId}: TProps) => {
   );
 };
 
-export default DeleteCategoryModal;
+export default DeleteBannerModal;

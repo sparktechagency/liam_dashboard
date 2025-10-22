@@ -5,6 +5,7 @@ import categorySliceReducer from "../features/category/categorySlice";
 import userSliceReducer from "../features/user/userSlice";
 import subCategorySliceReducer from "../features/subCategory/subCategorySlice";
 import subscriptionSliceReducer from "../features/subscription/subscriptionSlice";
+import bannerSliceReducer from "../features/banner/bannerSlice";
 
 export const store = configureStore({
   reducer: {
@@ -13,7 +14,8 @@ export const store = configureStore({
     category: categorySliceReducer,
     subCategory: subCategorySliceReducer,
     user: userSliceReducer,
-    subscription: subscriptionSliceReducer
+    subscription: subscriptionSliceReducer,
+    banner: bannerSliceReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware),
