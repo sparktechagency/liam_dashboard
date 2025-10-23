@@ -29,7 +29,7 @@ export const userApi = apiSlice.injectEndpoints({
     }),
     getMe: builder.query({
       query: () => ({
-        url: "/user/get-me",
+        url: "/users/me",
         method: "GET",
       }),
       keepUnusedDataFor: 600,
@@ -52,8 +52,8 @@ export const userApi = apiSlice.injectEndpoints({
       },
     }),
     updateProfile: builder.mutation({
-      query: (data) => ({
-        url: `/user/edit-my-profile`,
+      query: ({id, data}) => ({
+        url: `/users/${id}`,
         method: "PATCH",
         body: data,
       }),

@@ -1,14 +1,14 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { IUser } from "../../../types/user.type";
 
 
 type TInitialState = {
-  CreateError: string;
+  profileError: string;
   user: IUser | null;
 }
 
 const initialState: TInitialState = {
-  CreateError: "",
+  profileError: "",
   user: null
 };
 
@@ -19,11 +19,15 @@ const userSlice = createSlice({
     SetUser: (state, action) => {
       state.user = action.payload;
     },
+    SetProfileError: (state, action: PayloadAction<string>) => {
+      state.profileError = action.payload;
+    },
   },
 });
 
 export const {
-  SetUser
+  SetUser,
+  SetProfileError
 } = userSlice.actions;
 
 const userSliceReducer = userSlice.reducer;
