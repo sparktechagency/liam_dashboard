@@ -1,11 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Form, Modal, Select } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks/hooks";
 import { useCreateQuestionMutation } from "../../../redux/features/question/questionApi";
 import SubmitButton from "../../form/SubmitButton";
 import FeatureForm from "../../subscription/FeatureForm";
 import { useGetSubCategoryDropDownQuery } from "../../../redux/features/subCategory/subCategoryApi";
+import { WarningToast } from "../../../helper/ValidationHelper";
+import FormError from "../../validation/FormError";
+import { SetQuestionCreateError } from "../../../redux/features/question/questionSlice";
 const { Option } = Select;
 
 
@@ -34,14 +37,32 @@ const AddQuestionModal = () => {
     const [form] = Form.useForm();
 
 
+    //if success
+    useEffect(() => {
+        if (!isLoading && isSuccess) {
+            setIsModalOpen(false);
+            form.resetFields()
+            setQuestion([]);
+        }
+    }, [isLoading, isSuccess, form]);
+
     const onFinish = (values: any) => {
-        console.log("Form Values: ", values);
+        dispatch(SetQuestionCreateError(""));
+        if (question?.length === 0) {
+            WarningToast("Please add minimum one feature !")
+        } else {
+            createQuestion({
+                ...values,
+                question
+            })
+        }
     };
 
     return (
         <>
             <button onClick={showModal} className=" bg-primaryColor py-2 px-4 rounded-md cursor-pointer text-white">+ Add</button>
             <Modal maskClosable={false} centered footer={false} title="Add Questions" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                {QuestionCreateError && <FormError message={QuestionCreateError} />}
                 <Form
                     form={form}
                     initialValues={undefined}
@@ -49,8 +70,8 @@ const AddQuestionModal = () => {
                     layout="vertical"
                 >
                     <Form.Item
-                        name="categoryId"
-                        label="Category"
+                        name="subCategoryId"
+                        label="Sub Category"
                         rules={[{ required: true, message: "Please, Select a sub category !" }]}
                     >
                         <Select

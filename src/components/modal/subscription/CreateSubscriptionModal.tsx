@@ -7,12 +7,14 @@ import { durationOptions, planOptions } from "../../../data/option.data";
 import { WarningToast } from "../../../helper/ValidationHelper";
 import { useCreateSubscriptionMutation } from "../../../redux/features/subscription/subscriptionApi";
 import FormError from "../../validation/FormError";
-import { useAppSelector } from "../../../redux/hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks/hooks";
+import { SetSubscriptioneCreateError } from "../../../redux/features/subscription/subscriptionSlice";
 const { Option } = Select;
 
 
 
 const CreateSubscriptionModal = () => {
+    const dispatch = useAppDispatch();
     const [features, setFeatures] = useState<string[]>([])
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const { SubscriptionCreateError } = useAppSelector((state) => state.subscription);
@@ -34,11 +36,13 @@ const CreateSubscriptionModal = () => {
     useEffect(() => {
       if (!isLoading && isSuccess) {
         setIsModalOpen(false);
-        form.resetFields()
+        form.resetFields();
+        setFeatures([]);
       }
     }, [isLoading, isSuccess, form]);
 
     const onFinish = (values: any) => {
+        dispatch(SetSubscriptioneCreateError(""))
         if(features?.length===0){
             WarningToast("Please add minimum one feature !")
         }else{

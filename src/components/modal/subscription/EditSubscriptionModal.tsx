@@ -8,9 +8,10 @@ import FeatureForm from "../../subscription/FeatureForm";
 import { useUpdateSubscriptionMutation } from "../../../redux/features/subscription/subscriptionApi";
 import { WarningToast } from "../../../helper/ValidationHelper";
 import { durationOptions, planOptions } from "../../../data/option.data";
-import { useAppSelector } from "../../../redux/hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks/hooks";
 import FormError from "../../validation/FormError";
 import checkEqualArray from "../../../utils/checkEqualArray";
+import { SetSubscriptionUpdateError } from "../../../redux/features/subscription/subscriptionSlice";
 const { Option } = Select;
 
 
@@ -19,6 +20,7 @@ type TProps = {
 }
 
 const EditSubscriptionModal = ({ subscription}: TProps) => {
+    const dispatch = useAppDispatch();
     const [features, setFeatures] = useState<string[]>(subscription.details)
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const { SubscriptionUpdateError } = useAppSelector((state) => state.subscription);
@@ -44,6 +46,7 @@ const EditSubscriptionModal = ({ subscription}: TProps) => {
 
 
     const onFinish = (values: any) => {
+        dispatch(SetSubscriptionUpdateError(""))
         if (features?.length === 0) {
             WarningToast("Please add minimum one feature !");
             return;
@@ -96,6 +99,7 @@ const EditSubscriptionModal = ({ subscription}: TProps) => {
                         duration: subscription?.duration,
                         price: subscription?.price
                     });
+                    setFeatures(subscription.details)
                 }}
             >
                 {SubscriptionUpdateError && <FormError message={SubscriptionUpdateError} />}

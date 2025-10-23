@@ -1,8 +1,8 @@
 import { Pagination, Table } from "antd";
 import type { IMeta } from "../../types/global.type";
-import placeholder from "../../assets/placeholder.png";
 import DeleteCategoryModal from "../modal/category/DeleteCategoryModal";
 import { IQuestion, IQuestionDataSource } from "../../types/question.type";
+import EditQuestionModal from "../modal/question/EditQuestionModal";
 
 
 type TProps = {
@@ -72,9 +72,9 @@ const QuestionTable = ({
       dataIndex: "_id",
       key: "action",
       width: 115,
-      render: (val: string) => (
+      render: (val: string, record: IQuestionDataSource) => (
         <div className="flex items-center gap-3">
-          {/* <EditCategoryModal category={record} /> */}
+          <EditQuestionModal question={record} />
           <DeleteCategoryModal categoryId={val} />
         </div>
       ),

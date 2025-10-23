@@ -47,13 +47,13 @@ export const questionApi = apiSlice.injectEndpoints({
     }),
     updateQuestion: builder.mutation({
       query: ({ id, data }) => ({
-        url: `/subscriptions/plans/${id}`,
+        url: `/questions/${id}`,
         method: "PATCH",
         body: data,
       }),
       invalidatesTags: (result) => {
         if (result?.success) {
-          return [TagTypes.subscriptions];
+          return [TagTypes.questions];
         }
         return [];
       },
@@ -75,12 +75,12 @@ export const questionApi = apiSlice.injectEndpoints({
     }),
     deleteQuestion: builder.mutation({
       query: (id) => ({
-        url: `/question/delete/${id}`,
+        url: `/questions/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: (result) => {
         if (result?.success) {
-          return [TagTypes.subscriptions];
+          return [TagTypes.questions];
         }
         return [];
       },
