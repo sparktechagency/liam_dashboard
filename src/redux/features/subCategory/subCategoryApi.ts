@@ -2,9 +2,10 @@
 
 import TagTypes from "../../../constant/tagType.constant";
 import { ErrorToast, SuccessToast } from "../../../helper/ValidationHelper";
+import { ISubCategory } from "../../../types/category.type";
 import type { IParam } from "../../../types/global.type";
 import { apiSlice } from "../api/apiSlice";
-import { SetSubCategoryCreateError, SetSubCategoryUpdateError } from "./subCategorySlice";
+import { SetSubCategoryCreateError, SetSubCategoryOptions, SetSubCategoryUpdateError } from "./subCategorySlice";
 
 export const subCategoryApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -27,7 +28,7 @@ export const subCategoryApi = apiSlice.injectEndpoints({
       keepUnusedDataFor: 600,
       providesTags: [TagTypes.subCategories],
     }),
-    getSubCategoryDropDown: builder.query({
+    getSubCategoryDropDownByCategory: builder.query({
       query: (categoryId) => {
         return {
           url: `/sub-categories/by-category/${categoryId}`,
@@ -35,7 +36,39 @@ export const subCategoryApi = apiSlice.injectEndpoints({
         };
       },
       keepUnusedDataFor: 600,
+      providesTags: [TagTypes.subCategoryDropDownByCategory],
+    }),
+    getSubCategoryDropDown: builder.query({
+      query: (args) => {
+        const params = new URLSearchParams();
+        if (args !== undefined && args.length > 0) {
+          args.forEach((item: IParam) => {
+            if (item.value) {
+              params.append(item.name, item.value);
+            }
+          });
+        }
+        return {
+          url: "/sub-categories",
+          method: "GET",
+          params: params,
+        };
+      },
+      keepUnusedDataFor: 600,
       providesTags: [TagTypes.subCategoryDropDown],
+      async onQueryStarted(_arg, { queryFulfilled, dispatch }) {
+        try {
+          const res = await queryFulfilled;
+          const data = res?.data?.data;
+          const options = data?.map((c: ISubCategory) => ({
+            value: c._id,
+            label: c.name,
+          }))
+          dispatch(SetSubCategoryOptions(options))
+        } catch {
+          ErrorToast("Something Went Wrong");
+        }
+      },
     }),
     createSubCategory: builder.mutation({
       query: (data) => ({
@@ -45,7 +78,7 @@ export const subCategoryApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: (result) => {
         if (result?.success) {
-          return [TagTypes.subCategories, TagTypes.subCategoryDropDown];
+          return [TagTypes.subCategories, TagTypes.subCategoryDropDown, TagTypes.subCategoryDropDownByCategory];
         }
         return [];
       },
@@ -73,7 +106,7 @@ export const subCategoryApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: (result) => {
         if (result?.success) {
-          return [TagTypes.subCategories, TagTypes.subCategoryDropDown];
+          return [TagTypes.subCategories, TagTypes.subCategoryDropDown, TagTypes.subCategoryDropDownByCategory];
         }
         return [];
       },
@@ -101,7 +134,7 @@ export const subCategoryApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: (result) => {
         if (result?.success) {
-          return [TagTypes.subCategories, TagTypes.subCategoryDropDown];
+          return [TagTypes.subCategories, TagTypes.subCategoryDropDown, TagTypes.subCategoryDropDownByCategory];
         }
         return [];
       },
@@ -124,4 +157,4 @@ export const subCategoryApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetSubCategoriesQuery, useGetSubCategoryDropDownQuery, useCreateSubCategoryMutation, useDeleteSubCategoryMutation, useUpdateSubCategoryMutation } = subCategoryApi;
+export const { useGetSubCategoriesQuery, useGetSubCategoryDropDownByCategoryQuery, useGetSubCategoryDropDownQuery, useCreateSubCategoryMutation, useDeleteSubCategoryMutation, useUpdateSubCategoryMutation } = subCategoryApi;

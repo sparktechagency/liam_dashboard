@@ -4,10 +4,11 @@ import { X } from "lucide-react"
 
 type TProps = {
   features: string[],
-  setFeatures: React.Dispatch<React.SetStateAction<string[]>>
+  setFeatures: React.Dispatch<React.SetStateAction<string[]>>,
+  title?: string;
 }
 
-const FeatureForm = ({ features, setFeatures }: TProps) => {
+const FeatureForm = ({ features, setFeatures, title="Features" }: TProps) => {
   const [inputValue, setInputValue] = useState("")
 
   const handleAdd = () => {
@@ -30,7 +31,7 @@ const FeatureForm = ({ features, setFeatures }: TProps) => {
 
   return (
     <div className="bg-white rounded-lg">
-      <h2 className="text-lg font-semibold text-gray-700 mb-1">Features</h2>
+      <h2 className="text-lg font-semibold text-gray-700 mb-1">{title}</h2>
       <div className="mb-6">
         <div className="flex gap-2">
           <input
@@ -55,7 +56,7 @@ const FeatureForm = ({ features, setFeatures }: TProps) => {
       {features?.length > 0 && (
           <>
             <div className="space-y-2">
-              <h3 className="text-lg font-semibold text-gray-700 mb-3">Features ({features?.length})</h3>
+              <h3 className="text-lg font-semibold text-gray-700 mb-3">{title} ({features?.length})</h3>
               {features.length === 0 ? (
                 <p className="text-gray-500 text-center py-4 italic">No conditions added yet</p>
               ) : (

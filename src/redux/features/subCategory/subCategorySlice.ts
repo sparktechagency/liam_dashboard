@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   SubCategoryCreateError: "",
   SubCategoryUpdateError: "",
-  categoryOptions: []
+  subCategoryOptions: []
 };
 
 const subCategorySlice = createSlice({
@@ -17,7 +17,7 @@ const subCategorySlice = createSlice({
       state.SubCategoryUpdateError = action.payload;
     },
     SetSubCategoryOptions: (state, action) => {
-      state.categoryOptions = action.payload;
+      state.subCategoryOptions = action.payload;
     }
   },
 });

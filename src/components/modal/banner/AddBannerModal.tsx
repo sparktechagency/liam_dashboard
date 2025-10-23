@@ -5,7 +5,7 @@ import { MdOutlineFileUpload } from "react-icons/md";
 import { useGetCategoryDropDownQuery } from "../../../redux/features/category/categoryApi";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks/hooks";
 import SubmitButton from "../../form/SubmitButton";
-import { useGetSubCategoryDropDownQuery } from "../../../redux/features/subCategory/subCategoryApi";
+import { useGetSubCategoryDropDownByCategoryQuery } from "../../../redux/features/subCategory/subCategoryApi";
 import FormError from "../../validation/FormError";
 import { ISubCategory } from "../../../types/category.type";
 import { useCreateBannerMutation } from "../../../redux/features/banner/bannerApi";
@@ -27,7 +27,7 @@ const AddBannerModal = () => {
         { name: "limit", value: 100 }
     ]);
 
-    const {data: subCategoryData, isLoading: subCatgoryDropDownLoading} = useGetSubCategoryDropDownQuery(categoryId, {
+    const {data: subCategoryData, isLoading: subCatgoryDropDownLoading} = useGetSubCategoryDropDownByCategoryQuery(categoryId, {
         skip: !categoryId
     });
 

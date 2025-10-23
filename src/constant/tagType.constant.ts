@@ -4,6 +4,7 @@ const TagTypes = {
     categories: "Categories",
     subCategories: "SubCategories",
     subCategoryDropDown: "SubCategoryDropDown",
+    subCategoryDropDownByCategory: "SubCategoryDropDownByCategory",
     materials: "Materials",
     questions: "Questions",
     categoryDropDown: "CategoryDropDown",
