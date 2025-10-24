@@ -27,7 +27,9 @@ const TagTypes = {
     terms: "Terms",
     about: "About",
     banners: "Banners",
-    withdrawList: "WithdrawList"
+    withdrawList: "WithdrawList",
+    bookingStats: "BookingStats",
+    dailyBookings: "DailyBookings"
 }
 
 export default TagTypes;
