@@ -16,7 +16,7 @@ const Manage = () => {
     return (
         <div className=" bg-white rounded-md px-3 py-4 min-h-screen">
             <div className=" mb-5">
-              <h2 className="text-md md:text-xl font-semibold ">Manage</h2>
+              <h2 className="text-md md:text-xl font-semibold ">Category Manage</h2>
             </div>
             <div className=" flex justify-between gap-4">
                 <div className="flex gap-4">

@@ -10,7 +10,7 @@ import SubmitButton from "../../form/SubmitButton";
 import { IBannerDataSource } from "../../../types/banner.type";
 import { typeOptions } from "../../../data/option.data";
 import { SetBannerUpdateError } from "../../../redux/features/banner/bannerSlice";
-import { useGetSubCategoryDropDownQuery } from "../../../redux/features/subCategory/subCategoryApi";
+import { useGetSubCategoryDropDownByCategoryQuery } from "../../../redux/features/subCategory/subCategoryApi";
 import { ISubCategory } from "../../../types/category.type";
 import { useUpdateBannerMutation } from "../../../redux/features/banner/bannerApi";
 const { Option } = Select;
@@ -34,9 +34,11 @@ const EditBannerModal = ({ banner }: TProps) => {
         { name: "limit", value: 100 }
     ]);
 
-    const { data: subCategoryData, isLoading: subCatgoryDropDownLoading } = useGetSubCategoryDropDownQuery(categoryId, {
+
+    const { data: subCategoryData, isLoading: subCatgoryDropDownLoading } = useGetSubCategoryDropDownByCategoryQuery(categoryId, {
         skip: !categoryId
     });
+
 
     useEffect(() => {
         if (subCategoryData?.data) {
@@ -45,7 +47,7 @@ const EditBannerModal = ({ banner }: TProps) => {
                 label: cv?.name
             })))
         }
-    }, [subCategoryData])
+    }, [subCategoryData, categoryId])
 
 
 
@@ -159,7 +161,7 @@ const EditBannerModal = ({ banner }: TProps) => {
                         <Select
                             placeholder="Select a Sub Category"
                             allowClear
-                            disabled={subCatgoryDropDownLoading || subCategoryOptions?.length === 0}
+                            disabled={subCatgoryDropDownLoading || subCategoryOptions?.length===0}
                         >
                             {subCategoryOptions?.map(({ label, value }, index) => (
                                 <Option key={index} value={value}>{label}</Option>

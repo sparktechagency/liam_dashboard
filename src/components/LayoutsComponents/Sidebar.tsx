@@ -87,7 +87,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
                             key: '9',
                             // icon: <img src={location.pathname === '/' ? dashboardActive : dashboard} className='menu-icon' />,
                             icon: <MdOutlineCategory className='w-6 h-6' />,
-                            label: <Link className=' text-[16px]' to={`/manage`}>Manage</Link>,
+                            label: <Link className=' text-[16px]' to={`/manage`}>Category Manage</Link>,
                         },
                         // {
                         //     key: '7',
