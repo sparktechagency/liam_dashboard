@@ -10,6 +10,7 @@ import { RiBarChartGroupedLine, RiDashboard3Line, RiSettings2Line, RiUserLine } 
 import { IoAnalyticsOutline } from 'react-icons/io5';
 import { MdOutlineCategory, MdOutlineReport } from 'react-icons/md';
 import { logout } from '../../helper/SessionHelper';
+import { PiHandWithdrawBold } from 'react-icons/pi';
 
 interface SidebarProps {
     collapsed: boolean;
@@ -20,7 +21,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
 
     return (
         <div className='fixed top-0 left-0 bottom-0 bg-barColor '>
-            <Sider className='h-[100vh] w-[300px] overflow-y-scroll bg-barColor' width={250} collapsedWidth={80} trigger={null} collapsible collapsed={collapsed}>
+            <Sider className='h-screen w-[300px] overflow-y-scroll bg-barColor' width={250} collapsedWidth={80} trigger={null} collapsible collapsed={collapsed}>
                 <div className=' flex justify-center items-center py-6 '>
                     <Link to={`/`}><img src={logo} className=' w-16' /></Link>
                 </div>
@@ -38,13 +39,13 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
                             icon: <RiDashboard3Line className='w-6 h-6' />,
                             label: <Link className=' text-[16px]' to={`/`}>Dashboard</Link>,
                         },
-                        {
-                            key: '2',
-                            // icon: <img src={location.pathname === '/' ? dashboardActive : dashboard} className='menu-icon' />,
-                            // icon: <img src={income} className='menu-icon' />,
-                            icon: <IoAnalyticsOutline className='w-6 h-6' />,
-                            label: <Link className=' text-[16px]' to={`/income`}>Income</Link>,
-                        },
+                        // {
+                        //     key: '2',
+                        //     // icon: <img src={location.pathname === '/' ? dashboardActive : dashboard} className='menu-icon' />,
+                        //     // icon: <img src={income} className='menu-icon' />,
+                        //     icon: <IoAnalyticsOutline className='w-6 h-6' />,
+                        //     label: <Link className=' text-[16px]' to={`/income`}>Income</Link>,
+                        // },
                         {
                             key: '3',
                             // icon: <img src={location.pathname === '/' ? dashboardActive : dashboard} className='menu-icon' />,
@@ -67,17 +68,23 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
                         {
                             key: '6',
                             // icon: <img src={location.pathname === '/' ? dashboardActive : dashboard} className='menu-icon' />,
-                            icon: <RiUserLine className='w-6 h-6' />,
-                            label: <Link className=' text-[16px]' to={`/contractor-manage`}>Contractor Manage</Link>,
+                            icon: <PiHandWithdrawBold className='w-6 h-6' />,
+                            label: <Link className=' text-[16px]' to={`/withdraw-list`}>Withdraw List</Link>,
                         },
                         {
                             key: '7',
                             // icon: <img src={location.pathname === '/' ? dashboardActive : dashboard} className='menu-icon' />,
                             icon: <RiUserLine className='w-6 h-6' />,
-                            label: <Link className=' text-[16px]' to={`/customer-manage`}>Customer Manage</Link>,
+                            label: <Link className=' text-[16px]' to={`/contractor-manage`}>Contractor Manage</Link>,
                         },
                         {
                             key: '8',
+                            // icon: <img src={location.pathname === '/' ? dashboardActive : dashboard} className='menu-icon' />,
+                            icon: <RiUserLine className='w-6 h-6' />,
+                            label: <Link className=' text-[16px]' to={`/customer-manage`}>Customer Manage</Link>,
+                        },
+                        {
+                            key: '9',
                             // icon: <img src={location.pathname === '/' ? dashboardActive : dashboard} className='menu-icon' />,
                             icon: <MdOutlineCategory className='w-6 h-6' />,
                             label: <Link className=' text-[16px]' to={`/manage`}>Manage</Link>,
@@ -89,13 +96,13 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
                         //     label: <Link className=' text-[16px]' to={`/manage-service`}>Manage Services</Link>,
                         // },
                         {
-                            key: '9',
+                            key: '10',
                             // icon: <img src={location.pathname === '/' ? dashboardActive : dashboard} className='menu-icon' />,
                             icon: <MdOutlineReport className='w-6 h-6' />,
                             label: <Link className=' text-[16px]' to={`/report`}>Report</Link>,
                         },
                         {
-                            key: '10',
+                            key: '11',
                             // icon: <img src={location.pathname === '/' ? dashboardActive : dashboard} className='menu-icon' />,
                             icon: <RiSettings2Line className='w-6 h-6' />,
                             label: <p className=' text-[16px]'>Settings</p>,
@@ -130,7 +137,6 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
                         <p className="text-base font-medium text-[#222]">Log Out</p>
                     </div>
             </div>
-
         </div>
     );
 };

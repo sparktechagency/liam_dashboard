@@ -1,7 +1,6 @@
 import { Layout, theme } from 'antd';
-import { IoNotificationsOutline } from 'react-icons/io5';
 import { RxHamburgerMenu } from 'react-icons/rx';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useGetMeQuery } from '../../redux/features/user/userApi';
 import { useAppSelector } from '../../redux/hooks/hooks';
 import UserLoading from '../loader/UserLoading';
@@ -35,8 +34,8 @@ const MainHeader: React.FC<MainHeaderProps> = ({ setCollapsed, collapsed }) => {
                 <div className=' flex justify-end items-center pr-4  bg-barColor'>
 
                     {collapsed ? <RxHamburgerMenu onClick={() => setCollapsed(!collapsed)} className=' text-black w-8 h-8 cursor-pointer hidden' /> : <RxHamburgerMenu onClick={() => setCollapsed(!collapsed)} className=' text-black w-8 h-8 cursor-pointer hidden' />}
-                    <div className=' flex items-center gap-6'>
-                        <div>
+                    <div className='flex items-center gap-6'>
+                        {/* <div>
                             <Link className='flex items-center' to={`/notification`}>
                                 <div className=' relative mt-[4px]'>
                                     <IoNotificationsOutline className="w-7 h-7 text-primaryColor ">
@@ -46,7 +45,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({ setCollapsed, collapsed }) => {
                                     </span>
                                 </div>
                             </Link>
-                        </div>
+                        </div> */}
                         {/* <Link to={`/settings/profile`}>
                             <div className=' flex items-center gap-2 cursor-pointer '>
                                 <Avatar src={`https://avatar.iran.liara.run/public/24`} size={40} className=' ring-1 ring-[#1c4587]' />

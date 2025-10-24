@@ -7,7 +7,7 @@ import { ConfigProvider } from 'antd'
 import { mainTheme } from './theme'
 import { Provider } from 'react-redux'
 import { store } from './redux/store/store'
-import { Toaster } from 'react-hot-toast';
+// import { Toaster } from 'react-hot-toast';
 import '@ant-design/v5-patch-for-react-19';
 
 createRoot(document.getElementById('root')!).render(
@@ -16,7 +16,7 @@ createRoot(document.getElementById('root')!).render(
     <ConfigProvider theme={mainTheme}>
       <RouterProvider router={router} />
     </ConfigProvider>
-    <Toaster position="top-center" />
+    {/* <Toaster position="top-center" /> */}
     </Provider>
   </StrictMode>,
 )

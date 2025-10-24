@@ -23,6 +23,7 @@ import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 import Subscriptions from '../pages/subscriptions/Subscriptions';
 import BannerPage from '../pages/bannerPage/BannerPage';
+import WithdrawListPage from '../pages/withdrawListPage/WithdrawListPage';
 
 
 const router = createBrowserRouter([
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
             {
                 path: "/customer-manage",
                 element: <CustomerManage></CustomerManage>,
+            },
+            {
+                path: "/withdraw-list",
+                element: <WithdrawListPage/>,
             },
             {
                 path: "/contractor-manage",

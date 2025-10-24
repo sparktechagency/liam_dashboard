@@ -23,7 +23,26 @@ export const userApi = apiSlice.injectEndpoints({
       keepUnusedDataFor: 600,
       providesTags: [TagTypes.users],
     }),
+    getWithdrawList: builder.query({
+      query: (args) => {
+        const params = new URLSearchParams();
+        if (args !== undefined && args.length > 0) {
+          args.forEach((item: IParam) => {
+            if (item.value) {
+              params.append(item.name, item.value);
+            }
+          });
+        }
+        return {
+          url: "/payments/withdraw_list",
+          method: "GET",
+          params: params,
+        };
+      },
+      keepUnusedDataFor: 600,
+      providesTags: [TagTypes.withdrawList],
+    }),
   }),
 });
 
-export const { useGetTransactionsQuery } = userApi;
+export const { useGetTransactionsQuery, useGetWithdrawListQuery } = userApi;

@@ -2,26 +2,25 @@
 
 import TagTypes from "../../../constant/tagType.constant";
 import { ErrorToast, SuccessToast } from "../../../helper/ValidationHelper";
-import type { IParam } from "../../../types/global.type";
 import { apiSlice } from "../api/apiSlice";
 import { SetBannerCreateError, SetBannerUpdateError } from "./bannerSlice";
 
 export const bannerApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getBanners: builder.query({
-      query: (args) => {
-        const params = new URLSearchParams();
-        if (args !== undefined && args.length > 0) {
-          args.forEach((item: IParam) => {
-            if (item.value) {
-              params.append(item.name, item.value);
-            }
-          });
-        }
+      query: () => {
+        // const params = new URLSearchParams();
+        // if (args !== undefined && args.length > 0) {
+        //   args.forEach((item: IParam) => {
+        //     if (item.value) {
+        //       params.append(item.name, item.value);
+        //     }
+        //   });
+        // }
         return {
           url: "/dashboards/banners",
           method: "GET",
-          params: params,
+          // params: params,
         };
       },
       keepUnusedDataFor: 600,

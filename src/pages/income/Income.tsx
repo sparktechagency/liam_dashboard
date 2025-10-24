@@ -1,8 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Input, Table, TableProps } from "antd";
-import { CiSearch } from "react-icons/ci";
-import totalBalance from '../../assets/income/total-balance.png'
-import coin from '../../assets/income/coin.png'
+import { Table, TableProps } from "antd";
 import { Link } from "react-router-dom";
 
 
@@ -174,14 +171,14 @@ const Income = () => {
 
 
     return (
-        <div className=" w-full min-h-[100vh] bg-white rounded-lg px-3 py-4">
-            <div className="flex flex-col md:flex-row md:justify-between md:items-center ">
+        <div className=" w-full min-h-screen bg-white rounded-lg px-3 py-4">
+            {/* <div className="flex flex-col md:flex-row md:justify-between md:items-center ">
                 <h2 className="text-md md:text-xl font-semibold mb-5 md:mb-0 ">User Details</h2>
                 <div className=" w-[250px]">
                     <Input prefix={<CiSearch className=" w-6 h-6" />} className="w-[250px]" placeholder="Search" />
                 </div>
-            </div>
-
+            </div> */}
+{/* 
             <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-5">
 
                 <div className=" bg-[#42004A] rounded-lg px-5 py-8">
@@ -205,7 +202,7 @@ const Income = () => {
                     <h2 className="text-white text-2xl lg:text-3xl xl:text-4xl font-semibold">$92584.54</h2>
                 </div>
 
-            </div>
+            </div> */}
             <div className="flex justify-between items-center mt-5">
                 <h2 className="text-md md:text-xl font-semibold ">Transaction History</h2>
                 <div>
