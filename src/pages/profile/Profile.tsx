@@ -8,6 +8,7 @@ import profile_placeholder from "../../assets/profile_placeholder.png";
 import { useGetMeQuery } from "../../redux/features/user/userApi";
 import { useAppSelector } from "../../redux/hooks/hooks";
 import ProfileLoading from "../../components/loader/ProfileLoading";
+import PercentageForm from "../../components/dashboard/PercentageForm";
 
 type Tab = "editProfile" | "changePassword";
 
@@ -93,6 +94,8 @@ const Profile: React.FC = () => {
                             </div>
                         </div>
                     </div>
+                    {/*  */}
+                    <PercentageForm/>
                 </div>
             </div>
         );
