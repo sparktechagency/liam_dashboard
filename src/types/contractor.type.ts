@@ -5,6 +5,10 @@ export type IContractor = {
     email: string;
     contactNo: string;
     status: string;
+    adminAccept: TApprovalStatus;
+    contractor: {
+        subscriptionStatus: string;
+    }
 }
 
 export type IContratorDataSource = {
@@ -15,4 +19,9 @@ export type IContratorDataSource = {
     email: string;
     contactNo: string;
     status: string;
+    approvalStatus: TApprovalStatus;
+    subscriptionStatus: string;
 }
+
+
+export type TApprovalStatus =  'pending' | 'approved' | 'rejected';

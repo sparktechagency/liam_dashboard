@@ -24,6 +24,7 @@ import PublicRoute from './PublicRoute';
 import Subscriptions from '../pages/subscriptions/Subscriptions';
 import BannerPage from '../pages/bannerPage/BannerPage';
 import WithdrawListPage from '../pages/withdrawListPage/WithdrawListPage';
+import ContractorDetailsPage from '../pages/contractorDetailsPage/ContractorDetailsPage';
 
 
 const router = createBrowserRouter([
@@ -64,6 +65,10 @@ const router = createBrowserRouter([
             {
                 path: "/contractor-manage",
                 element: <ContractorManage></ContractorManage>,
+            },
+            {
+                path: "/contractor-details/:id",
+                element: <ContractorDetailsPage></ContractorDetailsPage>,
             },
             {
                 path: "/subscriptions",

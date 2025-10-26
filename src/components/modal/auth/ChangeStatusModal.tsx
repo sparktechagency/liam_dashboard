@@ -1,18 +1,18 @@
-import { Button, Modal } from "antd";
+import { Modal } from "antd";
 import { useEffect, useState } from "react";
 import { useChangeStatusMutation } from "../../../redux/features/auth/authApi";
 import DeleteButton from "../../form/DeleteButton";
 import { MdOutlineBlock } from "react-icons/md";
 import { BsFillStopCircleFill } from "react-icons/bs";
 
-type TProps ={
-  userId:string;
+type TProps = {
+  userId: string;
   status: string;
 }
 
 const ChangeStatusModal = ({ userId, status }: TProps) => {
   const [modalOpen, setModalOpen] = useState(false);
-  const [ changeStatus, { isLoading, isSuccess }] = useChangeStatusMutation();
+  const [changeStatus, { isLoading, isSuccess }] = useChangeStatusMutation();
 
   useEffect(() => {
     if (isSuccess) {
@@ -21,30 +21,37 @@ const ChangeStatusModal = ({ userId, status }: TProps) => {
   }, [isSuccess]);
 
 
- const handleClick = () => {
-   changeStatus({
-     id: userId,
-     data : {
-      status: status==="blocked" ? "active" : "blocked"
-     }
-   });
- };
+  const handleClick = () => {
+    changeStatus({
+      id: userId,
+      data: {
+        status: status === "blocked" ? "active" : "blocked"
+      }
+    });
+  };
 
   return (
     <>
-      <Button
-        type="text"
-        className="w-fit px-2"
-        onClick={() => {
-          setModalOpen(true);
-        }}
+      <button
+        onClick={() => setModalOpen(true)}
+        className={`inline-flex items-center gap-2 px-4 py-1 rounded-2xl font-medium transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 cursor-pointer ${status === "blocked"
+            ? "bg-red-50 text-red-700 hover:bg-red-100 focus:ring-red-300"
+            : "bg-green-50 text-green-700 hover:bg-green-100 focus:ring-green-300"
+          }`}
       >
-        {status === "active" ?
-          <BsFillStopCircleFill size={20} className="text-green-400" />
-          :
-          <MdOutlineBlock size={20} className="text-red-400 " />
-        }
-      </Button>
+        {status === "blocked" ? (
+          <>
+            <MdOutlineBlock className="w-4 h-4" />
+            <span>Blocked</span>
+          </>
+        ) : (
+          <>
+            <BsFillStopCircleFill className="w-4 h-4" />
+            <span>Active</span>
+          </>
+        )}
+      </button>
+
       <Modal
         title={`Are you sure, you want to ${status === "blocked" ? "active" : "block"}?`}
         open={modalOpen}

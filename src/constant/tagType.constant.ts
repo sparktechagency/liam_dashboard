@@ -30,7 +30,8 @@ const TagTypes = {
     withdrawList: "WithdrawList",
     bookingStats: "BookingStats",
     dailyBookings: "DailyBookings",
-    percentage: "Percentage"
+    percentage: "Percentage",
+    contractors: "Contractors"
 }
 
 export default TagTypes;

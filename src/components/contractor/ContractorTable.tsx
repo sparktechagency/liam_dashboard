@@ -1,8 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Pagination, Table } from "antd";
 import type { IMeta } from "../../types/global.type";
-import { IContractor, IContratorDataSource } from "../../types/contractor.type";
+import { IContractor, IContratorDataSource, TApprovalStatus } from "../../types/contractor.type";
 import ChangeStatusModal from "../modal/auth/ChangeStatusModal";
+import { Link } from "react-router-dom";
+import { Eye } from "lucide-react";
+import ContractorApprovalModal from "../modal/contractor/ContractorApprovalModal";
+import { ColumnsType } from "antd/es/table";
 
 
 type TProps = {
@@ -33,10 +36,13 @@ const ContractorTable = ({
     fullName: contractor?.fullName,
     email: contractor?.email,
     contactNo: contractor?.contactNo,
-    status: contractor?.status
+    status: contractor?.status,
+    approvalStatus: contractor?.adminAccept,
+    subscriptionStatus: contractor?.contractor?.subscriptionStatus
   }))
 
-  const columns = [
+
+  const columns: ColumnsType<IContratorDataSource>  = [
     {
       title: "S.N.",
       dataIndex: "serial",
@@ -66,42 +72,52 @@ const ContractorTable = ({
       ),
     },
     {
-      title: "Contact Number",
-      dataIndex: "contactNo",
-      key: "contactNo",
-      width: 180,
+      title: "Approval Status",
+      dataIndex: "approvalStatus",
+      key: "approvalStatus",
+      width: 160,
+      render: (status: TApprovalStatus, record) => (
+        <>
+          <ContractorApprovalModal status={status} userId={record?._id}/>
+        </>
+      )
+      ,
+    },
+     {
+      title: "Subscription Status",
+      dataIndex: "subscriptionStatus",
+      key: "subscriptionStatus",
+      width: 160,
+      align: "center" as const,
       render: (text: string) => (
         <>
-          <p className="truncate">{text}</p>
+          <p className="truncate capitalize">{text}</p>
         </>
       ),
     },
     {
-      title: "Status",
+      title: "Block Status",
       dataIndex: "status",
       key: "status",
       width: 160,
-      render: (status: string) => {
-        const statusStyles = {
-          blocked: "bg-red-100 text-red-700 border border-red-300",
-          active: "bg-green-100 text-green-700 border border-green-300",
-        };
-        const bgColor = status === "blocked" ? statusStyles.blocked : statusStyles.active;
-        return (
-            <button
-              className={`${bgColor} w-20 cursor-default px-3 py-0.5 text-sm font-medium rounded-full`}
-            >
-              {status === "blocked" ? "Blocked" : "Active"}
-            </button>
-        );
-      },
+      render: (status: string, record: IContratorDataSource) => (
+        <ChangeStatusModal userId={record?._id} status={status} />
+      )
+      ,
     },
     {
       title: "Action",
+      dataIndex: "_id",
+      key: "_id",
       width: 150,
-      render: (_: any, record: IContratorDataSource) => (
-        <div className="flex items-center">
-         <ChangeStatusModal userId={record?._id} status={record?.status}/>
+      render: (userId: string, ) => (
+        <div className="flex items-center gap-x-1">
+          <Link
+            to={`/contractor-details/${userId}`}
+            className="bg-red-600 hover:bg-gray-700 p-1 text-white rounded-full"
+          >
+            <Eye size={18} />
+          </Link>
         </div>
       ),
     },
