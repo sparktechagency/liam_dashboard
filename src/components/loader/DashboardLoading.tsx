@@ -1,7 +1,7 @@
 
 const DashboardLoading = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 p-4 md:p-8">
+    <div className="bg-linear-to-br from-purple-50 to-blue-50 p-4 md:p-8">
       <div className="mx-auto space-y-6">
         {/* Stats Cards Row */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">

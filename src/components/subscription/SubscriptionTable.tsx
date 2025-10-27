@@ -45,13 +45,15 @@ const SubscriptionTable = ({
       ),
     },
     {
-      title: "Price",
+      title: "Price ($)",
       dataIndex: "price",
-      key: "email",
+      key: "price",
       width: 180,
-      render: (text: string) => (
+      render: (price: number) => (
         <>
-          <p className="truncate">{text}</p>
+          <p className="truncate">
+            {price===0 ? "Free" : price}
+          </p>
         </>
       ),
     },
