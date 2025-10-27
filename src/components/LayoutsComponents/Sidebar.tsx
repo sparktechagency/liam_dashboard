@@ -23,7 +23,8 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
   return (
-    <Sider
+    <div className='fixed'>
+      <Sider
       width={250}
       collapsedWidth={80}
       trigger={null}
@@ -118,6 +119,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
         </div>
       </div>
     </Sider>
+    </div>
   );
 };
 
