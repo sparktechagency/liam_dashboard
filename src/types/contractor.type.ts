@@ -25,3 +25,11 @@ export type IContratorDataSource = {
 
 
 export type TApprovalStatus =  'pending' | 'approved' | 'rejected';
+
+
+export interface IMaterial {
+  _id: string
+  name: string
+  unit: string
+  price: number
+}

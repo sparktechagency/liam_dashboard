@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Pagination, Table } from "antd";
 import type { IMeta } from "../../types/global.type";
-import { IContractor, IContratorDataSource } from "../../types/contractor.type";
 import ChangeStatusModal from "../modal/auth/ChangeStatusModal";
+import { ICustomer, ICustomerDataSource } from "../../types/customer.type";
 
 
 type TProps = {
-  reports: IContractor[];
+  reports: ICustomer[];
   meta: IMeta;
   currentPage: number;
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
@@ -26,7 +26,7 @@ const ReportTable = ({
   loading,
 }: TProps) => {
 
-  const dataSource: IContratorDataSource[] = reports?.map((contractor, index) => ({
+  const dataSource: ICustomerDataSource[] = reports?.map((contractor, index) => ({
     key: index,
     serial: Number(index + 1) + (meta.page - 1) * meta.limit,
     _id: contractor?._id,
@@ -99,7 +99,7 @@ const ReportTable = ({
     {
       title: "Action",
       width: 150,
-      render: (_: any, record: IContratorDataSource) => (
+      render: (_: any, record: ICustomerDataSource) => (
         <div className="flex items-center">
          <ChangeStatusModal userId={record?._id} status={record?.status}/>
         </div>

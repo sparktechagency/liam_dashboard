@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { MapPin, Phone, Mail, Star, DollarSign } from "lucide-react"
+import ContractorApprovalModal from "../modal/contractor/ContractorApprovalModal"
 
 
 const ContractorHeader = ({ data }: any) => {
-  const isPending = data.adminAccept === "pending"
-  const isActive = data.contractor.subscriptionStatus === "active"
+
 
   return (
     <div className="border-b border-border bg-card">
@@ -13,12 +13,9 @@ const ContractorHeader = ({ data }: any) => {
           <div className="flex-1">
             <div className="flex items-center gap-3 mb-4">
               <h1 className="text-4xl md:text-5xl font-bold text-foreground">{data.fullName}</h1>
-              <div
-                className={`px-3 py-1 rounded-full text-xs font-semibold ${isPending ? "bg-yellow-100 text-yellow-800" : "bg-green-100 text-green-800"}`}
-              >
-                {data.adminAccept}
-              </div>
+              <ContractorApprovalModal status={data?.adminAccept} userId={data?._id}/>
             </div>
+         
 
             <div className="space-y-2 text-muted-foreground mb-6">
               <div className="flex items-center gap-2">
@@ -37,7 +34,7 @@ const ContractorHeader = ({ data }: any) => {
 
             <div className="flex flex-wrap gap-3">
               <div
-                className={`px-3 py-1 rounded-full text-xs font-semibold border ${isActive ? "bg-emerald-100 text-emerald-800 border-emerald-300" : "bg-slate-100 text-slate-800 border-slate-300"}`}
+                className={`px-3 py-1 rounded-full text-md font-semibold border "bg-emerald-100 text-emerald-800 border-emerald-300`}
               >
                 {data.contractor.subscriptionStatus}
               </div>

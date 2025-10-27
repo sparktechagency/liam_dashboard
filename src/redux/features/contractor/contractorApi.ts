@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import TagTypes from "../../../constant/tagType.constant";
@@ -26,14 +27,24 @@ export const contractorApi = apiSlice.injectEndpoints({
       keepUnusedDataFor: 600,
       providesTags: [TagTypes.contractors],
     }),
+    getSingleContractor: builder.query({
+      query: (id) => ({
+        url: `/users/${id}`,
+        method: "GET",
+      }),
+      keepUnusedDataFor: 600,
+      providesTags: (_result, _error, arg) => [
+        { type: TagTypes.contractor, id: arg },
+      ],
+    }),
     approveContractor: builder.mutation({
       query: ({userId, status}) => ({
         url: `/dashboards/approved_contactor?userId=${userId}&status=${status}`,
-        method: "DELETE",
+        method: "POST",
       }),
-      invalidatesTags: (result) => {
+      invalidatesTags: (result, _success, arg) => {
         if (result?.success) {
-          return [TagTypes.contractors];
+          return [TagTypes.users, {type: TagTypes.contractor, id: arg.userId}];
         }
         return [];
       },
@@ -56,4 +67,4 @@ export const contractorApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetContractorsQuery, useApproveContractorMutation} = contractorApi;
+export const { useGetContractorsQuery, useGetSingleContractorQuery, useApproveContractorMutation} = contractorApi;

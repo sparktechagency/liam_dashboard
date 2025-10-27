@@ -31,7 +31,8 @@ const TagTypes = {
     bookingStats: "BookingStats",
     dailyBookings: "DailyBookings",
     percentage: "Percentage",
-    contractors: "Contractors"
+    contractors: "Contractors",
+    contractor: "Contractor"
 }
 
 export default TagTypes;

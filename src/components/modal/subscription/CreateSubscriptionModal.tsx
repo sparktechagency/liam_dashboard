@@ -104,8 +104,8 @@ const CreateSubscriptionModal = () => {
                             { required: true, message: "Please enter the price!" },
                             {
                                 type: "number",
-                                min: 1,
-                                message: "Price must be greater than 0",
+                                min: 0,
+                                message: "Price can't be negative number",
                             },
                         ]}
                     >
