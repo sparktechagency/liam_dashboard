@@ -15,15 +15,15 @@ const MainLayout = () => {
             <Layout className=" ">
                 <Sidebar collapsed={collapsed} ></Sidebar>
                 <Layout
-                    style={{
-                        marginLeft: collapsed ? 80 : 250,
-                        transition: 'margin-left 0.2s ease',
-                    }}
+                    // style={{
+                    //     marginLeft: collapsed ? 80 : 250,
+                    //     transition: 'margin-left 0.2s ease',
+                    // }}
                     className={``}>
                     {/* my header */}
                     <MainHeader setCollapsed={setCollapsed} collapsed={collapsed}></MainHeader>
                     <Content
-                        className="p-5 min-h-[100vh] bg-bgColor"
+                        className="p-5 min-h-screen bg-bgColor"
                         style={{}}
                     >
                         {/* my content */}

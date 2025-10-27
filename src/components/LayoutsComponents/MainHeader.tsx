@@ -31,7 +31,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({ setCollapsed, collapsed }) => {
                     background: colorBgContainer,
                 }}
             >
-                <div className=' flex justify-end items-center pr-4  bg-barColor'>
+                <div className='flex justify-end items-center pr-4  bg-barColor'>
 
                     {collapsed ? <RxHamburgerMenu onClick={() => setCollapsed(!collapsed)} className=' text-black w-8 h-8 cursor-pointer hidden' /> : <RxHamburgerMenu onClick={() => setCollapsed(!collapsed)} className=' text-black w-8 h-8 cursor-pointer hidden' />}
                     <div className='flex items-center gap-6'>
