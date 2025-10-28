@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { Eye } from "lucide-react";
 import ContractorApprovalModal from "../modal/contractor/ContractorApprovalModal";
 import { ColumnsType } from "antd/es/table";
+import ChangeHomeContractorModal from "../modal/contractor/ChangeHomeContractorModal";
 
 
 type TProps = {
@@ -38,7 +39,9 @@ const ContractorTable = ({
     contactNo: contractor?.contactNo,
     status: contractor?.status,
     approvalStatus: contractor?.adminAccept,
-    subscriptionStatus: contractor?.contractor?.subscriptionStatus
+    subscriptionStatus: contractor?.contractor?.subscriptionStatus,
+    contractorId: contractor?.contractor?._id,
+    isHomeSelect: contractor?.contractor?.isHomeSelect
   }))
 
 
@@ -104,6 +107,32 @@ const ContractorTable = ({
         <ChangeStatusModal userId={record?._id} status={status} />
       )
       ,
+    },
+    {
+      title: "Home Page",
+      dataIndex: "isHomeSelect",
+      key: "status",
+      width: 145,
+      render: (status: boolean, record: IContratorDataSource) => {
+        const statusStyles = {
+          hidden: "bg-gray-100 text-gray-600 border border-gray-300",
+          visible: "bg-blue-100 text-blue-700 border border-blue-300",
+        };
+
+        const bgColor =
+          status ? statusStyles.visible : statusStyles.hidden;
+
+        return (
+          <div className="flex items-center gap-2">
+            <button
+              className={`${bgColor} capitalize w-20 cursor-default px-3 py-0.5 text-sm font-medium rounded-full`}
+            >
+              {status ? "visible" : "hidden"}
+            </button>
+            <ChangeHomeContractorModal contractorId={record?.contractorId} status={status} />
+          </div>
+        );
+      },
     },
     {
       title: "Action",

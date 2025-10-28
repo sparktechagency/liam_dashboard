@@ -64,7 +64,34 @@ export const contractorApi = apiSlice.injectEndpoints({
         }
       },
     }),
+    changeHomeContractor: builder.mutation({
+      query: ({contractorId, status}) => ({
+        url: `/dashboards/contractor_home?contractorId=${contractorId}&isHomeSelect=${status}`,
+        method: "PATCH",
+      }),
+      invalidatesTags: (result, _success, arg) => {
+        if (result?.success) {
+          return [TagTypes.users, {type: TagTypes.contractor, id: arg.userId}];
+        }
+        return [];
+      },
+      async onQueryStarted({ status }, { queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          SuccessToast(`Contractor is ${status ? "visible" : "hidden"} successfully`);
+        } catch (err: any) {
+          const status = err?.error?.status;
+          const message = err?.error?.data?.message || "Something Went Wrong";
+          if (status === 500) {
+            ErrorToast("Something Went Wrong");
+          }
+          else {
+            ErrorToast(message);
+          }
+        }
+      },
+    }),
   }),
 });
 
-export const { useGetContractorsQuery, useGetSingleContractorQuery, useApproveContractorMutation} = contractorApi;
+export const { useGetContractorsQuery, useGetSingleContractorQuery, useApproveContractorMutation, useChangeHomeContractorMutation} = contractorApi;

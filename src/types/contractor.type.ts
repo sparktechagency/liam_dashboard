@@ -7,7 +7,9 @@ export type IContractor = {
     status: string;
     adminAccept: TApprovalStatus;
     contractor: {
+        _id: string;
         subscriptionStatus: string;
+        isHomeSelect: boolean
     }
 }
 
@@ -21,6 +23,8 @@ export type IContratorDataSource = {
     status: string;
     approvalStatus: TApprovalStatus;
     subscriptionStatus: string;
+    contractorId: string;
+    isHomeSelect: boolean;
 }
 
 
