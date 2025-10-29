@@ -18,7 +18,7 @@ export const reportApi = apiSlice.injectEndpoints({
           });
         }
         return {
-          url: "/reports",
+          url: "/helps",
           method: "GET",
           params: params,
         };
@@ -27,8 +27,8 @@ export const reportApi = apiSlice.injectEndpoints({
       providesTags: [TagTypes.reports],
     }),
     replyContact: builder.mutation({
-      query: ({id, data }) => ({
-        url: `/contact/reply/${id}`,
+      query: (data) => ({
+        url: `/dashboards/replay_feedback`,
         method: "PATCH",
         body: data,
       }),
@@ -41,7 +41,7 @@ export const reportApi = apiSlice.injectEndpoints({
       async onQueryStarted(_arg, { queryFulfilled }) {
         try {
           await queryFulfilled;
-          SuccessToast("Your reply has been sent successfully.");
+          SuccessToast("Your reply message has been sent successfully.");
         } catch (err: any) {
            const status = err?.error?.status;
           const message = err?.error?.data?.message || "Something Went Wrong";

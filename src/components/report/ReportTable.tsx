@@ -1,12 +1,15 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Pagination, Table } from "antd";
 import type { IMeta } from "../../types/global.type";
-import ChangeStatusModal from "../modal/auth/ChangeStatusModal";
-import { ICustomer, ICustomerDataSource } from "../../types/customer.type";
+import ViewContactModal from "../modal/contact/ViewContactModal";
+import { Reply } from "lucide-react";
+import ReplyModal from "../modal/contact/ReplyModal";
+import { IHelp, IHelpDataSource } from "../../types/help.type";
+import placeholder from "../../assets/placeholder.png";
+
 
 
 type TProps = {
-  reports: ICustomer[];
+  reports: IHelp[];
   meta: IMeta;
   currentPage: number;
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
@@ -26,14 +29,16 @@ const ReportTable = ({
   loading,
 }: TProps) => {
 
-  const dataSource: ICustomerDataSource[] = reports?.map((contractor, index) => ({
+  const dataSource: IHelpDataSource[] = reports?.map((help, index) => ({
     key: index,
     serial: Number(index + 1) + (meta.page - 1) * meta.limit,
-    _id: contractor?._id,
-    fullName: contractor?.fullName,
-    email: contractor?.email,
-    contactNo: contractor?.contactNo,
-    status: contractor?.status
+    _id: help?._id,
+    fullName: help?.userId?.fullName,
+    email: help?.userId?.email,
+    img: help?.userId?.img,
+    title: help?.title,
+    details: help?.details,
+    adminMessage: help?.adminMessage ? help?.adminMessage : ""
   }))
 
   const columns = [
@@ -47,11 +52,30 @@ const ReportTable = ({
       title: "Name",
       dataIndex: "fullName",
       key: "fullName",
-      width: 180,
+      width: 120,
       render: (text: string) => (
         <>
           <p className="truncate">{text}</p>
         </>
+      ),
+    },
+    {
+      title: "Image",
+      dataIndex: "img",
+      key: "img",
+      width: 80,
+      render: (val?: string) => (
+        <div className="flex items-center">
+          <img
+            src={val || placeholder}
+            alt="profile"
+            className="w-[45px] h-[45px] rounded-lg"
+            onError={(e) => {
+              e.currentTarget.onerror = null;
+              e.currentTarget.src = placeholder;
+            }}
+          />
+        </div>
       ),
     },
     {
@@ -66,42 +90,43 @@ const ReportTable = ({
       ),
     },
     {
-      title: "Contact Number",
-      dataIndex: "contactNo",
-      key: "contactNo",
-      width: 180,
+      title: "Title",
+      dataIndex: "title",
+      key: "title",
+      width: 250,
       render: (text: string) => (
         <>
-          <p className="truncate">{text}</p>
+          <p className="truncate text-md">{text}</p>
         </>
       ),
     },
     {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
-      width: 160,
-      render: (status: string) => {
-        const statusStyles = {
-          blocked: "bg-red-100 text-red-700 border border-red-300",
-          active: "bg-green-100 text-green-700 border border-green-300",
-        };
-        const bgColor = status === "blocked" ? statusStyles.blocked : statusStyles.active;
-        return (
-            <button
-              className={`${bgColor} w-20 cursor-default px-3 py-0.5 text-sm font-medium rounded-full`}
-            >
-              {status === "blocked" ? "Blocked" : "Active"}
-            </button>
-        );
-      },
+      title: "Message",
+      dataIndex: "details",
+      key: "details",
+      width: 250,
+      render: (text: string) => (
+        <>
+          <p className="truncate text-md">{text}</p>
+        </>
+      ),
     },
     {
       title: "Action",
-      width: 150,
-      render: (_: any, record: ICustomerDataSource) => (
-        <div className="flex items-center">
-         <ChangeStatusModal userId={record?._id} status={record?.status}/>
+      key: "_id",
+      dataIndex: "_id",
+      width: "10%",
+      align: "center" as const,
+      render: (contactId: string, contact: IHelpDataSource) => (
+        <div className="flex justify-center gap-2">
+          <ViewContactModal contact={contact} />
+          {contact?.adminMessage ? (
+            <button className="bg-blue-300 hover:bg-blue-400 p-2 text-white rounded-full cursor-not-allowed">
+              <Reply size={18} />
+            </button>
+          ) : (
+            <ReplyModal contactId={contactId} />
+          )}
         </div>
       ),
     },
@@ -146,7 +171,7 @@ const ReportTable = ({
           />
         </div>
       )}
-      </>
+    </>
   );
 };
 

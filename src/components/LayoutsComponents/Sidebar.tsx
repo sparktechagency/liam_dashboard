@@ -90,7 +90,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
               {
                 key: '10',
                 icon: <MdOutlineReport className="w-6 h-6" />,
-                label: <Link to="/report">Report</Link>,
+                label: <Link to="/report">Help & Support</Link>,
               },
               {
                 key: '11',
